@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "ES2022",
+    "baseUrl": "./",
+    "moduleResolution": "Node",
+    "declaration": true,
+    "declarationDir": "./dist",
+    "module": "CommonJS",
+    "noEmit": false,
+    "sourceMap": true,
+    "allowJs": false,
+    "outDir": "./dist",
+    "paths": {
+      // "*": ["*"],
+      "@flavor/core": ["../../packages/core/src"]
+    }
+  },
+  "exclude": ["**/node_modules", "**/.*/", "dist"]
+}

@@ -1,0 +1,134 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+
+  url = env("DATABASE_URL")
+}
+
+model User {
+  id       String  @id @default(cuid())
+  name     String
+  password String?
+  salt     String?
+  email    String? @unique
+  avatar   String?
+
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime? @updatedAt @map("updated_at")
+  lastSignAt DateTime? @map("last_sign_at")
+  active     Boolean   @default(true)
+  accounts   Account[]
+
+  @@map("user")
+}
+
+model Account {
+  id         String   @id @default(cuid())
+  userId     String   @map("user_id")
+  type       String
+  provider   String
+  providerId String   @map("provider_id")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerId])
+  @@map("account")
+}
+
+model Space {
+  id     String  @id @default(cuid())
+  name   String  @db.Char(256)
+  active Boolean @default(true)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  createdBy String   @map("created_by")
+
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  updatedBy String?   @map("updated_by")
+
+  @@map("space")
+}
+
+model SpaceMember {
+  id        String    @id @default(cuid())
+  spaceId   String    @map("space_id")
+  userId    String    @map("user_id")
+  role      String    @db.VarChar(32)
+  active    Boolean   @default(true)
+  createdBy String    @map("created_by")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedBy String?   @map("updated_by")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  @@map("space_member")
+}
+
+model Group {
+  id         String    @id @default(cuid())
+  name       String    @db.Char(256)
+  spaceId    String    @map("space_id")
+  permission String    @db.Char(256)
+  active     Boolean   @default(true)
+  createdBy  String    @map("created_by")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedBy  String?   @map("updated_by")
+  updatedAt  DateTime? @updatedAt @map("updated_at")
+
+  @@map("group")
+}
+
+model GroupMember {
+  id         String    @id @default(cuid())
+  groupId    String    @map("group_id")
+  spaceId    String    @map("space_id")
+  userId     String    @map("user_id")
+  permission String    @db.Char(256)
+  active     Boolean   @default(true)
+  createdBy  String    @map("created_by")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedBy  String?   @map("updated_by")
+  updatedAt  DateTime? @updatedAt @map("updated_at")
+
+  @@map("group_member")
+}
+
+model Permission {
+  id   String @id @default(cuid())
+  type String @db.VarChar(32)
+}
+
+model Document {
+  id        String    @id @default(cuid())
+  spaceId   String    @map("space_id")
+  name      String
+  active    Boolean   @default(true)
+  schema    Json
+  createdBy String    @map("created_by")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedBy String?   @map("updated_by")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  @@map("document")
+}
+
+model Record {
+  documentId String    @default(cuid())
+  recordId   String    @default(cuid())
+  type       String    @db.VarChar(256)
+  active     Boolean   @default(true)
+  data       Json
+  createdBy  String    @map("created_by")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedBy  String?   @map("updated_by")
+  updatedAt  DateTime? @updatedAt @map("updated_at")
+
+  @@id([documentId, recordId])
+  @@map("record")
+}
