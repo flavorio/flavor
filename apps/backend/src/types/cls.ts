@@ -1,5 +1,6 @@
 import type { ClsStore } from 'nestjs-cls';
 import { Prisma } from '@prisma/client';
+import { PermissionAction } from '@flavor/core';
 
 export interface IClsStore extends ClsStore {
   user: {
@@ -19,4 +20,5 @@ export interface IClsStore extends ClsStore {
   };
 
   cookie?: string;
+  permissions: PermissionAction[];
 }

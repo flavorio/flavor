@@ -3,7 +3,6 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 
 module.exports = function (options, webpack) {
-  console.log(options.plugins);
   return {
     ...options,
     // entry: ['webpack/hot/poll?100', options.entry],
@@ -50,10 +49,6 @@ module.exports = function (options, webpack) {
       //   typescript: {
       //     configFile: 'tsconfig.json',
       //   },
-      // }),
-
-      // new CopyPlugin({
-      //   patterns: [{ from: 'src/features/mail-sender/templates', to: 'templates' }],
       // }),
     ],
   };

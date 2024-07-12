@@ -1,10 +1,20 @@
-import { Global, MiddlewareConsumer, NestModule, Module, DynamicModule, ModuleMetadata } from "@nestjs/common";
+import {
+  Global,
+  MiddlewareConsumer,
+  NestModule,
+  Module,
+  DynamicModule,
+  ModuleMetadata,
+} from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { ClsMiddleware, ClsModule } from 'nestjs-cls';
-import { ConfigModule } from '../config/config.module';
-import { CacheModule } from "../cache/cache.module";
-import { PrismaModule } from "src/prisma/prisma.module";
-import { AuthGuard } from "src/api/auth/guard/auth.guard";
+import { PrismaModule } from 'src/prisma/prisma.module';
+import { CacheModule } from 'src/cache/cache.module';
+import { ConfigModule } from 'src/config/config.module';
+import { AuthGuard } from 'src/api/auth/guard/auth.guard';
+import { PermissionGuard } from 'src/api/auth/guard/permission.guard';
+import { PermissionModule } from 'src/api/auth/permission.module';
+
 const globalModules = {
   imports: [
     ConfigModule.register(),
@@ -25,8 +35,9 @@ const globalModules = {
         // },
       },
     }),
-    CacheModule.register({global: true}),
-    PrismaModule
+    CacheModule.register({ global: true }),
+    PrismaModule,
+    PermissionModule,
   ],
 
   providers: [
@@ -34,18 +45,20 @@ const globalModules = {
       provide: APP_GUARD,
       useClass: AuthGuard,
     },
+    {
+      provide: APP_GUARD,
+      useClass: PermissionGuard,
+    },
   ],
 
-  exports: [
-
-  ]
-}
+  exports: [],
+};
 
 @Global()
 @Module(globalModules)
 export class GlobalModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(ClsMiddleware)
+    consumer.apply(ClsMiddleware);
   }
 
   static register(moduleMetadata: ModuleMetadata): DynamicModule {
@@ -53,7 +66,10 @@ export class GlobalModule implements NestModule {
       module: GlobalModule,
       global: true,
       imports: [...globalModules.imports, ...(moduleMetadata.imports || [])],
-      providers: [...globalModules.providers, ...(moduleMetadata.providers || [])],
+      providers: [
+        ...globalModules.providers,
+        ...(moduleMetadata.providers || []),
+      ],
       exports: [...globalModules.exports, ...(moduleMetadata.exports || [])],
     };
   }

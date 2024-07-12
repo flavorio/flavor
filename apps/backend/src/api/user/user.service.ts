@@ -3,6 +3,7 @@ import {
   generateUserId,
   generateAccountId,
   generateSpaceId,
+  SpaceRole,
 } from '@flavor/core';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ClsService } from 'nestjs-cls';
@@ -123,7 +124,7 @@ export class UserService {
         spaceId,
         userId,
         createdBy: userId,
-        role: 'OWNER',
+        role: SpaceRole.Owner,
       },
     });
     return space;
