@@ -17,4 +17,26 @@ export const apiAgent = {
       return await instance.post("auth/signin/", payload);
     },
   },
+
+  user: {
+    async getUserInfo() {
+      return await instance.post("user/getUserInfo/");
+    },
+  },
+
+  document: {
+    async createDocument(payload: CreateDocumentPayload) {
+      return await instance.post("/document/createDocument", payload);
+    },
+  },
+
+  space: {
+    async getSpaceList() {
+      return await instance.post("/space/getSpaceList");
+    },
+
+    async getSpaceInfo(payload: PayloadWithId) {
+      return await instance.post("/space/getSpaceInfo", payload);
+    },
+  },
 };

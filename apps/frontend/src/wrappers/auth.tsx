@@ -1,12 +1,15 @@
-import { Navigate, Outlet, useLocation } from "umi";
+import { Outlet } from "umi";
+import { useFetchData } from "@/hooks";
+import { useIsLogin } from "@/stores/user-store";
 
 export default function Auth(props) {
-  const location = useLocation();
-  const isLogin = true; // TODO: complete auth
+  const isLogin = useIsLogin();
+
+  useFetchData();
 
   if (isLogin) {
     return <Outlet />;
   } else {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    return <div>loading...</div>;
   }
 }
