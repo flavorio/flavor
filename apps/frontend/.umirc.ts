@@ -1,3 +1,4 @@
+const { join } = require("path");
 import { defineConfig } from "umi";
 
 export default defineConfig({
@@ -15,8 +16,13 @@ export default defineConfig({
   ],
 
   npmClient: "pnpm",
-  plugins: ["@umijs/plugins/dist/locale"],
+  plugins: [
+    "./umi-plugin.ts",
+    "@umijs/plugins/dist/locale",
+    "@umijs/plugins/dist/tailwindcss",
+  ],
   locale: {
+    antd: false,
     default: "zh-CN",
     baseSeparator: "-",
   },
@@ -28,4 +34,11 @@ export default defineConfig({
       // pathRewrite: { "^/api": "" },
     },
   },
+
+  alias: {
+    "@flavor/ui": join(__dirname, "../../packages/ui/src"),
+    "@flavor/core": join(__dirname, "../../packages/core/src"),
+  },
+
+  tailwindcss: {},
 });

@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "cross-env NODE_ENV=production tsc --build tsconfig.json"
+    "build": "cross-env NODE_ENV=production tsc --build tsconfig.json",
+    "shadcn:ui": "node ./scripts/shadcn-ui.js",
+    "update-shadcn-ui": "node ./scripts/update-shadcn-ui"
   },
   "keywords": [],
   "author": "",
@@ -27,6 +29,7 @@
     "@radix-ui/react-slot": "^1.1.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "deepmerge": "^4.3.1",
     "react-hook-form": "^7.52.1",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",

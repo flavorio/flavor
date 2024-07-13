@@ -1,6 +1,18 @@
-import { Button, Form, FormProps, Input } from "antd";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { FormattedMessage, Link, useIntl, useLocation, useNavigate } from "umi";
 import { apiAgent } from "@/api/api-agent";
+import { signinSchema, SigninRo } from "@flavor/core/data";
+import {
+  Button,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Input,
+} from "@flavor/ui/shadcn";
 
 export default function Login() {
   const location = useLocation();
@@ -13,46 +25,59 @@ export default function Login() {
     id: "user.password",
   });
 
-  const onFinish: FormProps<SigninPayload>["onFinish"] = async (values) => {
+  const form = useForm<SigninRo>({
+    resolver: zodResolver(signinSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  async function onSubmit(values: SigninRo) {
     await apiAgent.auth.signin(values);
-    const from = location.state?.from?.pathname;
+    const from = location.state?.from?.pathname || "/";
     navigate(from, { replace: true });
-  };
+  }
 
   return (
-    <div>
-      <Form
-        name="basic"
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
-        style={{ width: 600 }}
-        onFinish={onFinish}
-        autoComplete="off"
-      >
-        <Form.Item<SigninPayload>
-          label={emailDesc}
-          name="email"
-          rules={[{ required: true, message: "Please input your email!" }]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item<SigninPayload>
-          label={passwordDesc}
-          name="password"
-          rules={[{ required: true, message: "Please input your password!" }]}
-        >
-          <Input.Password />
-        </Form.Item>
-
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit">
-            <FormattedMessage id="auth.signIn" />
-          </Button>
-          <Link to="/signup" replace>
-            <FormattedMessage id="auth.redirectToSignUpDesc" />
-          </Link>
-        </Form.Item>
+    <div className="w-full h-full flex justify-center items-center">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="w-4/12">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{emailDesc}</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{passwordDesc}</FormLabel>
+                <FormControl>
+                  <Input {...field} type="password" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="mt-4">
+            <Button type="submit">
+              <FormattedMessage id="auth.signIn" />
+            </Button>
+            <Link to="/signup" replace className="ml-4">
+              <FormattedMessage id="auth.redirectToSignUpDesc" />
+            </Link>
+          </div>
+        </form>
       </Form>
     </div>
   );
