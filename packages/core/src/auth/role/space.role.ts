@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { AllActions } from "../actions";
 
 export enum SpaceRole {
@@ -6,6 +7,8 @@ export enum SpaceRole {
   Editor = "editor",
   Viewer = "viewer",
 }
+
+export const spaceRolesSchema = z.nativeEnum(SpaceRole);
 
 export type SpacePermission = AllActions;
 

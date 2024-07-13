@@ -9,10 +9,11 @@ import {
   UseGuards
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateUserDto } from './auth.dto';
 import { Public } from './decorator/public.decorator';
 import { LocalAuthGuard } from './guard/local-auth.guard';
 import { pickUserMe } from './utils';
+import { ZodValidationPipe } from 'src/zod.validation.pipe';
+import { SignupRo, signupSchema } from '@flavor/core';
 
 @Controller('api/auth')
 export class AuthController {
@@ -29,7 +30,7 @@ export class AuthController {
   @Public()
   @Post('signup')
   async signup(
-    @Body() body: CreateUserDto,
+    @Body(new ZodValidationPipe(signupSchema)) body: SignupRo,
     @Res({ passthrough: true }) res: Response,
     @Req() req: Express.Request
   ) {

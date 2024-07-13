@@ -44,7 +44,7 @@ model Account {
 
 model Space {
   id     String  @id @default(cuid())
-  name   String  @db.Char(256)
+  name   String
   active Boolean @default(true)
 
   createdAt DateTime @default(now()) @map("created_at")
@@ -60,7 +60,7 @@ model SpaceMember {
   id        String    @id @default(cuid())
   spaceId   String    @map("space_id")
   userId    String    @map("user_id")
-  role      String    @db.VarChar(32)
+  role      String
   active    Boolean   @default(true)
   createdBy String    @map("created_by")
   createdAt DateTime  @default(now()) @map("created_at")
@@ -72,9 +72,9 @@ model SpaceMember {
 
 model Group {
   id         String    @id @default(cuid())
-  name       String    @db.Char(256)
+  name       String
   spaceId    String    @map("space_id")
-  permission String    @db.Char(256)
+  permission String
   active     Boolean   @default(true)
   createdBy  String    @map("created_by")
   createdAt  DateTime  @default(now()) @map("created_at")
@@ -89,7 +89,7 @@ model GroupMember {
   groupId    String    @map("group_id")
   spaceId    String    @map("space_id")
   userId     String    @map("user_id")
-  permission String    @db.Char(256)
+  permission String
   active     Boolean   @default(true)
   createdBy  String    @map("created_by")
   createdAt  DateTime  @default(now()) @map("created_at")
@@ -99,17 +99,12 @@ model GroupMember {
   @@map("group_member")
 }
 
-model Permission {
-  id   String @id @default(cuid())
-  type String @db.VarChar(32)
-}
-
 model Document {
   id        String    @id @default(cuid())
   spaceId   String    @map("space_id")
   name      String
-  active    Boolean   @default(true)
   schema    Json
+  active    Boolean   @default(true)
   createdBy String    @map("created_by")
   createdAt DateTime  @default(now()) @map("created_at")
   updatedBy String?   @map("updated_by")
@@ -121,7 +116,7 @@ model Document {
 model Record {
   documentId String    @default(cuid())
   recordId   String    @default(cuid())
-  type       String    @db.VarChar(256)
+  type       String
   active     Boolean   @default(true)
   data       Json
   createdBy  String    @map("created_by")

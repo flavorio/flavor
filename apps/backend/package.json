@@ -65,7 +65,9 @@
     "ts-pattern": "^5.2.0",
     "uuid": "^10.0.0",
     "webpack-node-externals": "^3.0.0",
-    "ws": "^8.18.0"
+    "ws": "^8.18.0",
+    "zod": "^3.23.8",
+    "zod-validation-error": "^3.3.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.3.2",
