@@ -46,4 +46,25 @@ export class DocumentService {
     });
     return { documentId };
   }
+
+  public async updateDocument(id: string, name: string) {
+    const document = await this.prismaService.document.findUnique({
+      where: {
+        id,
+      },
+    });
+    if(!document) {
+      throw new NotFoundException('Document not found');
+    }
+    await this.prismaService.document.update(
+      {
+        where: {
+          id,
+        },
+        data: {
+          name
+        },
+      },
+    )
+  }
 }

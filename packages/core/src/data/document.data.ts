@@ -15,3 +15,11 @@ export const createDocumentSchema = z.object({
 });
 
 export type CreateDocumentRo = z.infer<typeof createDocumentSchema>;
+
+export const updateDocumentSchema = z.object({
+  id: z.string(),
+  name: z.string()
+});
+
+
+export type UpdateDocumentRo = z.infer<typeof updateDocumentSchema>;

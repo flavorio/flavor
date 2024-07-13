@@ -15,5 +15,10 @@ export const spaceVoSchema = z.object({
 
 export type SpaceVo = z.infer<typeof spaceVoSchema>;
 
+export const updateSpaceRoSchema = z.object({
+  id: z.string(),
+  name: z.string().optional(),
+});
+
 
 

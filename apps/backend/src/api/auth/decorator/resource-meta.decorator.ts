@@ -1,7 +1,7 @@
 import { SetMetadata } from '@nestjs/common';
 
 export type IResourceMeta = {
-  type: 'spaceId' | 'documentId';
+  type: 'spaceId' | 'documentId' | 'id';
   position: 'query' | 'params' | 'body';
 };
 
