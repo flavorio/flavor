@@ -1,4 +1,5 @@
 import axios from "axios";
+import { CreateDocumentRo, SigninRo, SignupRo } from "@flavor/core/data";
 
 const baseURL = "/api/";
 
@@ -9,11 +10,11 @@ const instance = axios.create({
 
 export const apiAgent = {
   auth: {
-    async signup(payload: SignupPayload) {
+    async signup(payload: SignupRo) {
       return await instance.post("auth/signup/", payload);
     },
 
-    async signin(payload: SigninPayload) {
+    async signin(payload: SigninRo) {
       return await instance.post("auth/signin/", payload);
     },
   },
@@ -25,7 +26,7 @@ export const apiAgent = {
   },
 
   document: {
-    async createDocument(payload: CreateDocumentPayload) {
+    async createDocument(payload: CreateDocumentRo) {
       return await instance.post("/document/createDocument", payload);
     },
   },
