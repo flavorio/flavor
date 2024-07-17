@@ -10,12 +10,14 @@ import { SessionStrategy } from './strategy/session.strategy';
 import { AuthGuard } from './guard/auth.guard';
 import { SessionSerializer } from './session/session.serializer';
 import { SessionStoreService } from './session/session-store.service';
+import { StorageModule } from 'src/storage/storage.module';
 
 @Module({
   imports: [
     UserModule,
     PassportModule.register({ session: true }),
     SessionModule,
+    StorageModule, //TODO
   ],
   providers: [
     AuthService,

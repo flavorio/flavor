@@ -4,16 +4,22 @@ import {
   generateAccountId,
   generateSpaceId,
   SpaceRole,
+  UploadType,
 } from '@flavor/core';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ClsService } from 'nestjs-cls';
 import { IClsStore } from 'src/types/cls';
+import { join } from 'path';
+import StorageAdapter from 'src/storage/adapter';
+import { InjectStorageAdapter } from 'src/storage/storage';
+import { Prisma } from 'src/prisma';
 
 @Injectable()
 export class UserService {
   constructor(
     private prismaService: PrismaService,
     private readonly cls: ClsService<IClsStore>,
+    @InjectStorageAdapter() readonly storageAdapter: StorageAdapter
   ) {}
 
   async getUserById(id: string) {
@@ -135,6 +141,54 @@ export class UserService {
     await this.prismaService.txClient().user.update({
       where: { id: userId, active: true },
       data: { lastSignAt: new Date().toISOString() },
+    });
+  }
+
+  async updateAvatar(id: string, avatarFile: { path: string; mimetype: string; size: number }) {
+    const path = join(StorageAdapter.getDir(UploadType.Avatar), id);
+    const bucket = StorageAdapter.getBucket(UploadType.Avatar);
+    const { hash, url } = await this.storageAdapter.uploadFileWidthPath(
+      bucket,
+      path,
+      avatarFile.path,
+      {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        'Content-Type': avatarFile.mimetype,
+      }
+    );
+    const { size, mimetype } = avatarFile;
+
+    await this.mountAttachment(id, {
+      bucket,
+      hash,
+      size,
+      mimetype,
+      token: id,
+      path,
+    });
+
+    await this.prismaService.txClient().user.update({
+      data: {
+        avatar: url,
+      },
+      where: { id, active: true },
+    });
+  }
+
+  private async mountAttachment(
+    userId: string,
+    input: Prisma.AttachmentCreateInput | Prisma.AttachmentUpdateInput
+  ) {
+    await this.prismaService.txClient().attachment.upsert({
+      create: {
+        ...input,
+        createdBy: userId,
+      } as Prisma.AttachmentCreateInput,
+      update: input as Prisma.AttachmentUpdateInput,
+      where: {
+        token: userId,
+        active: true
+      },
     });
   }
 }

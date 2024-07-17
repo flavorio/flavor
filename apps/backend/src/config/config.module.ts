@@ -4,8 +4,9 @@ import { ConfigModule as BaseConfigModule } from '@nestjs/config';
 import { loggerConfig } from './logger.config';
 import { authConfig } from './auth.config';
 import { cacheConfig } from './cache.config';
+import { storageConfig } from './storage.config';
 
-const configurations = [loggerConfig, authConfig, cacheConfig];
+const configurations = [loggerConfig, authConfig, cacheConfig, storageConfig];
 
 @Module({})
 export class ConfigModule {

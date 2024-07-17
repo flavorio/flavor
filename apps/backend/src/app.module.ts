@@ -7,12 +7,14 @@ import { SpaceModule } from './api/space/space.module';
 import { WsModule } from './ws/ws.module';
 import { GlobalModule } from 'src/global/global.module';
 import { DocumentModule } from './api/document/document.module';
+import { AttachmentModule } from './api/attachment/attachment.module';
 
 @Module({
   imports: [
     GlobalModule,
-    AuthModule,
+    AttachmentModule,
     UserModule,
+    AuthModule,
     SpaceModule,
     WsModule,
     DocumentModule,
