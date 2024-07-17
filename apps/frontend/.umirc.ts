@@ -23,7 +23,7 @@ export default defineConfig({
   ],
   locale: {
     antd: false,
-    default: "zh-CN",
+    default: "en-US",
     baseSeparator: "-",
   },
 
@@ -41,4 +41,13 @@ export default defineConfig({
   },
 
   tailwindcss: {},
+
+  // fix react multi-instance issues
+  mfsu: {
+    shared: {
+      react: {
+        singleton: true,
+      },
+    },
+  },
 });

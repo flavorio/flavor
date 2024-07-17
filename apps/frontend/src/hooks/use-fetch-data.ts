@@ -10,10 +10,9 @@ export function useFetchData() {
   const [isLogin, getUserInfo] = useUserStore(
     useShallow((state) => [state.isLogin, state.getUserInfo]),
   );
-  const [getSpaceList, getSpaceInfo] = useSpaceStore((state) => [
-    state.getSpaceList,
-    state.getSpaceInfo,
-  ]);
+  const [getSpaceList, getSpaceInfo] = useSpaceStore(
+    useShallow((state) => [state.getSpaceList, state.getSpaceInfo]),
+  );
 
   useEffect(() => {
     async function fetchUserInfo() {
@@ -27,6 +26,11 @@ export function useFetchData() {
     async function fetchSpaceData() {
       try {
         await getSpaceList();
+        const spaceState = useSpaceStore.getState();
+        const { currSpaceId, spaceList, setCurrSpaceId } = spaceState;
+        if (!currSpaceId && spaceList.length > 0) {
+          setCurrSpaceId(spaceList[0].id);
+        }
         await getSpaceInfo();
       } catch (_) {}
     }

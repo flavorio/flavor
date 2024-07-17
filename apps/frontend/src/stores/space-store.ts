@@ -11,8 +11,9 @@ type Space = {
 
 type SpaceList = Space[];
 
-type Document = {
-  //
+export type Document = {
+  id: string;
+  name: string;
 };
 
 type Documents = Document[];
@@ -29,6 +30,7 @@ type SpaceState = {
   spaceList: SpaceList;
   getSpaceList: () => Promise<void>;
   getSpaceInfo: () => Promise<void>;
+  setCurrSpaceId: (currSpaceId: string) => void;
 };
 
 export const useSpaceStore = create<SpaceState>((set, get) => ({
@@ -54,9 +56,12 @@ export const useSpaceStore = create<SpaceState>((set, get) => ({
       }
     } catch (e: any) {
       set({
-        spaceList: [],
+        currSpaceInfo: null,
       });
     }
+  },
+  setCurrSpaceId: (currSpaceId) => {
+    set({ currSpaceId });
   },
 }));
 
