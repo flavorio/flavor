@@ -1,8 +1,8 @@
 import { createReadStream, createWriteStream } from 'fs';
 import { BadRequestException, Injectable } from "@nestjs/common";
 import * as fse from 'fs-extra';
-import { FileUtils } from "src/utils";
-import { join, resolve } from 'node:path';
+import { FileUtils, join } from "src/utils";
+import { resolve } from 'node:path';
 import os from 'node:os';
 import { Encryptor } from "src/utils/encryptor";
 import { ILocalFileUpload, IObjectMeta, IPresignParams, IRespHeaders } from "./types";

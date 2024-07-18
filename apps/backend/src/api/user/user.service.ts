@@ -9,10 +9,10 @@ import {
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ClsService } from 'nestjs-cls';
 import { IClsStore } from 'src/types/cls';
-import { join } from 'path';
 import StorageAdapter from 'src/storage/adapter';
 import { InjectStorageAdapter } from 'src/storage/storage';
 import { Prisma } from 'src/prisma';
+import { join } from 'src/utils';
 
 @Injectable()
 export class UserService {

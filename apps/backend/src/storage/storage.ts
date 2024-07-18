@@ -2,6 +2,7 @@ import { Inject, Provider } from "@nestjs/common";
 import { CacheService } from "src/cache/cache.service";
 import { IStorageConfig, storageConfig } from "src/config/storage.config";
 import { LocalStorage } from "./local";
+import { MinioStorage } from "./minio";
 
 const StorageAdapterProvider = Symbol.for('ObjectStorage');
 
@@ -13,8 +14,8 @@ export const storageAdapterProvider: Provider = {
     switch (config.provider) {
       case 'local':
         return new LocalStorage(config, cacheService);
-      // case 'minio':
-      //   return new MinioStorage(config);
+      case 'minio':
+        return new MinioStorage(config);
       default:
         throw new Error('Invalid storage provider');
     }
