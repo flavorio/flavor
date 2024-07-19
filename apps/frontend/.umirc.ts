@@ -3,12 +3,17 @@ import { defineConfig } from "umi";
 
 export default defineConfig({
   routes: [
+    { path: "/", redirect: "/docs", layout: false },
     {
       path: "/",
       component: "@/layouts/index",
       layout: false,
       routes: [
-        { path: "/docs", component: "docs/docs", wrappers: ["@/wrappers/auth"] },
+        {
+          path: "/docs",
+          component: "docs/docs",
+          wrappers: ["@/wrappers/auth"],
+        },
       ],
     },
     { path: "/signup", component: "auth/signup", layout: false },
