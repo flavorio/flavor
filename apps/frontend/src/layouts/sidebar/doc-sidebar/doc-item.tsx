@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { FileIcon } from "@radix-ui/react-icons";
 import { Input } from "@flavor/ui/shadcn";
-import { Document } from "@/stores/space-store";
+import { Document, useSpaceStore } from "@/stores/space-store";
 import { usePageStore } from "@/stores/page-store";
 import { apiAgent } from "@/api";
 import DocOperation from "./doc-operation";
@@ -14,11 +14,18 @@ type DocItemProps = {
 export default function DocItem(props: DocItemProps) {
   const { doc, editingId, setEditingId } = props;
   const setPageId = usePageStore((state) => state.setPageId);
+  const updateDocName = useSpaceStore((state) => state.updateDocName);
   const inputRef = useRef<HTMLInputElement>(null);
   const isEditing = doc.id === editingId;
 
   const openDoc = (docId: string) => () => {
     setPageId(docId);
+  };
+
+  const syncDocName = async (name: string) => {
+    updateDocName(doc.id, name);
+    await apiAgent.document.updateDocument({ id: doc.id, name });
+    setEditingId("");
   };
 
   useEffect(() => {
@@ -41,14 +48,14 @@ export default function DocItem(props: DocItemProps) {
           className="h-6 round-none cursor-text bg-background px-4 outline-none"
           onBlur={(e) => {
             if (e.target.value && e.target.value !== doc.name) {
-              // api request
+              syncDocName(e.target.value);
             }
             setEditingId("");
           }}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               if (e.currentTarget.value && e.currentTarget.value !== doc.name) {
-                // api request
+                syncDocName(e.currentTarget.value);
               }
               setEditingId("");
             }
