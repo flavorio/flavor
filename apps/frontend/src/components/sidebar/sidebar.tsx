@@ -34,7 +34,7 @@ export default function Sidebar(props: PropsWithChildren<SidebarProps>) {
           <HoverWrapper.Trigger>
             <Button
               className={cn(
-                "absolute top-7 p-1 rounded-none -left-0 rounded-r-full z-[51]",
+                "absolute top-12 p-1 rounded-none -left-0 rounded-r-full z-[51]",
               )}
               variant={"outline"}
               size="sm"
