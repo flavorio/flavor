@@ -81,26 +81,9 @@ const createDoc = () => {
       "page:page": {
         meta: {},
         id: "page:page",
-        name: "Page 1",
+        name: "Page",
         index: "a1",
         typeName: "page",
-      },
-      "shape:f4LKGB_8M2qsyWGpHR5Dq": {
-        x: 30.9375,
-        y: 69.48828125,
-        rotation: 0,
-        isLocked: false,
-        opacity: 1,
-        meta: {},
-        id: "shape:f4LKGB_8M2qsyWGpHR5Dq",
-        type: "container",
-        parentId: "page:page",
-        index: "a1",
-        props: {
-          width: 644,
-          height: 148,
-        },
-        typeName: "shape",
       },
     },
     schema: {

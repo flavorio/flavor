@@ -8,7 +8,7 @@ export default defineConfig({
       component: "@/layouts/index",
       layout: false,
       routes: [
-        { path: "/docs", component: "docs", wrappers: ["@/wrappers/auth"] },
+        { path: "/docs", component: "docs/docs", wrappers: ["@/wrappers/auth"] },
       ],
     },
     { path: "/signup", component: "auth/signup", layout: false },

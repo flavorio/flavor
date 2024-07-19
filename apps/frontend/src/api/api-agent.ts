@@ -29,6 +29,14 @@ export const apiAgent = {
     async createDocument(payload: CreateDocumentRo) {
       return await instance.post("/document/createDocument", payload);
     },
+
+    async getDocument(payload: PayloadWithId) {
+      return await instance.post("/document/getDocument", payload);
+    },
+
+    async updateDocument(payload: PayloadWithId & { [key: string]: any }) {
+      return await instance.post("/document/updateDocument", payload);
+    },
   },
 
   space: {

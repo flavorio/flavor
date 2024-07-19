@@ -16,9 +16,9 @@ export class DocumentService {
     const space = await this.prismaService.space.findUnique({
       where: {
         id: spaceId,
-      }
+      },
     });
-    if(!space) {
+    if (!space) {
       throw new NotFoundException('Space not found');
     }
 
@@ -47,24 +47,50 @@ export class DocumentService {
     return { documentId };
   }
 
+  public async findDocument(id: string) {
+    const document = await this.prismaService.document.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    const records = await this.prismaService.record.findMany({
+      where: {
+        documentId: id,
+      },
+    });
+
+    if (!document) {
+      throw new NotFoundException('Document not found');
+    }
+
+    const store: Record<string, any> = {};
+    records.forEach((record) => {
+      const data = record.data as any;
+      if (data?.id) {
+        store[data.id] = data;
+      }
+    });
+
+    return { schema: document.schema, store };
+  }
+
   public async updateDocument(id: string, name: string) {
     const document = await this.prismaService.document.findUnique({
       where: {
         id,
       },
     });
-    if(!document) {
+    if (!document) {
       throw new NotFoundException('Document not found');
     }
-    await this.prismaService.document.update(
-      {
-        where: {
-          id,
-        },
-        data: {
-          name
-        },
+    await this.prismaService.document.update({
+      where: {
+        id,
       },
-    )
+      data: {
+        name,
+      },
+    });
   }
 }

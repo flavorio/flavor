@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { FileIcon } from "@radix-ui/react-icons";
 import { Input } from "@flavor/ui/shadcn";
 import { Document } from "@/stores/space-store";
+import { usePageStore } from "@/stores/page-store";
 import { apiAgent } from "@/api";
 import DocOperation from "./doc-operation";
 
@@ -12,8 +13,13 @@ type DocItemProps = {
 };
 export default function DocItem(props: DocItemProps) {
   const { doc, editingId, setEditingId } = props;
+  const setPageId = usePageStore((state) => state.setPageId);
   const inputRef = useRef<HTMLInputElement>(null);
   const isEditing = doc.id === editingId;
+
+  const openDoc = (docId: string) => () => {
+    setPageId(docId);
+  };
 
   useEffect(() => {
     if (isEditing) {
@@ -54,7 +60,9 @@ export default function DocItem(props: DocItemProps) {
       ) : (
         <>
           <FileIcon />
-          <span className="grow truncate">{doc.name}</span>
+          <span className="grow truncate" onClick={openDoc(doc.id)}>
+            {doc.name}
+          </span>
           <DocOperation doc={doc} onRename={() => setEditingId(doc.id)} />
         </>
       )}
