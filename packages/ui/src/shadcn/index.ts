@@ -6,3 +6,4 @@ export * from "./ui/label";
 export * from "./ui/select";
 export * from "./ui/dropdown-menu";
 export * from "./ui/avatar";
+export * from "./ui/tooltip";

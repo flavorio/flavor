@@ -1,4 +1,7 @@
 export default {
+  actions: {
+    collapseSidebar: "Collapse sidebar",
+  },
   auth: {
     forgotPassword: "Forgotten password?",
     signIn: "Sign in",

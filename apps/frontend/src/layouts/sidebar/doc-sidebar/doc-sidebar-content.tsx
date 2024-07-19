@@ -13,7 +13,7 @@ import { apiAgent } from "@/api";
 import { useState } from "react";
 import DocItem from "./doc-item";
 
-export default function SidebarContent() {
+export default function DocSidebarContent() {
   const [editingId, setEditingId] = useState("");
   const [currSpaceInfo, spaceList, setCurrSpaceId, getSpaceInfo] =
     useSpaceStore(

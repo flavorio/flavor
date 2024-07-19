@@ -1,4 +1,7 @@
 export default {
+  actions: {
+    collapseSidebar: "折叠侧边栏",
+  },
   auth: {
     forgotPassword: "忘记密码",
     signIn: "登录",
