@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { FileIcon } from "@radix-ui/react-icons";
-import { Input } from "@flavor/ui/shadcn";
+import { useShallow } from "zustand/react/shallow";
+import { cn, Input } from "@flavor/ui/shadcn";
 import { Document, useSpaceStore } from "@/stores/space-store";
 import { usePageStore } from "@/stores/page-store";
 import { apiAgent } from "@/api";
@@ -13,7 +14,9 @@ type DocItemProps = {
 };
 export default function DocItem(props: DocItemProps) {
   const { doc, editingId, setEditingId } = props;
-  const setPageId = usePageStore((state) => state.setPageId);
+  const [pageId, setPageId] = usePageStore(
+    useShallow((state) => [state.pageId, state.setPageId]),
+  );
   const updateDocName = useSpaceStore((state) => state.updateDocName);
   const inputRef = useRef<HTMLInputElement>(null);
   const isEditing = doc.id === editingId;
@@ -35,7 +38,14 @@ export default function DocItem(props: DocItemProps) {
   }, [isEditing]);
 
   return (
-    <li className="flex items-center gap-2 h-7 px-2 rounded-md hover:bg-accent hover:text-accent-foreground cursor-pointer">
+    <li
+      className={cn(
+        "flex items-center gap-2 h-7 px-2 rounded-md hover:bg-accent hover:text-accent-foreground cursor-pointer",
+        {
+          "bg-secondary/90": doc.id === pageId,
+        },
+      )}
+    >
       {editingId === doc.id ? (
         <Input
           ref={inputRef}

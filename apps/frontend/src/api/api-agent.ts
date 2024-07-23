@@ -1,5 +1,10 @@
 import axios from "axios";
-import { CreateDocumentRo, SigninRo, SignupRo } from "@flavor/core/data";
+import {
+  CreateDocumentRo,
+  SigninRo,
+  SignupRo,
+  UpdateDocumentRecordsRo,
+} from "@flavor/core/data";
 
 const baseURL = "/api/";
 
@@ -36,6 +41,10 @@ export const apiAgent = {
 
     async updateDocument(payload: PayloadWithId & { [key: string]: any }) {
       return await instance.post("/document/updateDocument", payload);
+    },
+
+    async updateDocumentRecords(payload: UpdateDocumentRecordsRo) {
+      return await instance.post("/document/updateDocumentRecords", payload);
     },
   },
 

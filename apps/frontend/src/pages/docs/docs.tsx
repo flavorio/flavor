@@ -1,11 +1,14 @@
 import { throttle } from "lodash";
 import { useShallow } from "zustand/react/shallow";
 import { usePageStore } from "@/stores/page-store";
+import { UpdatesRo } from "@flavor/core/data";
+import { apiAgent } from "@/api";
 import DocEditor, { DocEditorProps } from "./doc-editor";
 
 const DocsPage = () => {
-  const [pageStatus, pageData, updatePageData] = usePageStore(
+  const [pageId, pageStatus, pageData, updatePageData] = usePageStore(
     useShallow((state) => [
+      state.pageId,
       state.pageStatus,
       state.pageData,
       state.updatePageData,
@@ -14,7 +17,7 @@ const DocsPage = () => {
 
   const onChange: DocEditorProps["onChange"] = (update) => {
     updatePageData(update);
-    syncPageData();
+    syncPageData(pageId, update);
   };
 
   return (
@@ -28,9 +31,21 @@ const DocsPage = () => {
   );
 };
 
-const syncPageData = throttle(() => {
-  const { pageId, pageData } = usePageStore.getState();
-  // TODO: api request
+const updatesCache: Record<string, UpdatesRo[]> = {};
+
+const syncPageData = (pageId: string, update: UpdatesRo) => {
+  if (!updatesCache[pageId]) updatesCache[pageId] = [];
+  updatesCache[pageId].push(update);
+  sendPageData(pageId);
+};
+
+const sendPageData = throttle((pageId: string) => {
+  const updates = updatesCache[pageId];
+  updatesCache[pageId] = [];
+  apiAgent.document.updateDocumentRecords({
+    id: pageId,
+    updates,
+  });
 }, 200);
 
 export default DocsPage;

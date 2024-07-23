@@ -25,16 +25,20 @@ function InsideOfContext(props: DocEditorProps) {
   const { defaultData, onChange } = props;
   const editor = useEditor();
 
-  const unlisten = editor.store.listen(
-    (update) => {
-      onChange?.(update);
-    },
-    { scope: "document", source: "user" },
-  );
-
   useEffect(() => {
     loadSnapshot(editor.store, defaultData);
   }, []);
+
+  useEffect(() => {
+    const unlisten = editor.store.listen(
+      (update) => {
+        onChange?.(update);
+      },
+      { scope: "document", source: "user" },
+    );
+
+    return unlisten;
+  }, [onChange]);
 
   return null;
 }

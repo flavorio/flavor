@@ -5,9 +5,11 @@ import { ResourceMeta } from '../auth/decorator/resource-meta.decorator';
 import {
   CreateDocumentRo,
   FindDocumentRo,
+  UpdateDocumentRecordsRo,
   UpdateDocumentRo,
   createDocumentSchema,
   findDocumentSchema,
+  updateDocumentRecordsSchema,
   updateDocumentSchema,
 } from '@flavor/core';
 import { ZodValidationPipe } from 'src/zod.validation.pipe';
@@ -47,5 +49,17 @@ export class DocumentController {
   ): Promise<any> {
     const { name, id } = body;
     return await this.documentService.updateDocument(id, name);
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Post('updateDocumentRecords')
+  @Permissions('document|update')
+  @ResourceMeta('id', 'body')
+  public async updateDocumentRecords(
+    @Body(new ZodValidationPipe(updateDocumentRecordsSchema))
+    body: UpdateDocumentRecordsRo,
+  ): Promise<any> {
+    const { updates, id } = body;
+    return await this.documentService.updateDocumentRecords(id, updates);
   }
 }

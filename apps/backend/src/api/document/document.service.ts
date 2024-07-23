@@ -1,4 +1,4 @@
-import { generateDocumentId } from '@flavor/core';
+import { generateDocumentId, UpdatesRo } from '@flavor/core';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ClsService } from 'nestjs-cls';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -57,6 +57,7 @@ export class DocumentService {
     const records = await this.prismaService.record.findMany({
       where: {
         documentId: id,
+        active: true,
       },
     });
 
@@ -91,6 +92,65 @@ export class DocumentService {
       data: {
         name,
       },
+    });
+  }
+
+  public async updateDocumentRecords(id: string, updates: UpdatesRo[]) {
+    const userId = this.cls.get('user.id');
+
+    await this.prismaService.$tx(async (prisma) => {
+      for (let i = 0; i < updates.length; i++) {
+        const update = updates[i];
+        const { added, removed, updated } = update.changes;
+
+        const createOrUpdateRecord = async (record: any) => {
+          await prisma.record.upsert({
+            where: {
+              documentId_recordId: {
+                documentId: id,
+                recordId: record.id,
+              },
+            },
+            update: {
+              active: true,
+              data: record,
+            },
+            create: {
+              documentId: id,
+              recordId: record.id,
+              type: record.typeName,
+              data: record,
+              createdBy: userId,
+            },
+          });
+        };
+
+        const deleteRecord = async (record: any) => {
+          await prisma.record.update({
+            where: {
+              documentId_recordId: {
+                documentId: id,
+                recordId: record.id,
+              },
+            },
+            data: {
+              active: false,
+            },
+          });
+        };
+
+        for (const [_, record] of Object.entries(added)) {
+          await createOrUpdateRecord(record);
+        }
+
+        for (const [_, record] of Object.entries(removed)) {
+          await deleteRecord(record);
+        }
+
+        for (const [_, change] of Object.entries(updated)) {
+          await createOrUpdateRecord(change[1]);
+        }
+      }
     });
   }
 }

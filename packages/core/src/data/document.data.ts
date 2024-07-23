@@ -28,3 +28,27 @@ export const findDocumentSchema = z.object({
 });
 
 export type FindDocumentRo = z.infer<typeof findDocumentSchema>;
+
+export const changeSchema = z.object({
+  added: z.record(z.string(), z.record(z.string(), z.any())),
+  removed: z.record(z.string(), z.record(z.string(), z.any())),
+  updated: z.record(z.string(), z.array(z.record(z.string(), z.any()))),
+});
+
+export type ChangeRo = z.infer<typeof changeSchema>;
+
+export const updatesSchema = z.object({
+  changes: changeSchema,
+  source: z.string(),
+});
+
+export type UpdatesRo = z.infer<typeof updatesSchema>;
+
+export const updateDocumentRecordsSchema = z.object({
+  id: z.string(),
+  updates: z.array(updatesSchema),
+});
+
+export type UpdateDocumentRecordsRo = z.infer<
+  typeof updateDocumentRecordsSchema
+>;
