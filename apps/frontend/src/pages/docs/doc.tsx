@@ -4,21 +4,30 @@ import { usePageStore } from "@/stores/page-store";
 import { UpdatesRo } from "@flavor/core/data";
 import { apiAgent } from "@/api";
 import DocEditor, { DocEditorProps } from "./doc-editor";
+import { useParams } from "umi";
+import { useLayoutEffect } from "react";
 
-const DocsPage = () => {
-  const [pageId, pageStatus, pageData, updatePageData] = usePageStore(
-    useShallow((state) => [
-      state.pageId,
-      state.pageStatus,
-      state.pageData,
-      state.updatePageData,
-    ]),
-  );
+const Doc = () => {
+  const { docId } = useParams();
+  const [pageId, setPageId, pageStatus, pageData, updatePageData] =
+    usePageStore(
+      useShallow((state) => [
+        state.pageId,
+        state.setPageId,
+        state.pageStatus,
+        state.pageData,
+        state.updatePageData,
+      ]),
+    );
 
   const onChange: DocEditorProps["onChange"] = (update) => {
     updatePageData(update);
     syncPageData(pageId, update);
   };
+
+  useLayoutEffect(() => {
+    docId && setPageId(docId);
+  }, [docId]);
 
   return (
     <div className="w-full h-full">
@@ -48,4 +57,4 @@ const sendPageData = throttle((pageId: string) => {
   });
 }, 200);
 
-export default DocsPage;
+export default Doc;

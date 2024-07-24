@@ -1,6 +1,6 @@
+import { useNavigate } from "umi";
 import React, { useEffect, useRef } from "react";
 import { FileIcon } from "@radix-ui/react-icons";
-import { useShallow } from "zustand/react/shallow";
 import { cn, Input } from "@flavor/ui/shadcn";
 import { Document, useSpaceStore } from "@/stores/space-store";
 import { usePageStore } from "@/stores/page-store";
@@ -14,15 +14,14 @@ type DocItemProps = {
 };
 export default function DocItem(props: DocItemProps) {
   const { doc, editingId, setEditingId } = props;
-  const [pageId, setPageId] = usePageStore(
-    useShallow((state) => [state.pageId, state.setPageId]),
-  );
+  const navigate = useNavigate();
+  const [pageId] = usePageStore((state) => state.pageId);
   const updateDocName = useSpaceStore((state) => state.updateDocName);
   const inputRef = useRef<HTMLInputElement>(null);
   const isEditing = doc.id === editingId;
 
   const openDoc = (docId: string) => () => {
-    setPageId(docId);
+    navigate(`/docs/${docId}`);
   };
 
   const syncDocName = async (name: string) => {

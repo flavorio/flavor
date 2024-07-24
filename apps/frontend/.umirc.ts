@@ -5,14 +5,14 @@ export default defineConfig({
   routes: [
     { path: "/", redirect: "/docs", layout: false },
     {
-      path: "/",
-      component: "@/layouts/index",
+      path: "/docs",
+      component: "@/layouts/docs",
+      wrappers: ["@/wrappers/auth"],
       layout: false,
       routes: [
         {
-          path: "/docs",
-          component: "docs/docs",
-          wrappers: ["@/wrappers/auth"],
+          path: "/docs/:docId",
+          component: "docs/doc",
         },
       ],
     },
