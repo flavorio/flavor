@@ -15,7 +15,7 @@ type DocItemProps = {
 export default function DocItem(props: DocItemProps) {
   const { doc, editingId, setEditingId } = props;
   const navigate = useNavigate();
-  const [pageId] = usePageStore((state) => state.pageId);
+  const pageId = usePageStore((state) => state.pageId);
   const updateDocName = useSpaceStore((state) => state.updateDocName);
   const inputRef = useRef<HTMLInputElement>(null);
   const isEditing = doc.id === editingId;

@@ -15,15 +15,9 @@ import DocItem from "./doc-item";
 
 export default function DocSidebarContent() {
   const [editingId, setEditingId] = useState("");
-  const [currSpaceInfo, spaceList, setCurrSpaceId, getSpaceInfo] =
-    useSpaceStore(
-      useShallow((state) => [
-        state.currSpaceInfo,
-        state.spaceList,
-        state.setCurrSpaceId,
-        state.getSpaceInfo,
-      ]),
-    );
+  const [currSpaceInfo, getSpaceInfo] = useSpaceStore(
+    useShallow((state) => [state.currSpaceInfo, state.getSpaceInfo]),
+  );
 
   const addDoc = async () => {
     const payload = {

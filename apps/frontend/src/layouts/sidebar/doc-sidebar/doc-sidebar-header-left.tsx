@@ -1,4 +1,4 @@
-import { FormattedMessage } from "umi";
+import { useNavigate, FormattedMessage } from "umi";
 import { useShallow } from "zustand/react/shallow";
 import { useSpaceStore } from "@/stores/space-store";
 import {
@@ -10,6 +10,7 @@ import {
 } from "@flavor/ui/shadcn";
 
 export default function DocSidebarHeaderLeft() {
+  const navigate = useNavigate();
   const [currSpaceInfo, spaceList, setCurrSpaceId, getSpaceInfo] =
     useSpaceStore(
       useShallow((state) => [
@@ -23,6 +24,7 @@ export default function DocSidebarHeaderLeft() {
   const selectWorkspace = (spaceId: string) => {
     setCurrSpaceId(spaceId);
     getSpaceInfo();
+    navigate("/docs");
   };
 
   return (

@@ -1,6 +1,7 @@
 export default {
   actions: {
     collapseSidebar: "Collapse sidebar",
+    backToHome: "Back To Home",
   },
   auth: {
     forgotPassword: "Forgotten password?",
