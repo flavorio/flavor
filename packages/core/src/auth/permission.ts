@@ -27,3 +27,11 @@ export const getPermissionMap = (
       return {} as PermissionMap;
   }
 };
+
+export const checkPermissions = (role: SpaceRole, actions: PermissionAction[]) => {
+  return actions.every((action) => Boolean(spacePermissions[role][action]));
+};
+
+export const hasPermission = (role: SpaceRole, action: PermissionAction) => {
+  return checkPermissions(role, [action]);
+};

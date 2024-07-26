@@ -145,3 +145,31 @@ model Attachment {
 
   @@map("attachment")
 }
+
+model Invitation {
+  id             String    @id @default(cuid())
+  spaceId        String    @map("space_id")
+  type           String    @map("type")
+  role           String
+  invitationCode String    @map("invitation_code")
+  expiredAt      DateTime? @map("expired_at")
+  createdBy      String    @map("create_by")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedBy      String?   @map("updated_by")
+  updatedAt      DateTime? @updatedAt @map("updated_at")
+  active         Boolean   @default(true)
+
+  @@map("invitation")
+}
+
+model InvitationRecord {
+  id           String   @id @default(cuid())
+  invitationId String   @map("invitation_id")
+  spaceId      String   @map("space_id")
+  type         String   @map("type")
+  inviter      String   @map("inviter")
+  accepter     String   @map("accepter")
+  createdAt    DateTime @default(now()) @map("created_time")
+
+  @@map("invitation_record")
+}

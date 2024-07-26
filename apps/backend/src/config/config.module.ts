@@ -5,8 +5,15 @@ import { loggerConfig } from './logger.config';
 import { authConfig } from './auth.config';
 import { cacheConfig } from './cache.config';
 import { storageConfig } from './storage.config';
+import { mailConfig } from './mail.config';
 
-const configurations = [loggerConfig, authConfig, cacheConfig, storageConfig];
+const configurations = [
+  loggerConfig,
+  mailConfig,
+  authConfig,
+  cacheConfig,
+  storageConfig,
+];
 
 @Module({})
 export class ConfigModule {

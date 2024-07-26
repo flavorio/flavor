@@ -6,6 +6,7 @@ export enum IdPrefix {
   User = 'usr',
   Account = 'aco',
   Document = 'doc',
+  Invitation = 'inv',
 }
 
 const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -31,4 +32,8 @@ export function generateAccountId() {
 
 export function generateDocumentId() {
   return IdPrefix.Document + getRandomString(16);
+}
+
+export function generateInvitationId() {
+  return IdPrefix.Invitation + getRandomString(16);
 }

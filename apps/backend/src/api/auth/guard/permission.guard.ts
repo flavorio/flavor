@@ -1,9 +1,16 @@
-import { ExecutionContext, ForbiddenException, Injectable } from '@nestjs/common';
+import {
+  ExecutionContext,
+  ForbiddenException,
+  Injectable,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ClsService } from 'nestjs-cls';
 import { IClsStore } from 'src/types/cls';
 import { PermissionService } from '../permission.service';
-import { IResourceMeta, RESOURCE_META } from '../decorator/resource-meta.decorator';
+import {
+  IResourceMeta,
+  RESOURCE_META,
+} from '../decorator/resource-meta.decorator';
 import { IS_PUBLIC_KEY } from '../decorator/public.decorator';
 import { IS_DISABLED_PERMISSION } from '../decorator/disabled-permission.decorator';
 import { PermissionAction } from '@flavor/core';
@@ -16,22 +23,24 @@ export class PermissionGuard {
     private readonly reflector: Reflector,
     private readonly cls: ClsService<IClsStore>,
     private readonly permissionService: PermissionService,
-  ) {
-
-  }
+  ) {}
 
   private getResourceId(context: ExecutionContext): string | undefined {
-    const resourceMeta = this.reflector.getAllAndOverride<IResourceMeta | undefined>(
-      RESOURCE_META,
-      [context.getHandler(), context.getClass()]
-    );
+    const resourceMeta = this.reflector.getAllAndOverride<
+      IResourceMeta | undefined
+    >(RESOURCE_META, [context.getHandler(), context.getClass()]);
     const req = context.switchToHttp().getRequest();
 
     if (resourceMeta) {
       const { type, position } = resourceMeta;
       return req?.[position]?.[type];
     }
-    return req.params.documentId || req.params.spaceId;
+    return (
+      req.params.documentId ||
+      req.params.spaceId ||
+      req.body.documentId ||
+      req.body.spaceId
+    );
   }
 
   async canActivate(context: ExecutionContext) {
@@ -46,10 +55,10 @@ export class PermissionGuard {
     }
 
     // disabled check
-    const isDisabledPermission = this.reflector.getAllAndOverride<boolean>(IS_DISABLED_PERMISSION, [
-      context.getHandler(),
-      context.getClass(),
-    ]);
+    const isDisabledPermission = this.reflector.getAllAndOverride<boolean>(
+      IS_DISABLED_PERMISSION,
+      [context.getHandler(), context.getClass()],
+    );
 
     if (isDisabledPermission) {
       return true;
@@ -59,10 +68,9 @@ export class PermissionGuard {
   }
 
   protected async permissionCheck(context: ExecutionContext) {
-    const permissions = this.reflector.getAllAndOverride<PermissionAction[] | undefined>(
-      PERMISSIONS_KEY,
-      [context.getHandler(), context.getClass()]
-    );
+    const permissions = this.reflector.getAllAndOverride<
+      PermissionAction[] | undefined
+    >(PERMISSIONS_KEY, [context.getHandler(), context.getClass()]);
 
     const accessTokenId = this.cls.get('accessTokenId');
     if (accessTokenId && !permissions?.length) {
@@ -82,13 +90,17 @@ export class PermissionGuard {
       return await this.permissionCreateSpace();
     }
     // resource permission check
-    return await this.resourcePermission(this.getResourceId(context), permissions);
+    return await this.resourcePermission(
+      this.getResourceId(context),
+      permissions,
+    );
   }
 
   private async permissionCreateSpace() {
     const accessTokenId = this.cls.get('accessTokenId');
     if (accessTokenId) {
-      const { scopes } = await this.permissionService.getAccessToken(accessTokenId);
+      const { scopes } =
+        await this.permissionService.getAccessToken(accessTokenId);
       return scopes.includes('space|create');
     }
     return true;
@@ -96,7 +108,7 @@ export class PermissionGuard {
 
   protected async resourcePermission(
     resourceId: string | undefined,
-    permissions: PermissionAction[]
+    permissions: PermissionAction[],
   ) {
     if (!resourceId) {
       throw new ForbiddenException('permission check ID does not exist');
@@ -105,10 +117,9 @@ export class PermissionGuard {
     const ownPermissions = await this.permissionService.validPermissions(
       resourceId,
       permissions,
-      accessTokenId
+      accessTokenId,
     );
     this.cls.set('permissions', ownPermissions);
     return true;
   }
-
 }

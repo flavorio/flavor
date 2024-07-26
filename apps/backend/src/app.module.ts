@@ -8,6 +8,7 @@ import { WsModule } from './ws/ws.module';
 import { GlobalModule } from 'src/global/global.module';
 import { DocumentModule } from './api/document/document.module';
 import { AttachmentModule } from './api/attachment/attachment.module';
+import { InvitationModule } from './api/invitation/invitation.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { AttachmentModule } from './api/attachment/attachment.module';
     SpaceModule,
     WsModule,
     DocumentModule,
+    InvitationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
