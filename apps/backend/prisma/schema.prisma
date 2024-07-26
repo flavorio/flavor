@@ -7,8 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-
-  url = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -126,4 +125,23 @@ model Record {
 
   @@id([documentId, recordId])
   @@map("record")
+}
+
+model Attachment {
+  id        String    @id @default(cuid())
+  bucket    String
+  token     String    @unique
+  hash      String
+  size      Int
+  mimetype  String
+  path      String
+  width     Int?
+  height    Int?
+  active    Boolean   @default(true)
+  createdBy String    @map("created_by")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedBy String?   @map("updated_by")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  @@map("attachment")
 }
