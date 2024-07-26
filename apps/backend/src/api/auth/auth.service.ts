@@ -23,9 +23,9 @@ export class AuthService {
       throw new HttpException(`User ${email} is already registered`, HttpStatus.BAD_REQUEST);
     }
     const { salt, hashPassword } = await this.encodePassword(password);
-    return await this.prismaService.$tx(async () => {
+    return await this.prismaService.$tx(async (prisma) => {
       if (user) {
-        return await this.prismaService.user.update({
+        return await prisma.user.update({
           where: { id: user.id, active: true },
           data: {
             salt,

@@ -13,7 +13,7 @@ export class DocumentService {
   public async createDocument(name: string, spaceId: string, doc: any) {
     const userId = this.cls.get('user.id');
     const documentId = generateDocumentId();
-    const space = await this.prismaService.space.findUnique({
+    const space = await this.prismaService.txClient().space.findUnique({
       where: {
         id: spaceId,
       },
@@ -48,13 +48,13 @@ export class DocumentService {
   }
 
   public async findDocument(id: string) {
-    const document = await this.prismaService.document.findUnique({
+    const document = await this.prismaService.txClient().document.findUnique({
       where: {
         id,
       },
     });
 
-    const records = await this.prismaService.record.findMany({
+    const records = await this.prismaService.txClient().record.findMany({
       where: {
         documentId: id,
         active: true,
@@ -77,7 +77,7 @@ export class DocumentService {
   }
 
   public async updateDocument(id: string, name: string) {
-    const document = await this.prismaService.document.findUnique({
+    const document = await this.prismaService.txClient().document.findUnique({
       where: {
         id,
       },
@@ -85,7 +85,7 @@ export class DocumentService {
     if (!document) {
       throw new NotFoundException('Document not found');
     }
-    await this.prismaService.document.update({
+    await this.prismaService.txClient().document.update({
       where: {
         id,
       },

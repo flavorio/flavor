@@ -17646,6 +17646,10 @@ snapshots:
       once: 1.4.0
       simple-concat: 1.0.1
 
+  simple-swizzle@0.2.2:
+    dependencies:
+      is-arrayish: 0.3.2
+
   simple-zustand-devtools@1.1.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(zustand@4.5.4(@types/react@18.3.3)(immer@10.1.1)(react@18.3.1)):
     dependencies:
       '@types/react': 18.3.3

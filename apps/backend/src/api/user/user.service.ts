@@ -113,7 +113,7 @@ export class UserService {
   async createSpaceBySignUp(name: string) {
     const spaceId = generateSpaceId();
     const userId = this.cls.get('user.id');
-    const space = await this.prismaService.space.create({
+    const space = await this.prismaService.txClient().space.create({
       select: {
         id: true,
         name: true,
@@ -125,7 +125,7 @@ export class UserService {
       },
     });
 
-    await this.prismaService.spaceMember.create({
+    await this.prismaService.txClient().spaceMember.create({
       data: {
         spaceId,
         userId,

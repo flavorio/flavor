@@ -25,7 +25,7 @@ export class PermissionService {
   async getRoleBySpaceId(spaceId: string) {
     const userId = this.cls.get('user.id');
 
-    const collaborator = await this.prismaService.spaceMember.findFirst({
+    const collaborator = await this.prismaService.txClient().spaceMember.findFirst({
       where: {
         userId,
         spaceId,
@@ -52,7 +52,7 @@ export class PermissionService {
   async getUpperIdByDocumentId(
     documentId: string,
   ): Promise<{ spaceId: string }> {
-    const space = await this.prismaService.document.findFirst({
+    const space = await this.prismaService.txClient().document.findFirst({
       where: {
         id: documentId,
         active: true,
