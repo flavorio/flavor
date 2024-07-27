@@ -29,7 +29,7 @@ export default function DocSidebarHeaderLeft() {
 
   return (
     <div className="m-2 flex justify-start items-center">
-      <span className="mr-2">
+      <span className="mr-2 text-sm">
         <FormattedMessage id="space.space" />:
       </span>
       {currSpaceInfo?.id && (

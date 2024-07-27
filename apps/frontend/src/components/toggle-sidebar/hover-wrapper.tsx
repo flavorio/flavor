@@ -24,8 +24,10 @@ export const HoverWrapper = (props: IHoverWrapperProps) => {
   };
 
   return (
-    <div className="z-[301]">
-      <div onMouseEnter={() => mouseEnterHandler()}>{trigger}</div>
+    <div>
+      <div onMouseEnter={() => mouseEnterHandler()} className="z-10">
+        {trigger}
+      </div>
       {
         <div
           className={cn(

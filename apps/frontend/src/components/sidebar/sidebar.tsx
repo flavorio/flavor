@@ -6,20 +6,25 @@ import { SidebarHeader } from "./sidebar-header";
 import { SIDE_BAR_WIDTH } from "../toggle-sidebar/constant";
 
 interface SidebarProps {
+  className?: string;
   headerLeft: ReactNode;
 }
 
 export default function Sidebar(props: PropsWithChildren<SidebarProps>) {
-  const { headerLeft, children } = props;
+  const { className, headerLeft, children } = props;
   const [leftVisible, setLeftVisible] = useState(true);
 
   return (
     <>
       <div
-        className={cn("flex w-0 border-r flex-shrink-0 h-full", {
-          "overflow-hidden": !leftVisible,
-          "w-72": leftVisible,
-        })}
+        className={cn(
+          "flex w-0 border-r flex-shrink-0 h-full",
+          {
+            "overflow-hidden": !leftVisible,
+            "w-72": leftVisible,
+          },
+          className,
+        )}
       >
         <div className="flex size-full flex-col overflow-hidden bg-popover">
           <SidebarHeader

@@ -21,6 +21,45 @@ export default {
   },
   space: {
     space: "Space",
+    spaceMembers: "Space members",
+    invite: {
+      title: "{{spaceName}} space sharing",
+      desc: "This space has {count, plural, =0 {no collaborators} one {# collaborator} other {# collaborators}}. Adding a space collaborator will give them access to all bases within this space.",
+      tabEmail: "Invite by email",
+      emailPlaceholder: "Invite more space collaborators via email",
+      tabLink: "Invite by link",
+      linkPlaceholder:
+        "Create an invite link that grants the following access to anyone who opens it: ",
+      emailSend: "Send invite",
+      linkSend: "Create link",
+      spaceTitle: "Space collaborators",
+      collaboratorSearchPlaceholder:
+        "Find a space collaborator by name or email",
+      collaboratorJoin: "joined {joinTime}",
+      collaboratorRemove: "Remove collaborator",
+      linkTitle: "Invite links",
+      linkCreatedTime: "created {createdTime}",
+      linkCopySuccess: "Link copied",
+      linkRemove: "Remove link",
+    },
+    spaceRole: {
+      role: {
+        owner: "Owner",
+        creator: "Creator",
+        editor: "Editor",
+        commenter: "Commenter",
+        viewer: "Viewer",
+      },
+      description: {
+        owner:
+          "Can fully configure and edit bases, and manage space settings and billing",
+        creator: "Can fully configure and edit bases",
+        editor:
+          "Can edit records and views, but cannot configure tables or fields",
+        commenter: "Can comment on records",
+        viewer: "Cannot edit or comment",
+      },
+    },
   },
   doc: {
     createANewDoc: "Create a new document",

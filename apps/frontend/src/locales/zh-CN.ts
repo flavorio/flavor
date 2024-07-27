@@ -1,7 +1,7 @@
 export default {
   actions: {
     collapseSidebar: "折叠侧边栏",
-    backToHome: "返回首页"
+    backToHome: "返回首页",
   },
   auth: {
     forgotPassword: "忘记密码",
@@ -21,6 +21,41 @@ export default {
   },
   space: {
     space: "空间",
+    spaceMembers: "空间成员",
+    invite: {
+      title: "{spaceName} 空间分享",
+      desc: "这个空间有 {count} 个协作者。添加一个空间协作者将使他们能够访问该空间内的所有数据库。",
+      tabEmail: "通过电子邮件邀请",
+      emailPlaceholder: "通过电子邮件邀请更多空间协作者",
+      tabLink: "通过链接邀请",
+      linkPlaceholder: "创建一个邀请链接，让任何打开它的人获得以下权限：",
+      emailSend: "发送邀请",
+      linkSend: "创建链接",
+      spaceTitle: "空间协作者",
+      collaboratorSearchPlaceholder: "按姓名或电子邮件查找空间协作者",
+      collaboratorJoin: "加入于 {joinTime}",
+      collaboratorRemove: "移除协作者",
+      linkTitle: "邀请链接",
+      linkCreatedTime: "创建于 {createdTime}",
+      linkCopySuccess: "链接已复制",
+      linkRemove: "移除链接",
+    },
+    spaceRole: {
+      role: {
+        owner: "拥有者",
+        creator: "创建者",
+        editor: "编辑者",
+        commenter: "评论者",
+        viewer: "查看者",
+      },
+      description: {
+        owner: "具有完全配置和编辑数据库、管理空间设置和计费的权限",
+        creator: "具有完全配置和编辑数据库的权限",
+        editor: "可以编辑记录和视图，但不能配置表格或字段",
+        commenter: "可以在记录上添加评论的权限",
+        viewer: "无法编辑或评论",
+      },
+    },
   },
   doc: {
     createANewDoc: "新建文档",

@@ -39,7 +39,7 @@ export default function DocItem(props: DocItemProps) {
   return (
     <li
       className={cn(
-        "flex items-center gap-2 h-7 px-2 rounded-md hover:bg-accent hover:text-accent-foreground cursor-pointer",
+        "flex items-center gap-2 h-7 px-2 rounded-md hover:bg-accent hover:text-accent-foreground cursor-pointer text-sm",
         {
           "bg-secondary/90": doc.id === pageId,
         },

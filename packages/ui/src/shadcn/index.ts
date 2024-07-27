@@ -7,3 +7,8 @@ export * from "./ui/select";
 export * from "./ui/dropdown-menu";
 export * from "./ui/avatar";
 export * from "./ui/tooltip";
+export * from "./ui/dialog";
+export * from "./ui/separator";
+export * from "./ui/toast";
+export * from "./ui/toaster";
+export * from "./ui/use-toast";
