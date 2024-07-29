@@ -3,11 +3,13 @@ import { SpaceService } from './space.service';
 import { ClsService } from 'nestjs-cls';
 import { IdRo, idSchema } from '@flavor/core';
 import { ZodValidationPipe } from 'src/zod.validation.pipe';
+import { InvitationService } from '../invitation/invitation.service';
 
 @Controller('api/space')
 export class SpaceController {
   constructor(
     private readonly spaceService: SpaceService,
+    private readonly invitationService: InvitationService,
     private readonly cls: ClsService,
   ) {}
 
@@ -23,6 +25,15 @@ export class SpaceController {
   public async getSpaceInfo(
     @Body(new ZodValidationPipe(idSchema)) body: IdRo,
   ): Promise<any> {
-    return await this.spaceService.getSpaceInfo(body.id);
+    const userId = this.cls.get('user.id');
+    return await this.spaceService.getSpaceInfo(body.id, userId);
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Post('getSpaceInviteLinks')
+  public async getSpaceInviteLinks(
+    @Body(new ZodValidationPipe(idSchema)) body: IdRo,
+  ): Promise<any> {
+    return await this.invitationService.getInvitationLinkBySpace(body.id);
   }
 }

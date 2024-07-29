@@ -34,7 +34,7 @@ export class InvitationService {
       invitationId: id,
       role: role as SpaceRole,
       createdBy,
-      createdTime: createdAt.toISOString(),
+      createdAt: createdAt.toISOString(),
       inviteUrl: this.generateInviteUrl(id, invitationCode),
       invitationCode,
     };
@@ -84,6 +84,27 @@ export class InvitationService {
       invitationId: id,
       role: role as SpaceRole,
     };
+  }
+
+  async getInvitationLinkBySpace(spaceId: string) {
+    const data = await this.prismaService.txClient().invitation.findMany({
+      select: {
+        id: true,
+        role: true,
+        createdBy: true,
+        createdAt: true,
+        invitationCode: true,
+      },
+      where: { spaceId, type: 'link', active: true },
+    });
+    return data.map(({ id, role, createdBy, createdAt, invitationCode }) => ({
+      invitationId: id,
+      role: role as SpaceRole,
+      createdBy,
+      createdAt: createdAt.toISOString(),
+      invitationCode,
+      inviteUrl: this.generateInviteUrl(id, invitationCode),
+    }));
   }
 
   async acceptInvitationLink(invitationId: string, invitationCode: string) {

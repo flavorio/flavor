@@ -55,7 +55,7 @@ export const Collaborators: FC<PropsWithChildren<ICollaborators>> = (props) => {
       email: "nxjniexiao@gmail.com",
       avatar: "https://sss.teable.io/pub-assets/avatar/usr0lfDYZzxy44Owig6",
       role: "owner",
-      createdTime: "2024-07-17T03:26:19.246Z",
+      createdAt: "2024-07-17T03:26:19.246Z",
     },
     {
       userId: "usrmRE0EhpPlRFV1XMQ",
@@ -63,7 +63,7 @@ export const Collaborators: FC<PropsWithChildren<ICollaborators>> = (props) => {
       email: "awehook@163.com",
       avatar: "https://sss.teable.io/pub-assets/avatar/usrmRE0EhpPlRFV1XMQ",
       role: "creator",
-      createdTime: "2024-07-26T10:22:43.229Z",
+      createdAt: "2024-07-26T10:22:43.229Z",
     },
   ];
   const updateCollaborator = (arg: any) => {
@@ -104,12 +104,12 @@ export const Collaborators: FC<PropsWithChildren<ICollaborators>> = (props) => {
       </div>
       <div className="space-y-5">
         {collaboratorsFiltered?.map(
-          ({ userId, userName, email, role, avatar, createdTime }) => (
+          ({ userId, userName, email, role, avatar, createdAt }) => (
             <div key={userId} className="relative flex items-center gap-3 pr-6">
               <Collaborator name={userName} email={email} avatar={avatar} />
               <div className="text-xs text-muted-foreground">
                 {t("space.invite.collaboratorJoin", {
-                  joinTime: createdTime,
+                  joinTime: createdAt,
                 })}
               </div>
               <RoleSelect

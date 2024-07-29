@@ -7,7 +7,7 @@ export const itemSpaceCollaboratorSchema = z.object({
   email: z.string(),
   role: spaceRolesSchema,
   avatar: z.string().nullable(),
-  createdTime: z.string(),
+  createdAt: z.string(),
 });
 
 export type ItemSpaceCollaboratorVo = z.infer<

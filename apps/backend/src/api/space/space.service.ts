@@ -47,7 +47,7 @@ export class SpaceService {
     }));
   }
 
-  async getSpaceInfo(spaceId: string) {
+  async getSpaceInfo(spaceId: string, userId: string) {
     const space = await this.prisma.space.findUnique({
       where: { id: spaceId, active: true },
       select: { id: true, name: true },
@@ -56,11 +56,17 @@ export class SpaceService {
       throw new NotFoundException('Space not found');
     }
 
+    const spaceMember = await this.prisma.spaceMember.findFirst({
+      where: { spaceId, userId },
+      select: { spaceId: true, role: true },
+    });
+
     const documents = await this.prisma.document.findMany({
       where: { spaceId, active: true },
     });
     return {
       ...space,
+      role: spaceMember?.role,
       documents,
     };
   }

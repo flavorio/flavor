@@ -1,10 +1,13 @@
 import { z } from "zod";
 import { map } from "lodash";
 import { useMemo, useState } from "react";
+import { useShallow } from "zustand/react/shallow";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { hasPermission, SpaceRole } from "@flavor/core/auth";
 import { Button, cn } from "@flavor/ui/shadcn";
+import { apiAgent } from "@/api";
 import { useSpaceRoleStatic, useT } from "@/hooks";
+import { useSpaceStore } from "@/stores/space-store";
 import { RoleSelect } from "./RoleSelect";
 import { getRolesWithLowerPermissions } from "./utils";
 
@@ -16,9 +19,13 @@ interface IInvite {
 
 export const Invite: React.FC<IInvite> = (props) => {
   const { className, spaceId, role } = props;
+
+  const [getInviteLinks, getCollaborators] = useSpaceStore(
+    useShallow((state) => [state.getInviteLinks, state.getCollaborators]),
+  );
   const t = useT();
 
-  const [inviteType, setInviteType] = useState<"link" | "email">("email");
+  const [inviteType, setInviteType] = useState<"link" | "email">("link");
   const [inviteRole, setInviteRole] = useState<SpaceRole>(role);
   const [email, setEmail] = useState<string>("");
   const [inviteEmails, setInviteEmails] = useState<string[]>([]);
@@ -31,7 +38,11 @@ export const Invite: React.FC<IInvite> = (props) => {
   };
 
   const createInviteLink = async () => {
-    //
+    await apiAgent.invitation.createSpaceInviteLink({
+      spaceId,
+      role: inviteRole,
+    });
+    getInviteLinks();
   };
 
   const changeInviteType = (inviteType: "link" | "email") => {
@@ -159,14 +170,14 @@ export const Invite: React.FC<IInvite> = (props) => {
   return (
     <div className={cn(className, "rounded bg-muted px-4 py-2")}>
       <div className="pb-2">
-        <Button
+        {/* <Button
           className="mr-6 p-0 data-[state=active]:underline"
           data-state={inviteType === "email" ? "active" : "inactive"}
           variant={"link"}
           onClick={() => changeInviteType("email")}
         >
           {t("space.invite.tabEmail")}
-        </Button>
+        </Button> */}
         <Button
           className="p-0 data-[state=active]:underline"
           data-state={inviteType === "link" ? "active" : "inactive"}

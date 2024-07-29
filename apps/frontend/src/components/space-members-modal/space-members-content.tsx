@@ -1,11 +1,35 @@
 import { FormattedMessage } from "umi";
+import { useEffect } from "react";
+import { useShallow } from "zustand/react/shallow";
+import { useSpaceStore } from "@/stores/space-store";
+import { useT } from "@/hooks";
 import { Invite } from "./invite";
 import { InviteLink } from "./InviteLink";
 import { Collaborators } from "./Collaborators";
 
 export default function SpaceMemberModalContent() {
-  const spaceId = "";
-  const role = "owner" as any;
+  const [currSpaceInfo, getInviteLinks, getCollaborators] = useSpaceStore(
+    useShallow((state) => [
+      state.currSpaceInfo,
+      state.getInviteLinks,
+      state.getCollaborators,
+    ]),
+  );
+  const t = useT();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      getInviteLinks();
+      // getCollaborators();
+    };
+
+    fetchData();
+  }, []);
+
+  if (!currSpaceInfo) return null;
+
+  const spaceId = currSpaceInfo.id;
+  const role = currSpaceInfo.role;
 
   return (
     <div className="overflow-y-auto">
@@ -16,7 +40,9 @@ export default function SpaceMemberModalContent() {
         <Invite spaceId={spaceId} role={role} />
         <InviteLink spaceId={spaceId} role={role} />
         <div className="w-full">
-          <div className="mb-3 text-sm text-muted-foreground">{/* text */}</div>
+          <div className="mb-3 text-sm text-muted-foreground">
+            {t("space.invite.spaceTitle")}
+          </div>
           <Collaborators spaceId={spaceId} role={role} />
         </div>
       </div>
