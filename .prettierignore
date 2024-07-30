@@ -1,0 +1,7 @@
+# Ignore artifacts:
+.idea/
+.vscode/
+pnpm-lock.yaml
+dist
+build
+coverage
