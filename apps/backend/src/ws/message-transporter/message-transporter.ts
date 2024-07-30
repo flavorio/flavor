@@ -25,18 +25,17 @@ export class MessageTransporter extends EventEmitter2 {
   }
 
   public isReady(): boolean {
-    return this.thisSideReady && this.otherSideReady
+    return this.thisSideReady && this.otherSideReady;
   }
 
   public doAsSoonAsReady(callback: () => void): Listener {
     if (this.isReady()) {
-      callback()
+      callback();
     }
     return this.on('ready', callback, {
-      objectify: true
-    }) as Listener
+      objectify: true,
+    }) as Listener;
   }
-
 
   public getConnectionState(): ConnectionState {
     return (
@@ -55,21 +54,21 @@ export class MessageTransporter extends EventEmitter2 {
     this.transportAdapter = adapter;
     this.bindWebsocketEvents(adapter);
 
-    if(this.isConnected()) {
+    if (this.isConnected()) {
       this.onConnected();
     } else {
       // TODO
       console.debug('WHY');
       this.destroyOnConnectedEventHandler = adapter.bindOnConnectedEvent(
-        this.onConnected.bind(this)
-      )
+        this.onConnected.bind(this),
+      );
     }
   }
 
   protected onConnected(): void {
-    this.destroyOnConnectedEventHandler?.()
-    this.destroyOnConnectedEventHandler = undefined
-    this.emit(ConnectionStateEvent.connected)
+    this.destroyOnConnectedEventHandler?.();
+    this.destroyOnConnectedEventHandler = undefined;
+    this.emit(ConnectionStateEvent.connected);
   }
 
   private bindWebsocketEvents(transportAdapter: TransportAdapter) {

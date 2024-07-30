@@ -1,6 +1,6 @@
-import { find } from "lodash";
-import React, { useMemo } from "react";
-import { useSpaceRoleStatic } from "@/hooks";
+import { find } from 'lodash';
+import React, { useMemo } from 'react';
+import { useSpaceRoleStatic } from '@/hooks';
 import {
   cn,
   Select,
@@ -9,8 +9,8 @@ import {
   SelectTrigger,
   SelectValue,
   Separator,
-} from "@flavor/ui/shadcn";
-import { SpaceRole } from "@flavor/core/auth";
+} from '@flavor/ui/shadcn';
+import { SpaceRole } from '@flavor/core/auth';
 
 interface IRoleSelect {
   className?: string;
@@ -22,8 +22,7 @@ interface IRoleSelect {
 }
 
 export const RoleSelect: React.FC<IRoleSelect> = (props) => {
-  const { className, value, defaultValue, disabled, filterRoles, onChange } =
-    props;
+  const { className, value, defaultValue, disabled, filterRoles, onChange } = props;
   const spaceRoleList = useSpaceRoleStatic();
   const filteredRoleList = useMemo(() => {
     return filterRoles
@@ -42,7 +41,7 @@ export const RoleSelect: React.FC<IRoleSelect> = (props) => {
       onValueChange={(value) => onChange?.(value as SpaceRole)}
       disabled={disabled}
     >
-      <SelectTrigger className={cn("h-8 w-32 bg-background", className)}>
+      <SelectTrigger className={cn('h-8 w-32 bg-background', className)}>
         <SelectValue>{showSelectedRoleValue}</SelectValue>
       </SelectTrigger>
       <SelectContent className=" w-72">

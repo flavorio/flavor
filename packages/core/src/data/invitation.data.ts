@@ -1,6 +1,6 @@
-import { z } from "zod";
-import { spaceRolesSchema } from "../auth/role/space.role";
-import { IdPrefix } from "../utils/id-generator";
+import { z } from 'zod';
+import { spaceRolesSchema } from '../auth/role/space.role';
+import { IdPrefix } from '../utils/id-generator';
 
 export const createSpaceInvitationLinkRoSchema = z.object({
   spaceId: z.string(),
@@ -16,20 +16,17 @@ export const deleteSpaceInvitationLinkRoSchema = z.object({
 
 export type DeleteSpaceInvitationLinkRo = z.infer<typeof deleteSpaceInvitationLinkRoSchema>;
 
-
 export const updateSpaceInvitationLinkRoSchema = z.object({
   spaceId: z.string(),
   invitationId: z.string(),
-  role: spaceRolesSchema
+  role: spaceRolesSchema,
 });
 
 export type UpdateSpaceInvitationLinkRo = z.infer<typeof updateSpaceInvitationLinkRoSchema>;
-
 
 export const acceptInvitationLinkRoSchema = z.object({
   invitationCode: z.string(),
   invitationId: z.string().startsWith(IdPrefix.Invitation),
 });
-
 
 export type AcceptInvitationLinkRo = z.infer<typeof acceptInvitationLinkRoSchema>;

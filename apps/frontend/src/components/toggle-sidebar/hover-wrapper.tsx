@@ -1,5 +1,5 @@
-import { cn } from "@flavor/ui/shadcn";
-import React, { useState } from "react";
+import { cn } from '@flavor/ui/shadcn';
+import React, { useState } from 'react';
 
 interface IHoverWrapperProps {
   children: React.ReactElement[];
@@ -31,23 +31,23 @@ export const HoverWrapper = (props: IHoverWrapperProps) => {
       {
         <div
           className={cn(
-            "fixed flex h-full top-0 transition-[z-index] will-change-auto",
-            hover ? "z-50 w-full" : "w-auto z-0",
+            'fixed flex h-full top-0 transition-[z-index] will-change-auto',
+            hover ? 'z-50 w-full' : 'w-auto z-0',
           )}
         >
           <div
             className={cn(
-              "transition-[width] overflow-hidden drop-shadow-2xl border-r will-change-auto",
+              'transition-[width] overflow-hidden drop-shadow-2xl border-r will-change-auto',
             )}
             style={{
-              width: hover ? `${size}px` : "0",
+              width: hover ? `${size}px` : '0',
             }}
           >
             {content}
           </div>
           <div
             onMouseEnter={() => mouseOutHandler()}
-            className={cn("flex-1", { hidden: !hover })}
+            className={cn('flex-1', { hidden: !hover })}
           ></div>
         </div>
       }
@@ -59,7 +59,7 @@ export const HoverWrapperTrigger = ({ children }: IHoverWrapperTag) => {
   return <>{children}</>;
 };
 
-HoverWrapperTrigger.displayName = "HoverWrapper.trigger";
+HoverWrapperTrigger.displayName = 'HoverWrapper.trigger';
 
 HoverWrapper.Trigger = HoverWrapperTrigger;
 
@@ -67,6 +67,6 @@ export const HoverWrapperContent = ({ children }: IHoverWrapperTag) => {
   return <>{children}</>;
 };
 
-HoverWrapperContent.displayName = "HoverWrapper.content";
+HoverWrapperContent.displayName = 'HoverWrapper.content';
 
 HoverWrapper.content = HoverWrapperContent;

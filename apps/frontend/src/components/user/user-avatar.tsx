@@ -1,5 +1,5 @@
-import { Avatar, AvatarFallback, AvatarImage, cn } from "@flavor/ui/shadcn";
-import React from "react";
+import { Avatar, AvatarFallback, AvatarImage, cn } from '@flavor/ui/shadcn';
+import React from 'react';
 
 interface UserAvatarProps {
   user: { name: string; avatar?: string | null };
@@ -22,7 +22,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = (props) => {
   };
 
   return (
-    <Avatar className={cn("size-7", className)} style={style}>
+    <Avatar className={cn('size-7', className)} style={style}>
       {avatar && <AvatarImage {...userAvatarProps} />}
       <AvatarFallback>{name.slice(0, 1)}</AvatarFallback>
     </Avatar>

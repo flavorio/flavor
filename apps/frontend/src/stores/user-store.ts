@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import { apiAgent } from "@/api";
+import { create } from 'zustand';
+import { apiAgent } from '@/api';
 
 type LoginParams = { email: string; password: string };
 

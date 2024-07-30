@@ -1,24 +1,20 @@
-import { FormattedMessage } from "umi";
-import { DotsHorizontalIcon, PersonIcon } from "@radix-ui/react-icons";
+import { FormattedMessage } from 'umi';
+import { DotsHorizontalIcon, PersonIcon } from '@radix-ui/react-icons';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@flavor/ui/shadcn";
-import { useUIStore } from "@/stores/ui-store";
+} from '@flavor/ui/shadcn';
+import { useUIStore } from '@/stores/ui-store';
 
 type SidebarFooterOperationProps = {
   className?: string;
 };
 
-export default function SidebarFooterOperation(
-  props: SidebarFooterOperationProps,
-) {
+export default function SidebarFooterOperation(props: SidebarFooterOperationProps) {
   const { className } = props;
-  const setIsSpaceMembersModalOpen = useUIStore(
-    (state) => state.setIsSpaceMembersModalOpen,
-  );
+  const setIsSpaceMembersModalOpen = useUIStore((state) => state.setIsSpaceMembersModalOpen);
 
   const openSpaceMembers = () => {
     setIsSpaceMembersModalOpen(true);

@@ -1,4 +1,1 @@
-
-export interface IDbProvider {
-
-}
+export interface IDbProvider {}

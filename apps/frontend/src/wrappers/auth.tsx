@@ -1,6 +1,6 @@
-import { Outlet } from "umi";
-import { useFetchData } from "@/hooks";
-import { useIsLogin } from "@/stores/user-store";
+import { Outlet } from 'umi';
+import { useFetchData } from '@/hooks';
+import { useIsLogin } from '@/stores/user-store';
 
 export default function Auth(props) {
   const isLogin = useIsLogin();

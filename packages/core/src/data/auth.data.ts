@@ -1,6 +1,6 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-export const passwordSchema = z.string().min(8, "Minimum 8 chars");
+export const passwordSchema = z.string().min(8, 'Minimum 8 chars');
 
 export const signinSchema = z.object({
   email: z.string().email(),

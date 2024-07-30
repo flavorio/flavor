@@ -1,4 +1,9 @@
-import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
 import { generateUserId, getRandomString } from '@flavor/core';
 import * as bcrypt from 'bcrypt';
 import { UserService } from '../user/user.service';
@@ -20,7 +25,10 @@ export class AuthService {
   async signup(email: string, password: string) {
     const user = await this.userService.getUserByEmail(email);
     if (user && (user.password !== null || user.accounts.length > 0)) {
-      throw new HttpException(`User ${email} is already registered`, HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        `User ${email} is already registered`,
+        HttpStatus.BAD_REQUEST,
+      );
     }
     const { salt, hashPassword } = await this.encodePassword(password);
     return await this.prismaService.$tx(async (prisma) => {
@@ -56,13 +64,15 @@ export class AuthService {
     }
 
     const { password, salt, ...result } = user;
-    return (await this.comparePassword(pass, password, salt)) ? { ...result, password } : null;
+    return (await this.comparePassword(pass, password, salt))
+      ? { ...result, password }
+      : null;
   }
 
   private async comparePassword(
     password: string,
     hashPassword: string | null,
-    salt: string | null
+    salt: string | null,
   ) {
     const _hashPassword = await bcrypt.hash(password || '', salt || '');
     return _hashPassword === hashPassword;

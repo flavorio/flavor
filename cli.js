@@ -1,3 +1,3 @@
 const { program } = require('commander');
 
-program.command()
+program.command();

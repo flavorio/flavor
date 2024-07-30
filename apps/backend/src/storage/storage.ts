@@ -1,8 +1,8 @@
-import { Inject, Provider } from "@nestjs/common";
-import { CacheService } from "src/cache/cache.service";
-import { IStorageConfig, storageConfig } from "src/config/storage.config";
-import { LocalStorage } from "./local";
-import { MinioStorage } from "./minio";
+import { Inject, Provider } from '@nestjs/common';
+import { CacheService } from 'src/cache/cache.service';
+import { IStorageConfig, storageConfig } from 'src/config/storage.config';
+import { LocalStorage } from './local';
+import { MinioStorage } from './minio';
 
 const StorageAdapterProvider = Symbol.for('ObjectStorage');
 

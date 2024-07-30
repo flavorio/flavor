@@ -1,30 +1,23 @@
-import { useNavigate, FormattedMessage } from "umi";
-import { useShallow } from "zustand/react/shallow";
-import { useSpaceStore } from "@/stores/space-store";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@flavor/ui/shadcn";
+import { useNavigate, FormattedMessage } from 'umi';
+import { useShallow } from 'zustand/react/shallow';
+import { useSpaceStore } from '@/stores/space-store';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@flavor/ui/shadcn';
 
 export default function DocSidebarHeaderLeft() {
   const navigate = useNavigate();
-  const [currSpaceInfo, spaceList, setCurrSpaceId, getSpaceInfo] =
-    useSpaceStore(
-      useShallow((state) => [
-        state.currSpaceInfo,
-        state.spaceList,
-        state.setCurrSpaceId,
-        state.getSpaceInfo,
-      ]),
-    );
+  const [currSpaceInfo, spaceList, setCurrSpaceId, getSpaceInfo] = useSpaceStore(
+    useShallow((state) => [
+      state.currSpaceInfo,
+      state.spaceList,
+      state.setCurrSpaceId,
+      state.getSpaceInfo,
+    ]),
+  );
 
   const selectWorkspace = (spaceId: string) => {
     setCurrSpaceId(spaceId);
     getSpaceInfo();
-    navigate("/docs");
+    navigate('/docs');
   };
 
   return (
@@ -33,10 +26,7 @@ export default function DocSidebarHeaderLeft() {
         <FormattedMessage id="space.space" />:
       </span>
       {currSpaceInfo?.id && (
-        <Select
-          defaultValue={currSpaceInfo?.id}
-          onValueChange={selectWorkspace}
-        >
+        <Select defaultValue={currSpaceInfo?.id} onValueChange={selectWorkspace}>
           <SelectTrigger className="h-8 w-[160px]">
             <SelectValue placeholder="select a workspace" />
           </SelectTrigger>

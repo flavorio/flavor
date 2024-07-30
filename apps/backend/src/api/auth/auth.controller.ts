@@ -6,7 +6,7 @@ import {
   Post,
   Req,
   Res,
-  UseGuards
+  UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public } from './decorator/public.decorator';
@@ -32,14 +32,15 @@ export class AuthController {
   async signup(
     @Body(new ZodValidationPipe(signupSchema)) body: SignupRo,
     @Res({ passthrough: true }) res: Response,
-    @Req() req: Express.Request
+    @Req() req: Express.Request,
   ) {
-    const user = pickUserMe(await this.authService.signup(body.email, body.password));
+    const user = pickUserMe(
+      await this.authService.signup(body.email, body.password),
+    );
     // set cookie, passport login
     await new Promise<void>((resolve, reject) => {
       req.login(user, (err) => (err ? reject(err) : resolve()));
     });
     return user;
   }
-
 }

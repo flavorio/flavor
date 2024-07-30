@@ -27,4 +27,3 @@ export class AuthGuard extends PassportAuthGuard(['session']) {
     return this.validate(context);
   }
 }
-

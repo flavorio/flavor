@@ -19,7 +19,7 @@ export class UserService {
   constructor(
     private prismaService: PrismaService,
     private readonly cls: ClsService<IClsStore>,
-    @InjectStorageAdapter() readonly storageAdapter: StorageAdapter
+    @InjectStorageAdapter() readonly storageAdapter: StorageAdapter,
   ) {}
 
   async getUserById(id: string) {
@@ -136,7 +136,6 @@ export class UserService {
     return space;
   }
 
-
   async refreshLastSignTime(userId: string) {
     await this.prismaService.txClient().user.update({
       where: { id: userId, active: true },
@@ -144,7 +143,10 @@ export class UserService {
     });
   }
 
-  async updateAvatar(id: string, avatarFile: { path: string; mimetype: string; size: number }) {
+  async updateAvatar(
+    id: string,
+    avatarFile: { path: string; mimetype: string; size: number },
+  ) {
     const path = join(StorageAdapter.getDir(UploadType.Avatar), id);
     const bucket = StorageAdapter.getBucket(UploadType.Avatar);
     const { hash, url } = await this.storageAdapter.uploadFileWidthPath(
@@ -154,7 +156,7 @@ export class UserService {
       {
         // eslint-disable-next-line @typescript-eslint/naming-convention
         'Content-Type': avatarFile.mimetype,
-      }
+      },
     );
     const { size, mimetype } = avatarFile;
 
@@ -177,7 +179,7 @@ export class UserService {
 
   private async mountAttachment(
     userId: string,
-    input: Prisma.AttachmentCreateInput | Prisma.AttachmentUpdateInput
+    input: Prisma.AttachmentCreateInput | Prisma.AttachmentUpdateInput,
   ) {
     await this.prismaService.txClient().attachment.upsert({
       create: {
@@ -187,7 +189,7 @@ export class UserService {
       update: input as Prisma.AttachmentUpdateInput,
       where: {
         token: userId,
-        active: true
+        active: true,
       },
     });
   }

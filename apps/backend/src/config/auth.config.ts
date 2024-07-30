@@ -11,7 +11,6 @@ export const authConfig = registerAs('auth', () => ({
   },
 }));
 
-
 export const AuthConfig = () => Inject(authConfig.KEY);
 
 export type IAuthConfig = ConfigType<typeof authConfig>;

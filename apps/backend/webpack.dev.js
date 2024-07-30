@@ -43,7 +43,9 @@ module.exports = function (options, webpack) {
     plugins: [
       // filter default ForkTsCheckerWebpackPlugin to rewrite the ts config file path
       // nest default tsconfig path is tsconfig.build.json
-      ...options.plugins.filter((plugin) => !(plugin instanceof ForkTsCheckerWebpackPlugin)),
+      ...options.plugins.filter(
+        (plugin) => !(plugin instanceof ForkTsCheckerWebpackPlugin),
+      ),
       new webpack.HotModuleReplacementPlugin(),
       // new ForkTsCheckerWebpackPlugin({
       //   typescript: {

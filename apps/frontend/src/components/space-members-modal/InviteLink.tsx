@@ -1,6 +1,6 @@
-import { map } from "lodash";
-import { useMemo } from "react";
-import { useShallow } from "zustand/react/shallow";
+import { map } from 'lodash';
+import { useMemo } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 import {
   Button,
   Input,
@@ -9,14 +9,14 @@ import {
   TooltipProvider,
   TooltipTrigger,
   useToast,
-} from "@flavor/ui/shadcn";
-import { RoleSelect } from "./RoleSelect";
-import { getRolesWithLowerPermissions } from "./utils";
-import { CopyIcon, Cross2Icon } from "@radix-ui/react-icons";
-import { SpaceRole } from "@flavor/core/auth";
-import { useSpaceRoleStatic, useT } from "@/hooks";
-import { useSpaceStore } from "@/stores/space-store";
-import { apiAgent } from "@/api";
+} from '@flavor/ui/shadcn';
+import { RoleSelect } from './RoleSelect';
+import { getRolesWithLowerPermissions } from './utils';
+import { CopyIcon, Cross2Icon } from '@radix-ui/react-icons';
+import { SpaceRole } from '@flavor/core/auth';
+import { useSpaceRoleStatic, useT } from '@/hooks';
+import { useSpaceStore } from '@/stores/space-store';
+import { apiAgent } from '@/api';
 
 interface IInviteLink {
   spaceId: string;
@@ -49,12 +49,12 @@ export const InviteLink: React.FC<IInviteLink> = (props) => {
 
   const copyInviteUrl = async (url: string) => {
     await navigator.clipboard.writeText(url);
-    toast({ title: t("space.invite.linkCopySuccess") });
+    toast({ title: t('space.invite.linkCopySuccess') });
   };
 
   const spaceRoleStatic = useSpaceRoleStatic();
   const filterRoles = useMemo(
-    () => map(getRolesWithLowerPermissions(role, spaceRoleStatic), "role"),
+    () => map(getRolesWithLowerPermissions(role, spaceRoleStatic), 'role'),
     [role, spaceRoleStatic],
   );
 
@@ -64,15 +64,10 @@ export const InviteLink: React.FC<IInviteLink> = (props) => {
 
   return (
     <div>
-      <div className="mb-3 text-sm text-muted-foreground">
-        {t("space.invite.linkTitle")}
-      </div>
+      <div className="mb-3 text-sm text-muted-foreground">{t('space.invite.linkTitle')}</div>
       <div className="space-y-3">
         {inviteLinks.map(({ invitationId, inviteUrl, createdAt, role }) => (
-          <div
-            key={invitationId}
-            className="relative flex items-center gap-3 pr-7"
-          >
+          <div key={invitationId} className="relative flex items-center gap-3 pr-7">
             <div className="flex flex-1 items-center gap-2">
               <Input className="h-8 flex-1" value={inviteUrl} readOnly />
               <CopyIcon
@@ -81,7 +76,7 @@ export const InviteLink: React.FC<IInviteLink> = (props) => {
               />
             </div>
             <div className="text-xs text-muted-foreground">
-              {t("space.invite.linkCreatedTime", {
+              {t('space.invite.linkCreatedTime', {
                 createdTime: createdAt,
               })}
             </div>
@@ -105,7 +100,7 @@ export const InviteLink: React.FC<IInviteLink> = (props) => {
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>{t("space.invite.linkRemove")}</p>
+                  <p>{t('space.invite.linkRemove')}</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>

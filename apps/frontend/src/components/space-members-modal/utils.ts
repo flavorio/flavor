@@ -1,14 +1,12 @@
-import { ISpaceRoleStatic } from "@/hooks";
-import { SpaceRole } from "@flavor/core/auth/role";
+import { ISpaceRoleStatic } from '@/hooks';
+import { SpaceRole } from '@flavor/core/auth/role';
 
 export const getRolesWithLowerPermissions = (
   role: SpaceRole,
   spaceRoleStatic: ISpaceRoleStatic[],
   includeRole: boolean = true,
 ) => {
-  const roleLevel = spaceRoleStatic.find(
-    (spaceRole) => spaceRole.role === role,
-  )?.level;
+  const roleLevel = spaceRoleStatic.find((spaceRole) => spaceRole.role === role)?.level;
   if (roleLevel == undefined) {
     return [];
   }
@@ -22,9 +20,7 @@ export const getRolesWithHigherPermissions = (
   spaceRoleStatic: ISpaceRoleStatic[],
   includeRole: boolean = true,
 ) => {
-  const roleLevel = spaceRoleStatic.find(
-    (spaceRole) => spaceRole.role === role,
-  )?.level;
+  const roleLevel = spaceRoleStatic.find((spaceRole) => spaceRole.role === role)?.level;
   if (roleLevel == undefined) {
     return [];
   }

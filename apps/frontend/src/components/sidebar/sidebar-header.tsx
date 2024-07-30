@@ -1,13 +1,13 @@
-import type { ReactNode } from "react";
-import { FormattedMessage } from "umi";
-import { DoubleArrowLeftIcon } from "@radix-ui/react-icons";
+import type { ReactNode } from 'react';
+import { FormattedMessage } from 'umi';
+import { DoubleArrowLeftIcon } from '@radix-ui/react-icons';
 import {
   Button,
   TooltipProvider,
   Tooltip,
   TooltipTrigger,
   TooltipContent,
-} from "@flavor/ui/shadcn";
+} from '@flavor/ui/shadcn';
 
 export interface ISidebarHeaderProps {
   headerLeft: ReactNode;

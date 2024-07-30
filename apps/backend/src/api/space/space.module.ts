@@ -5,6 +5,6 @@ import { InvitationService } from '../invitation/invitation.service';
 
 @Module({
   controllers: [SpaceController],
-  providers: [SpaceService, InvitationService]
+  providers: [SpaceService, InvitationService],
 })
 export class SpaceModule {}

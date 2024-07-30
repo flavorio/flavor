@@ -25,14 +25,16 @@ export class PermissionService {
   async getRoleBySpaceId(spaceId: string) {
     const userId = this.cls.get('user.id');
 
-    const collaborator = await this.prismaService.txClient().spaceMember.findFirst({
-      where: {
-        userId,
-        spaceId,
-        active: true,
-      },
-      select: { role: true },
-    });
+    const collaborator = await this.prismaService
+      .txClient()
+      .spaceMember.findFirst({
+        where: {
+          userId,
+          spaceId,
+          active: true,
+        },
+        select: { role: true },
+      });
     if (!collaborator) {
       throw new ForbiddenException(`can't find collaborator`);
     }
@@ -92,13 +94,12 @@ export class PermissionService {
     if (accessTokenId) {
       const accessTokenPermission = await this.getPermissionsByAccessToken(
         resourceId,
-        accessTokenId
+        accessTokenId,
       );
       return intersection(userPermissions, accessTokenPermission);
     }
     return userPermissions;
   }
-
 
   async validPermissions(
     resourceId: string,
@@ -106,11 +107,13 @@ export class PermissionService {
     accessTokenId?: string,
   ) {
     const ownPermissions = await this.getPermissions(resourceId, accessTokenId);
-    if (permissions.every((permission) => ownPermissions.includes(permission))) {
+    if (
+      permissions.every((permission) => ownPermissions.includes(permission))
+    ) {
       return ownPermissions;
     }
     throw new ForbiddenException(
-      `not allowed to operate ${permissions.join(', ')} on ${resourceId}`
+      `not allowed to operate ${permissions.join(', ')} on ${resourceId}`,
     );
   }
 }

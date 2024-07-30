@@ -7,5 +7,7 @@ export type IResourceMeta = {
 
 export const RESOURCE_META = 'resourceMeta';
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export const ResourceMeta = (type: IResourceMeta['type'], position: IResourceMeta['position']) =>
-  SetMetadata(RESOURCE_META, { type, position });
+export const ResourceMeta = (
+  type: IResourceMeta['type'],
+  position: IResourceMeta['position'],
+) => SetMetadata(RESOURCE_META, { type, position });

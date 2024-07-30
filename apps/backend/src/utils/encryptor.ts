@@ -40,4 +40,5 @@ export class Encryptor<T> {
   }
 }
 
-export const getEncryptor = <T>(options: IEncryptionOptions) => new Encryptor<T>(options);
+export const getEncryptor = <T>(options: IEncryptionOptions) =>
+  new Encryptor<T>(options);

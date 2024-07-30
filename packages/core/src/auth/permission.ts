@@ -1,12 +1,12 @@
 import { keys } from 'lodash';
-import { AllActions } from "./actions";
-import { DocumentRole, SpaceRole, spacePermissions } from "./role";
+import { AllActions } from './actions';
+import { DocumentRole, SpaceRole, spacePermissions } from './role';
 
 export type PermissionAction = AllActions;
 
 export enum RoleType {
   Space = 'space',
-  Document = 'document'
+  Document = 'document',
 }
 
 export type PermissionMap = Record<PermissionAction, boolean>;
@@ -18,7 +18,7 @@ export const getPermissions = (type: RoleType, role?: SpaceRole | DocumentRole) 
 
 export const getPermissionMap = (
   type: RoleType,
-  role?: SpaceRole | DocumentRole
+  role?: SpaceRole | DocumentRole,
 ): PermissionMap => {
   switch (type) {
     case RoleType.Space:

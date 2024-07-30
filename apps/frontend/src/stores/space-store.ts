@@ -1,7 +1,7 @@
-import { create } from "zustand";
-import { produce } from "immer";
-import { apiAgent } from "@/api";
-import { SpaceRole } from "@flavor/core/auth/role";
+import { create } from 'zustand';
+import { produce } from 'immer';
+import { apiAgent } from '@/api';
+import { SpaceRole } from '@flavor/core/auth/role';
 
 type Space = {
   id: string;
@@ -94,9 +94,7 @@ export const useSpaceStore = create<SpaceState>((set, get) => ({
   updateDocName: (docId, docName) => {
     set(
       produce((state: SpaceState) => {
-        const doc = state.currSpaceInfo?.documents.find(
-          (doc) => doc.id === docId,
-        );
+        const doc = state.currSpaceInfo?.documents.find((doc) => doc.id === docId);
         if (doc) {
           doc.name = docName;
         }

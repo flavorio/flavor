@@ -7,7 +7,10 @@ export class PassportSessionStrategy extends Strategy {
   private _key: string;
   private _deserializeUser: DeserializeUserFunction;
 
-  constructor(options?: SessionStrategyOptions, deserializeUser?: DeserializeUserFunction) {
+  constructor(
+    options?: SessionStrategyOptions,
+    deserializeUser?: DeserializeUserFunction,
+  ) {
     if (typeof options === 'function') {
       deserializeUser = options;
       options = undefined;

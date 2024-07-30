@@ -14,13 +14,14 @@ async function bootstrap() {
   app.useWebSocketAdapter(new WsAdapter(app));
   app.useGlobalPipes(new ValidationPipe());
 
-  const port = await getAvailablePort(configService.get<string>('PORT') as string);
+  const port = await getAvailablePort(
+    configService.get<string>('PORT') as string,
+  );
   process.env.PORT = port.toString();
 
   await app.listen(port);
 }
 bootstrap();
-
 
 async function getAvailablePort(dPort: number | string): Promise<number> {
   let port = Number(dPort);

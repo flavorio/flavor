@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 //TODO how to describe the store and schema?
 export const documentSchema = z.object({
@@ -49,6 +49,4 @@ export const updateDocumentRecordsSchema = z.object({
   updates: z.array(updatesSchema),
 });
 
-export type UpdateDocumentRecordsRo = z.infer<
-  typeof updateDocumentRecordsSchema
->;
+export type UpdateDocumentRecordsRo = z.infer<typeof updateDocumentRecordsSchema>;

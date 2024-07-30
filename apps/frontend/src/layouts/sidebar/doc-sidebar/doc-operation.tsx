@@ -1,12 +1,12 @@
-import { FormattedMessage } from "umi";
-import { DotsHorizontalIcon, Pencil1Icon } from "@radix-ui/react-icons";
+import { FormattedMessage } from 'umi';
+import { DotsHorizontalIcon, Pencil1Icon } from '@radix-ui/react-icons';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@flavor/ui/shadcn";
-import { Document } from "@/stores/space-store";
+} from '@flavor/ui/shadcn';
+import { Document } from '@/stores/space-store';
 
 type DocOperationProps = {
   className?: string;

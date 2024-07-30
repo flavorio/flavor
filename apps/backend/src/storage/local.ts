@@ -1,24 +1,28 @@
 import { createReadStream, createWriteStream } from 'fs';
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from '@nestjs/common';
 import * as fse from 'fs-extra';
-import { FileUtils, join } from "src/utils";
+import { FileUtils, join } from 'src/utils';
 import { resolve } from 'node:path';
 import os from 'node:os';
-import { Encryptor } from "src/utils/encryptor";
-import { ILocalFileUpload, IObjectMeta, IPresignParams, IRespHeaders } from "./types";
-import { IStorageConfig, StorageConfig } from "src/config/storage.config";
-import { CacheService } from "src/cache/cache.service";
-import StorageAdapter from "./adapter";
-import { getRandomString } from "@flavor/core";
-import { second } from "src/utils/second";
-import sharp from "sharp";
-import { Readable } from "stream";
+import { Encryptor } from 'src/utils/encryptor';
+import {
+  ILocalFileUpload,
+  IObjectMeta,
+  IPresignParams,
+  IRespHeaders,
+} from './types';
+import { IStorageConfig, StorageConfig } from 'src/config/storage.config';
+import { CacheService } from 'src/cache/cache.service';
+import StorageAdapter from './adapter';
+import { getRandomString } from '@flavor/core';
+import { second } from 'src/utils/second';
+import sharp from 'sharp';
+import { Readable } from 'stream';
 
 interface ITokenEncryptor {
   expiresDate: number;
   respHeaders?: IRespHeaders;
 }
-
 
 @Injectable()
 export class LocalStorage implements StorageAdapter {
@@ -30,7 +34,7 @@ export class LocalStorage implements StorageAdapter {
 
   constructor(
     @StorageConfig() readonly config: IStorageConfig,
-    private readonly cacheService: CacheService
+    private readonly cacheService: CacheService,
   ) {
     this.expireTokenEncryptor = new Encryptor(this.config.encryption);
     this.path = this.config.local.path;
@@ -39,14 +43,28 @@ export class LocalStorage implements StorageAdapter {
     fse.ensureDirSync(this.temporaryDir);
     fse.ensureDirSync(this.storageDir);
   }
-  async getObjectMeta(bucket: string, path: string, token: string): Promise<IObjectMeta> {
-    throw new Error("Method not implemented.");
+  async getObjectMeta(
+    bucket: string,
+    path: string,
+    token: string,
+  ): Promise<IObjectMeta> {
+    throw new Error('Method not implemented.');
   }
-  getPreviewUrl(bucket: string, path: string, expiresIn?: number | undefined, respHeaders?: { [key: string]: any; } | undefined): Promise<string> {
-    throw new Error("Method not implemented.");
+  getPreviewUrl(
+    bucket: string,
+    path: string,
+    expiresIn?: number | undefined,
+    respHeaders?: { [key: string]: any } | undefined,
+  ): Promise<string> {
+    throw new Error('Method not implemented.');
   }
-  uploadFile(bucket: string, path: string, stream: Buffer | Readable, metadata?: Record<string, unknown> | undefined): Promise<{ hash: string; url: string; }> {
-    throw new Error("Method not implemented.");
+  uploadFile(
+    bucket: string,
+    path: string,
+    stream: Buffer | Readable,
+    metadata?: Record<string, unknown> | undefined,
+  ): Promise<{ hash: string; url: string }> {
+    throw new Error('Method not implemented.');
   }
 
   private getUploadUrl(token: string) {
@@ -57,7 +75,7 @@ export class LocalStorage implements StorageAdapter {
     bucket: string,
     path: string,
     filePath: string,
-    _metadata: Record<string, unknown>
+    _metadata: Record<string, unknown>,
   ) {
     const hash = await FileUtils.getHash(filePath);
     await this.save(filePath, join(bucket, path));
@@ -79,7 +97,6 @@ export class LocalStorage implements StorageAdapter {
     return createReadStream(resolve(this.storageDir, path));
   }
 
-
   parsePath(path: string) {
     const parts = path.split('/');
     return {
@@ -100,7 +117,7 @@ export class LocalStorage implements StorageAdapter {
         contentLength,
         contentType,
       },
-      expiresIn
+      expiresIn,
     );
 
     const path = join(dir, filename);
@@ -116,9 +133,10 @@ export class LocalStorage implements StorageAdapter {
     };
   }
 
-
   async validateToken(token: string, file: ILocalFileUpload) {
-    const validateMeta = await this.cacheService.get(`attachment:local-signature:${token}`);
+    const validateMeta = await this.cacheService.get(
+      `attachment:local-signature:${token}`,
+    );
     if (!validateMeta) {
       throw new BadRequestException('Invalid token');
     }
@@ -159,7 +177,8 @@ export class LocalStorage implements StorageAdapter {
 
   verifyReadToken(token: string) {
     try {
-      const { expiresDate, respHeaders } = this.expireTokenEncryptor.decrypt(token);
+      const { expiresDate, respHeaders } =
+        this.expireTokenEncryptor.decrypt(token);
       if (expiresDate > 0 && Math.floor(Date.now() / 1000) > expiresDate) {
         throw new BadRequestException('Token has expired');
       }

@@ -1,27 +1,27 @@
-import { FormattedMessage } from "umi";
-import { useShallow } from "zustand/react/shallow";
-import { FilePlusIcon, PlusIcon } from "@radix-ui/react-icons";
-import { useSpaceStore } from "@/stores/space-store";
+import { FormattedMessage } from 'umi';
+import { useShallow } from 'zustand/react/shallow';
+import { FilePlusIcon, PlusIcon } from '@radix-ui/react-icons';
+import { useSpaceStore } from '@/stores/space-store';
 import {
   Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@flavor/ui/shadcn";
-import { apiAgent } from "@/api";
-import { useState } from "react";
-import DocItem from "./doc-item";
+} from '@flavor/ui/shadcn';
+import { apiAgent } from '@/api';
+import { useState } from 'react';
+import DocItem from './doc-item';
 
 export default function DocSidebarContent() {
-  const [editingId, setEditingId] = useState("");
+  const [editingId, setEditingId] = useState('');
   const [currSpaceInfo, getSpaceInfo] = useSpaceStore(
     useShallow((state) => [state.currSpaceInfo, state.getSpaceInfo]),
   );
 
   const addDoc = async () => {
     const payload = {
-      name: "new doc",
+      name: 'new doc',
       spaceId: currSpaceInfo?.id!,
       doc: createDoc(),
     };
@@ -34,7 +34,7 @@ export default function DocSidebarContent() {
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <div className="px-2">
-            <Button variant={"outline"} size={"sm"} className={`w-full`}>
+            <Button variant={'outline'} size={'sm'} className={`w-full`}>
               <PlusIcon />
             </Button>
           </div>
@@ -50,12 +50,7 @@ export default function DocSidebarContent() {
       </DropdownMenu>
       <ul className="mx-2">
         {currSpaceInfo?.documents.map((doc) => (
-          <DocItem
-            key={doc.id}
-            doc={doc}
-            editingId={editingId}
-            setEditingId={setEditingId}
-          />
+          <DocItem key={doc.id} doc={doc} editingId={editingId} setEditingId={setEditingId} />
         ))}
       </ul>
     </div>
@@ -65,54 +60,54 @@ export default function DocSidebarContent() {
 const createDoc = () => {
   return {
     store: {
-      "document:document": {
+      'document:document': {
         gridSize: 10,
-        name: "",
+        name: '',
         meta: {},
-        id: "document:document",
-        typeName: "document",
+        id: 'document:document',
+        typeName: 'document',
       },
-      "page:page": {
+      'page:page': {
         meta: {},
-        id: "page:page",
-        name: "Page",
-        index: "a1",
-        typeName: "page",
+        id: 'page:page',
+        name: 'Page',
+        index: 'a1',
+        typeName: 'page',
       },
     },
     schema: {
       schemaVersion: 2,
       sequences: {
-        "com.tldraw.store": 4,
-        "com.tldraw.asset": 1,
-        "com.tldraw.camera": 1,
-        "com.tldraw.document": 2,
-        "com.tldraw.instance": 25,
-        "com.tldraw.instance_page_state": 5,
-        "com.tldraw.page": 1,
-        "com.tldraw.instance_presence": 5,
-        "com.tldraw.pointer": 1,
-        "com.tldraw.shape": 4,
-        "com.tldraw.asset.bookmark": 2,
-        "com.tldraw.asset.image": 4,
-        "com.tldraw.asset.video": 4,
-        "com.tldraw.shape.group": 0,
-        "com.tldraw.shape.text": 2,
-        "com.tldraw.shape.bookmark": 2,
-        "com.tldraw.shape.draw": 2,
-        "com.tldraw.shape.geo": 9,
-        "com.tldraw.shape.note": 7,
-        "com.tldraw.shape.line": 5,
-        "com.tldraw.shape.frame": 0,
-        "com.tldraw.shape.arrow": 5,
-        "com.tldraw.shape.highlight": 1,
-        "com.tldraw.shape.embed": 4,
-        "com.tldraw.shape.image": 3,
-        "com.tldraw.shape.video": 2,
-        "com.tldraw.shape.container": 0,
-        "com.tldraw.shape.element": 0,
-        "com.tldraw.binding.arrow": 0,
-        "com.tldraw.binding.layout": 0,
+        'com.tldraw.store': 4,
+        'com.tldraw.asset': 1,
+        'com.tldraw.camera': 1,
+        'com.tldraw.document': 2,
+        'com.tldraw.instance': 25,
+        'com.tldraw.instance_page_state': 5,
+        'com.tldraw.page': 1,
+        'com.tldraw.instance_presence': 5,
+        'com.tldraw.pointer': 1,
+        'com.tldraw.shape': 4,
+        'com.tldraw.asset.bookmark': 2,
+        'com.tldraw.asset.image': 4,
+        'com.tldraw.asset.video': 4,
+        'com.tldraw.shape.group': 0,
+        'com.tldraw.shape.text': 2,
+        'com.tldraw.shape.bookmark': 2,
+        'com.tldraw.shape.draw': 2,
+        'com.tldraw.shape.geo': 9,
+        'com.tldraw.shape.note': 7,
+        'com.tldraw.shape.line': 5,
+        'com.tldraw.shape.frame': 0,
+        'com.tldraw.shape.arrow': 5,
+        'com.tldraw.shape.highlight': 1,
+        'com.tldraw.shape.embed': 4,
+        'com.tldraw.shape.image': 3,
+        'com.tldraw.shape.video': 2,
+        'com.tldraw.shape.container': 0,
+        'com.tldraw.shape.element': 0,
+        'com.tldraw.binding.arrow': 0,
+        'com.tldraw.binding.layout': 0,
       },
     },
   };

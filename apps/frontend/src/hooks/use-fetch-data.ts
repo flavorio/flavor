@@ -1,8 +1,8 @@
-import { useEffect } from "react";
-import { useLocation, useNavigate } from "umi";
-import { useShallow } from "zustand/react/shallow";
-import { useUserStore } from "@/stores/user-store";
-import { useSpaceStore } from "@/stores/space-store";
+import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'umi';
+import { useShallow } from 'zustand/react/shallow';
+import { useUserStore } from '@/stores/user-store';
+import { useSpaceStore } from '@/stores/space-store';
 
 export function useFetchData() {
   const location = useLocation();
@@ -19,7 +19,7 @@ export function useFetchData() {
       try {
         await getUserInfo();
       } catch (err) {
-        navigate("/login", { state: { from: location } });
+        navigate('/login', { state: { from: location } });
       }
     }
 

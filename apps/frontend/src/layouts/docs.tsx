@@ -1,5 +1,5 @@
-import { Outlet } from "umi";
-import DocSidebar from "./sidebar/doc-sidebar";
+import { Outlet } from 'umi';
+import DocSidebar from './sidebar/doc-sidebar';
 
 export default function DocsLayout() {
   return (

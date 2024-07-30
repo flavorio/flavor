@@ -12,7 +12,7 @@ export class SessionHandleService {
   sessionMiddleware: RequestHandler;
   constructor(
     private readonly sessionStoreService: SessionStoreService,
-    @AuthConfig() private readonly authConfig: IAuthConfig
+    @AuthConfig() private readonly authConfig: IAuthConfig,
   ) {
     this.sessionMiddleware = session({
       name: AUTH_SESSION_COOKIE_NAME,

@@ -1,19 +1,15 @@
-import { FormattedMessage } from "umi";
-import { useEffect } from "react";
-import { useShallow } from "zustand/react/shallow";
-import { useSpaceStore } from "@/stores/space-store";
-import { useT } from "@/hooks";
-import { Invite } from "./invite";
-import { InviteLink } from "./InviteLink";
-import { Collaborators } from "./Collaborators";
+import { FormattedMessage } from 'umi';
+import { useEffect } from 'react';
+import { useShallow } from 'zustand/react/shallow';
+import { useSpaceStore } from '@/stores/space-store';
+import { useT } from '@/hooks';
+import { Invite } from './invite';
+import { InviteLink } from './InviteLink';
+import { Collaborators } from './Collaborators';
 
 export default function SpaceMemberModalContent() {
   const [currSpaceInfo, getInviteLinks, getSpaceMembers] = useSpaceStore(
-    useShallow((state) => [
-      state.currSpaceInfo,
-      state.getInviteLinks,
-      state.getSpaceMembers,
-    ]),
+    useShallow((state) => [state.currSpaceInfo, state.getInviteLinks, state.getSpaceMembers]),
   );
   const t = useT();
 
@@ -40,9 +36,7 @@ export default function SpaceMemberModalContent() {
         <Invite spaceId={spaceId} role={role} />
         <InviteLink spaceId={spaceId} role={role} />
         <div className="w-full">
-          <div className="mb-3 text-sm text-muted-foreground">
-            {t("space.invite.spaceTitle")}
-          </div>
+          <div className="mb-3 text-sm text-muted-foreground">{t('space.invite.spaceTitle')}</div>
           <Collaborators spaceId={spaceId} role={role} />
         </div>
       </div>

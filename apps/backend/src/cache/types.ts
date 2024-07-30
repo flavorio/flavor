@@ -12,7 +12,6 @@ export interface ICacheStore {
   // [key: `reset-password-email:${string}`]: IResetPasswordEmailCache;
 }
 
-
 export interface IAttachmentSignatureCache {
   path: string;
   bucket: string;

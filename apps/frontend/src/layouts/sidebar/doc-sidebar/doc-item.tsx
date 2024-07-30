@@ -1,11 +1,11 @@
-import { useNavigate } from "umi";
-import React, { useEffect, useRef } from "react";
-import { FileIcon } from "@radix-ui/react-icons";
-import { cn, Input } from "@flavor/ui/shadcn";
-import { Document, useSpaceStore } from "@/stores/space-store";
-import { usePageStore } from "@/stores/page-store";
-import { apiAgent } from "@/api";
-import DocOperation from "./doc-operation";
+import { useNavigate } from 'umi';
+import React, { useEffect, useRef } from 'react';
+import { FileIcon } from '@radix-ui/react-icons';
+import { cn, Input } from '@flavor/ui/shadcn';
+import { Document, useSpaceStore } from '@/stores/space-store';
+import { usePageStore } from '@/stores/page-store';
+import { apiAgent } from '@/api';
+import DocOperation from './doc-operation';
 
 type DocItemProps = {
   doc: Document;
@@ -27,7 +27,7 @@ export default function DocItem(props: DocItemProps) {
   const syncDocName = async (name: string) => {
     updateDocName(doc.id, name);
     await apiAgent.document.updateDocument({ id: doc.id, name });
-    setEditingId("");
+    setEditingId('');
   };
 
   useEffect(() => {
@@ -39,9 +39,9 @@ export default function DocItem(props: DocItemProps) {
   return (
     <li
       className={cn(
-        "flex items-center gap-2 h-7 px-2 rounded-md hover:bg-accent hover:text-accent-foreground cursor-pointer text-sm",
+        'flex items-center gap-2 h-7 px-2 rounded-md hover:bg-accent hover:text-accent-foreground cursor-pointer text-sm',
         {
-          "bg-secondary/90": doc.id === pageId,
+          'bg-secondary/90': doc.id === pageId,
         },
       )}
     >
@@ -52,21 +52,21 @@ export default function DocItem(props: DocItemProps) {
           placeholder="name"
           defaultValue={doc.name}
           style={{
-            boxShadow: "none",
+            boxShadow: 'none',
           }}
           className="h-6 round-none cursor-text bg-background px-4 outline-none"
           onBlur={(e) => {
             if (e.target.value && e.target.value !== doc.name) {
               syncDocName(e.target.value);
             }
-            setEditingId("");
+            setEditingId('');
           }}
           onKeyDown={(e) => {
-            if (e.key === "Enter") {
+            if (e.key === 'Enter') {
               if (e.currentTarget.value && e.currentTarget.value !== doc.name) {
                 syncDocName(e.currentTarget.value);
               }
-              setEditingId("");
+              setEditingId('');
             }
           }}
           onMouseDown={(e) => {

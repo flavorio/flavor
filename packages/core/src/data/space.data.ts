@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { spaceRolesSchema } from "../auth/role/space.role";
+import { z } from 'zod';
+import { spaceRolesSchema } from '../auth/role/space.role';
 
 export const createSpaceRoSchema = z.object({
   name: z.string(),

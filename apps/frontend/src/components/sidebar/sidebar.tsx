@@ -1,9 +1,9 @@
-import { PropsWithChildren, ReactNode, useState } from "react";
-import { DoubleArrowRightIcon } from "@radix-ui/react-icons";
-import { Button, cn } from "@flavor/ui/shadcn";
-import { HoverWrapper } from "@/components/toggle-sidebar/hover-wrapper";
-import { SidebarHeader } from "./sidebar-header";
-import { SIDE_BAR_WIDTH } from "../toggle-sidebar/constant";
+import { PropsWithChildren, ReactNode, useState } from 'react';
+import { DoubleArrowRightIcon } from '@radix-ui/react-icons';
+import { Button, cn } from '@flavor/ui/shadcn';
+import { HoverWrapper } from '@/components/toggle-sidebar/hover-wrapper';
+import { SidebarHeader } from './sidebar-header';
+import { SIDE_BAR_WIDTH } from '../toggle-sidebar/constant';
 
 interface SidebarProps {
   className?: string;
@@ -18,19 +18,16 @@ export default function Sidebar(props: PropsWithChildren<SidebarProps>) {
     <>
       <div
         className={cn(
-          "flex w-0 border-r flex-shrink-0 h-full",
+          'flex w-0 border-r flex-shrink-0 h-full',
           {
-            "overflow-hidden": !leftVisible,
-            "w-72": leftVisible,
+            'overflow-hidden': !leftVisible,
+            'w-72': leftVisible,
           },
           className,
         )}
       >
         <div className="flex size-full flex-col overflow-hidden bg-popover">
-          <SidebarHeader
-            headerLeft={headerLeft}
-            onExpand={() => setLeftVisible(!leftVisible)}
-          />
+          <SidebarHeader headerLeft={headerLeft} onExpand={() => setLeftVisible(!leftVisible)} />
           {leftVisible && children}
         </div>
       </div>
@@ -38,10 +35,8 @@ export default function Sidebar(props: PropsWithChildren<SidebarProps>) {
         <HoverWrapper size={SIDE_BAR_WIDTH}>
           <HoverWrapper.Trigger>
             <Button
-              className={cn(
-                "absolute top-12 p-1 rounded-none -left-0 rounded-r-full z-[51]",
-              )}
-              variant={"outline"}
+              className={cn('absolute top-12 p-1 rounded-none -left-0 rounded-r-full z-[51]')}
+              variant={'outline'}
               size="sm"
               onClick={() => {
                 setLeftVisible(!leftVisible);

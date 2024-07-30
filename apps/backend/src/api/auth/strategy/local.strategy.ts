@@ -9,7 +9,7 @@ import { pickUserMe } from '../utils';
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(
     private readonly userService: UserService,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
   ) {
     super({
       usernameField: 'email',

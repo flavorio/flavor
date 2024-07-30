@@ -7,7 +7,7 @@ import { StorageModule } from 'src/storage/storage.module';
 @Module({
   providers: [AttachmentService],
   controllers: [AttachmentController],
-  imports: [StorageModule,  AuthModule],
+  imports: [StorageModule, AuthModule],
   exports: [AttachmentService],
 })
 export class AttachmentModule {}

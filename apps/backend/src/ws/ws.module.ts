@@ -3,6 +3,6 @@ import { WsService } from './ws.service';
 import { WsGateway } from './ws.gateway';
 
 @Module({
-  providers: [WsGateway, WsService]
+  providers: [WsGateway, WsService],
 })
 export class WsModule {}

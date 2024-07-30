@@ -13,7 +13,7 @@ export class SessionStoreService extends Store {
 
   constructor(
     private readonly cacheService: CacheService,
-    @AuthConfig() private readonly authConfig: IAuthConfig
+    @AuthConfig() private readonly authConfig: IAuthConfig,
   ) {
     super();
     this.ttl = second(this.authConfig.session.expiresIn);
@@ -22,7 +22,8 @@ export class SessionStoreService extends Store {
 
   private async setCache(sid: string, session: ISessionData) {
     const userId = session.passport.user.id;
-    const userSessions = (await this.cacheService.get(`auth:session-user:${userId}`)) ?? {};
+    const userSessions =
+      (await this.cacheService.get(`auth:session-user:${userId}`)) ?? {};
     // The expiration time is greater than the session cache time,
     // so that the user session does not expire while the session is still alive.
     const nowSec = Math.floor(Date.now() / 1000);
@@ -33,7 +34,11 @@ export class SessionStoreService extends Store {
         delete userSessions[key];
       }
     }
-    await this.cacheService.set(`auth:session-user:${userId}`, userSessions, this.ttl);
+    await this.cacheService.set(
+      `auth:session-user:${userId}`,
+      userSessions,
+      this.ttl,
+    );
     await this.cacheService.set(`auth:session-store:${sid}`, session, this.ttl);
   }
 
@@ -47,7 +52,8 @@ export class SessionStoreService extends Store {
       return null;
     }
     const userId = session.passport.user.id;
-    const userSessions = (await this.cacheService.get(`auth:session-user:${userId}`)) ?? {};
+    const userSessions =
+      (await this.cacheService.get(`auth:session-user:${userId}`)) ?? {};
     if (!userSessions[sid]) {
       await this.cacheService.del(`auth:session-store:${sid}`);
       return null;
@@ -58,7 +64,11 @@ export class SessionStoreService extends Store {
     if (userSessions[sid] < nowSec) {
       delete userSessions[sid];
       await this.cacheService.del(`auth:session-store:${sid}`);
-      await this.cacheService.set(`auth:session-user:${userId}`, userSessions, this.ttl);
+      await this.cacheService.set(
+        `auth:session-user:${userId}`,
+        userSessions,
+        this.ttl,
+      );
       return null;
     }
     return session;
@@ -66,7 +76,7 @@ export class SessionStoreService extends Store {
 
   async get(
     sid: string,
-    callback: (err: unknown, session?: ISessionData | null | undefined) => void
+    callback: (err: unknown, session?: ISessionData | null | undefined) => void,
   ): Promise<void> {
     try {
       const session = await this.getCache(sid);
@@ -76,7 +86,11 @@ export class SessionStoreService extends Store {
     }
   }
 
-  async set(sid: string, session: ISessionData, callback?: ((err?: unknown) => void) | undefined) {
+  async set(
+    sid: string,
+    session: ISessionData,
+    callback?: ((err?: unknown) => void) | undefined,
+  ) {
     try {
       await this.setCache(sid, session);
       callback?.();
@@ -97,7 +111,7 @@ export class SessionStoreService extends Store {
   async touch(
     sid: string,
     session: ISessionData,
-    callback?: ((err?: unknown) => void) | undefined
+    callback?: ((err?: unknown) => void) | undefined,
   ) {
     try {
       const sessionCache = await this.getCache(sid);
@@ -113,7 +127,8 @@ export class SessionStoreService extends Store {
   }
 
   async clearByUserId(userId: string) {
-    const userSessions = (await this.cacheService.get(`auth:session-user:${userId}`)) ?? {};
+    const userSessions =
+      (await this.cacheService.get(`auth:session-user:${userId}`)) ?? {};
     for (const sid of Object.keys(userSessions)) {
       // Preventing competition
       await this.cacheService.set(`auth:session-expire:${sid}`, true, 60);

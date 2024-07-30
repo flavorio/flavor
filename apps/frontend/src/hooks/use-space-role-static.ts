@@ -1,6 +1,6 @@
-import { useMemo } from "react";
-import { useIntl } from "umi";
-import { SpaceRole } from "@flavor/core/auth/role";
+import { useMemo } from 'react';
+import { useIntl } from 'umi';
+import { SpaceRole } from '@flavor/core/auth/role';
 
 export interface ISpaceRoleStatic {
   role: SpaceRole;
@@ -17,14 +17,14 @@ export const useSpaceRoleStatic = (): ISpaceRoleStatic[] => {
     return [
       {
         role: SpaceRole.Creator,
-        name: t("space.spaceRole.role.creator"),
-        description: t("space.spaceRole.description.creator"),
+        name: t('space.spaceRole.role.creator'),
+        description: t('space.spaceRole.description.creator'),
         level: 1,
       },
       {
         role: SpaceRole.Editor,
-        name: t("space.spaceRole.role.editor"),
-        description: t("space.spaceRole.description.editor"),
+        name: t('space.spaceRole.role.editor'),
+        description: t('space.spaceRole.description.editor'),
         level: 2,
       },
       // {
@@ -35,14 +35,14 @@ export const useSpaceRoleStatic = (): ISpaceRoleStatic[] => {
       // },
       {
         role: SpaceRole.Viewer,
-        name: t("space.spaceRole.role.viewer"),
-        description: t("space.spaceRole.description.viewer"),
+        name: t('space.spaceRole.role.viewer'),
+        description: t('space.spaceRole.description.viewer'),
         level: 4,
       },
       {
         role: SpaceRole.Owner,
-        name: t("space.spaceRole.role.owner"),
-        description: t("space.spaceRole.description.owner"),
+        name: t('space.spaceRole.role.owner'),
+        description: t('space.spaceRole.description.owner'),
         level: 0,
       },
     ];

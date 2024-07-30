@@ -14,7 +14,9 @@ export class FileUtils {
    * @param input A file path, ReadStream, or Buffer.
    * @returns A promise that resolves with the hex-encoded hash.
    */
-  static async getHash(input: string | ReadableStream | Buffer): Promise<string> {
+  static async getHash(
+    input: string | ReadableStream | Buffer,
+  ): Promise<string> {
     let stream: ReadableStream;
 
     if (typeof input === 'string') {

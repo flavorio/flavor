@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { spaceRolesSchema } from "../auth";
+import { z } from 'zod';
+import { spaceRolesSchema } from '../auth';
 
 export const itemSpaceCollaboratorSchema = z.object({
   userId: z.string(),
@@ -10,14 +10,8 @@ export const itemSpaceCollaboratorSchema = z.object({
   createdAt: z.string(),
 });
 
-export type ItemSpaceCollaboratorVo = z.infer<
-  typeof itemSpaceCollaboratorSchema
->;
+export type ItemSpaceCollaboratorVo = z.infer<typeof itemSpaceCollaboratorSchema>;
 
-export const listSpaceCollaboratorVoSchema = z.array(
-  itemSpaceCollaboratorSchema,
-);
+export const listSpaceCollaboratorVoSchema = z.array(itemSpaceCollaboratorSchema);
 
-export type ListSpaceCollaboratorVo = z.infer<
-  typeof listSpaceCollaboratorVoSchema
->;
+export type ListSpaceCollaboratorVo = z.infer<typeof listSpaceCollaboratorVoSchema>;

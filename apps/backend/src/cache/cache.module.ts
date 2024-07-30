@@ -1,4 +1,8 @@
-import { ConfigurableModuleBuilder, type DynamicModule, Module } from '@nestjs/common';
+import {
+  ConfigurableModuleBuilder,
+  type DynamicModule,
+  Module,
+} from '@nestjs/common';
 import { CacheProvider } from './cache.provider';
 
 export interface CacheModuleOptions {

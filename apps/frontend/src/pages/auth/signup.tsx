@@ -1,8 +1,8 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { apiAgent } from "@/api";
-import { useIntl, FormattedMessage, Link, useLocation, useNavigate } from "umi";
-import { signupSchema, SignupRo } from "@flavor/core/data";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { apiAgent } from '@/api';
+import { useIntl, FormattedMessage, Link, useLocation, useNavigate } from 'umi';
+import { signupSchema, SignupRo } from '@flavor/core/data';
 import {
   Button,
   Form,
@@ -12,30 +12,30 @@ import {
   FormLabel,
   FormMessage,
   Input,
-} from "@flavor/ui/shadcn";
+} from '@flavor/ui/shadcn';
 
 export default function SignUp() {
   const location = useLocation();
   const navigate = useNavigate();
   const intl = useIntl();
   const emailDesc = intl.formatMessage({
-    id: "user.email",
+    id: 'user.email',
   });
   const passwordDesc = intl.formatMessage({
-    id: "user.password",
+    id: 'user.password',
   });
 
   const form = useForm<SignupRo>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
   });
 
   async function onSubmit(values: SignupRo) {
     await apiAgent.auth.signup(values);
-    const from = location.state?.from || "/";
+    const from = location.state?.from || '/';
     navigate(from, { replace: true });
   }
 

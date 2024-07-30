@@ -1,1 +1,1 @@
-export * from "./space-members-modal";
+export * from './space-members-modal';

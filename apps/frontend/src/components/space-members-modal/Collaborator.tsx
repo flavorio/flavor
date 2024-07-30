@@ -1,5 +1,5 @@
-import { cn } from "@flavor/ui/shadcn";
-import { UserAvatar } from "../user/user-avatar";
+import { cn } from '@flavor/ui/shadcn';
+import { UserAvatar } from '../user/user-avatar';
 
 interface ICollaboratorProps {
   name: string;
@@ -12,7 +12,7 @@ export const Collaborator = (props: ICollaboratorProps) => {
   const { name, email, avatar, className } = props;
 
   return (
-    <div className={cn("flex flex-1", className)}>
+    <div className={cn('flex flex-1', className)}>
       <UserAvatar user={{ name, avatar }} />
       <div className="ml-2 flex flex-1 flex-col space-y-1">
         <p className="text-sm font-medium leading-none">{name}</p>

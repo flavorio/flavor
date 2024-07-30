@@ -7,7 +7,6 @@ import { IObjectMeta, IPresignParams, IPresignRes } from './types';
 export default abstract class StorageAdapter {
   static readonly getBucket = (type: UploadType) => {
     switch (type) {
-
       case UploadType.Avatar:
         return storageConfig().publicBucket;
       default:
@@ -19,7 +18,6 @@ export default abstract class StorageAdapter {
     switch (type) {
       case UploadType.Avatar:
         return 'avatar';
-
 
       default:
         throw new BadRequestException('Invalid upload type');
@@ -37,7 +35,11 @@ export default abstract class StorageAdapter {
    * @param params presigned params, limit presigned url upload file
    * @returns presigned url and upload params
    */
-  abstract presigned(bucket: string, dir: string, params?: IPresignParams): Promise<IPresignRes>;
+  abstract presigned(
+    bucket: string,
+    dir: string,
+    params?: IPresignParams,
+  ): Promise<IPresignRes>;
 
   /**
    * get object meta
@@ -46,7 +48,11 @@ export default abstract class StorageAdapter {
    * @param token presigned token
    * @returns object meta
    */
-  abstract getObjectMeta(bucket: string, path: string, token: string): Promise<IObjectMeta>;
+  abstract getObjectMeta(
+    bucket: string,
+    path: string,
+    token: string,
+  ): Promise<IObjectMeta>;
 
   /**
    * get preview url
@@ -61,7 +67,7 @@ export default abstract class StorageAdapter {
     respHeaders?: {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       [key: string]: any;
-    }
+    },
   ): Promise<string>;
 
   /**
@@ -75,7 +81,7 @@ export default abstract class StorageAdapter {
     bucket: string,
     path: string,
     filePath: string,
-    metadata: Record<string, unknown>
+    metadata: Record<string, unknown>,
   ): Promise<{ hash: string; url: string }>;
 
   /**
@@ -89,6 +95,6 @@ export default abstract class StorageAdapter {
     bucket: string,
     path: string,
     stream: Buffer | ReadableStream,
-    metadata?: Record<string, unknown>
+    metadata?: Record<string, unknown>,
   ): Promise<{ hash: string; url: string }>;
 }

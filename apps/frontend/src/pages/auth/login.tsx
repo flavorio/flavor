@@ -1,8 +1,8 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { FormattedMessage, Link, useIntl, useLocation, useNavigate } from "umi";
-import { apiAgent } from "@/api/api-agent";
-import { signinSchema, SigninRo } from "@flavor/core/data";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { FormattedMessage, Link, useIntl, useLocation, useNavigate } from 'umi';
+import { apiAgent } from '@/api/api-agent';
+import { signinSchema, SigninRo } from '@flavor/core/data';
 import {
   Button,
   Form,
@@ -12,30 +12,30 @@ import {
   FormLabel,
   FormMessage,
   Input,
-} from "@flavor/ui/shadcn";
+} from '@flavor/ui/shadcn';
 
 export default function Login() {
   const location = useLocation();
   const navigate = useNavigate();
   const intl = useIntl();
   const emailDesc = intl.formatMessage({
-    id: "user.email",
+    id: 'user.email',
   });
   const passwordDesc = intl.formatMessage({
-    id: "user.password",
+    id: 'user.password',
   });
 
   const form = useForm<SigninRo>({
     resolver: zodResolver(signinSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
   });
 
   async function onSubmit(values: SigninRo) {
     await apiAgent.auth.signin(values);
-    const from = location.state?.from || "/";
+    const from = location.state?.from || '/';
     navigate(from, { replace: true });
   }
 

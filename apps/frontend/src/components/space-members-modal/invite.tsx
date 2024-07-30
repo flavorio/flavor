@@ -1,15 +1,15 @@
-import { z } from "zod";
-import { map } from "lodash";
-import { useMemo, useState } from "react";
-import { useShallow } from "zustand/react/shallow";
-import { Cross2Icon } from "@radix-ui/react-icons";
-import { hasPermission, SpaceRole } from "@flavor/core/auth";
-import { Button, cn } from "@flavor/ui/shadcn";
-import { apiAgent } from "@/api";
-import { useSpaceRoleStatic, useT } from "@/hooks";
-import { useSpaceStore } from "@/stores/space-store";
-import { RoleSelect } from "./RoleSelect";
-import { getRolesWithLowerPermissions } from "./utils";
+import { z } from 'zod';
+import { map } from 'lodash';
+import { useMemo, useState } from 'react';
+import { useShallow } from 'zustand/react/shallow';
+import { Cross2Icon } from '@radix-ui/react-icons';
+import { hasPermission, SpaceRole } from '@flavor/core/auth';
+import { Button, cn } from '@flavor/ui/shadcn';
+import { apiAgent } from '@/api';
+import { useSpaceRoleStatic, useT } from '@/hooks';
+import { useSpaceStore } from '@/stores/space-store';
+import { RoleSelect } from './RoleSelect';
+import { getRolesWithLowerPermissions } from './utils';
 
 interface IInvite {
   className?: string;
@@ -20,14 +20,12 @@ interface IInvite {
 export const Invite: React.FC<IInvite> = (props) => {
   const { className, spaceId, role } = props;
 
-  const [getInviteLinks] = useSpaceStore(
-    useShallow((state) => [state.getInviteLinks]),
-  );
+  const [getInviteLinks] = useSpaceStore(useShallow((state) => [state.getInviteLinks]));
   const t = useT();
 
-  const [inviteType, setInviteType] = useState<"link" | "email">("link");
+  const [inviteType, setInviteType] = useState<'link' | 'email'>('link');
   const [inviteRole, setInviteRole] = useState<SpaceRole>(role);
-  const [email, setEmail] = useState<string>("");
+  const [email, setEmail] = useState<string>('');
   const [inviteEmails, setInviteEmails] = useState<string[]>([]);
 
   const updateCollaboratorLoading = false;
@@ -45,7 +43,7 @@ export const Invite: React.FC<IInvite> = (props) => {
     getInviteLinks();
   };
 
-  const changeInviteType = (inviteType: "link" | "email") => {
+  const changeInviteType = (inviteType: 'link' | 'email') => {
     initEmail();
     setInviteRole(SpaceRole.Creator);
     setInviteType(inviteType);
@@ -53,42 +51,37 @@ export const Invite: React.FC<IInvite> = (props) => {
 
   const initEmail = () => {
     setInviteEmails([]);
-    setEmail("");
+    setEmail('');
   };
 
   const emailInputChange = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.code === "Backspace" && !email?.length) {
+    if (e.code === 'Backspace' && !email?.length) {
       setInviteEmails(inviteEmails.slice(0, inviteEmails.length - 1));
       return;
     }
     if (
-      ["Space", "Enter"].includes(e.code) &&
+      ['Space', 'Enter'].includes(e.code) &&
       email &&
       z.string().email().safeParse(email).success &&
       !inviteEmails.includes(email)
     ) {
-      setEmail("");
+      setEmail('');
       setInviteEmails(inviteEmails.concat(email));
       e.preventDefault();
     }
   };
 
   const deleteEmail = (email: string) => {
-    setInviteEmails((inviteEmails) =>
-      inviteEmails.filter((inviteEmail) => email !== inviteEmail),
-    );
+    setInviteEmails((inviteEmails) => inviteEmails.filter((inviteEmail) => email !== inviteEmail));
   };
 
   const spaceRoleStatic = useSpaceRoleStatic();
   const filterRoles = useMemo(
-    () => map(getRolesWithLowerPermissions(role, spaceRoleStatic), "role"),
+    () => map(getRolesWithLowerPermissions(role, spaceRoleStatic), 'role'),
     [role, spaceRoleStatic],
   );
 
-  const isEmailInputValid = useMemo(
-    () => z.string().email().safeParse(email).success,
-    [email],
-  );
+  const isEmailInputValid = useMemo(() => z.string().email().safeParse(email).success, [email]);
 
   const EmailInvite = (
     <div>
@@ -108,29 +101,22 @@ export const Invite: React.FC<IInvite> = (props) => {
           ))}
           <input
             className="h-6 flex-auto bg-background text-xs outline-none"
-            placeholder={t("space.invite.emailPlaceholder")}
+            placeholder={t('space.invite.emailPlaceholder')}
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             onKeyDown={emailInputChange}
           />
         </div>
-        <RoleSelect
-          value={inviteRole}
-          filterRoles={filterRoles}
-          onChange={setInviteRole}
-        />
+        <RoleSelect value={inviteRole} filterRoles={filterRoles} onChange={setInviteRole} />
       </div>
       <Button
         className="mt-2"
-        size={"sm"}
-        disabled={
-          (!isEmailInputValid && inviteEmails.length === 0) ||
-          updateCollaboratorLoading
-        }
+        size={'sm'}
+        disabled={(!isEmailInputValid && inviteEmails.length === 0) || updateCollaboratorLoading}
         onClick={sendInviteEmail}
       >
-        {t("space.invite.emailSend")}
+        {t('space.invite.emailSend')}
       </Button>
     </div>
   );
@@ -138,7 +124,7 @@ export const Invite: React.FC<IInvite> = (props) => {
   const LinkInvite = (
     <div>
       <div className="flex items-center text-sm">
-        <span>{t("space.invite.linkPlaceholder")}</span>
+        <span>{t('space.invite.linkPlaceholder')}</span>
         <RoleSelect
           className="mx-1"
           filterRoles={filterRoles}
@@ -148,27 +134,23 @@ export const Invite: React.FC<IInvite> = (props) => {
       </div>
       <Button
         className="mt-2"
-        size={"sm"}
+        size={'sm'}
         disabled={createInviteLinkLoading}
         onClick={createInviteLink}
       >
-        {t("space.invite.linkSend")}
+        {t('space.invite.linkSend')}
       </Button>
     </div>
   );
 
-  const showLink = hasPermission(role, "space|invite_link");
+  const showLink = hasPermission(role, 'space|invite_link');
 
   if (!showLink) {
-    return (
-      <div className={cn(className, "rounded bg-muted px-4 py-2")}>
-        {EmailInvite}
-      </div>
-    );
+    return <div className={cn(className, 'rounded bg-muted px-4 py-2')}>{EmailInvite}</div>;
   }
 
   return (
-    <div className={cn(className, "rounded bg-muted px-4 py-2")}>
+    <div className={cn(className, 'rounded bg-muted px-4 py-2')}>
       <div className="pb-2">
         {/* <Button
           className="mr-6 p-0 data-[state=active]:underline"
@@ -180,14 +162,14 @@ export const Invite: React.FC<IInvite> = (props) => {
         </Button> */}
         <Button
           className="p-0 data-[state=active]:underline"
-          data-state={inviteType === "link" ? "active" : "inactive"}
-          variant={"link"}
-          onClick={() => changeInviteType("link")}
+          data-state={inviteType === 'link' ? 'active' : 'inactive'}
+          variant={'link'}
+          onClick={() => changeInviteType('link')}
         >
-          {t("space.invite.tabLink")}
+          {t('space.invite.tabLink')}
         </Button>
       </div>
-      <div>{inviteType === "email" ? EmailInvite : LinkInvite}</div>
+      <div>{inviteType === 'email' ? EmailInvite : LinkInvite}</div>
     </div>
   );
 };

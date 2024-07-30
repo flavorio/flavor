@@ -1,3 +1,1 @@
-export class RealtimePage {
-
-}
+export class RealtimePage {}

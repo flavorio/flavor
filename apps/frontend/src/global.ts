@@ -1,1 +1,1 @@
-import "@/stores/zustand-devtools";
+import '@/stores/zustand-devtools';

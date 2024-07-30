@@ -1,21 +1,18 @@
-import { z } from "zod";
-import { AllActions } from "../actions";
+import { z } from 'zod';
+import { AllActions } from '../actions';
 
 export enum SpaceRole {
-  Owner = "owner",
-  Creator = "creator",
-  Editor = "editor",
-  Viewer = "viewer",
+  Owner = 'owner',
+  Creator = 'creator',
+  Editor = 'editor',
+  Viewer = 'viewer',
 }
 
 export const spaceRolesSchema = z.nativeEnum(SpaceRole);
 
 export type SpacePermission = AllActions;
 
-export const spacePermissions: Record<
-  SpaceRole,
-  Record<SpacePermission, boolean>
-> = {
+export const spacePermissions: Record<SpaceRole, Record<SpacePermission, boolean>> = {
   [SpaceRole.Owner]: {
     'space|create': true,
     'space|delete': true,
@@ -67,5 +64,5 @@ export const spacePermissions: Record<
     'document|delete': false,
     'document|read': true,
     'document|update': false,
-  }
+  },
 };

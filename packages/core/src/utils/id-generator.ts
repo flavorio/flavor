@@ -1,6 +1,5 @@
 import { customAlphabet } from 'nanoid';
 
-
 export enum IdPrefix {
   Space = 'spc',
   User = 'usr',
@@ -16,7 +15,6 @@ export function getRandomString(len: number) {
   return nanoid(len);
 }
 
-
 export function generateUserId() {
   return IdPrefix.User + getRandomString(16);
 }
@@ -24,7 +22,6 @@ export function generateUserId() {
 export function generateSpaceId() {
   return IdPrefix.Space + getRandomString(16);
 }
-
 
 export function generateAccountId() {
   return IdPrefix.Account + getRandomString(16);

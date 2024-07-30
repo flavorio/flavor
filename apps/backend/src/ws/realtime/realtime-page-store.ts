@@ -1,4 +1,1 @@
-
-export class RealtimePageStore {
-
-}
+export class RealtimePageStore {}

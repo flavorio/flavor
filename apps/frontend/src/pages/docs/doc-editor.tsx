@@ -1,6 +1,6 @@
-import { useEffect } from "react";
-import { HistoryEntry, loadSnapshot, Tldraw, useEditor } from "tldraw";
-import "tldraw/tldraw.css";
+import { useEffect } from 'react';
+import { HistoryEntry, loadSnapshot, Tldraw, useEditor } from 'tldraw';
+import 'tldraw/tldraw.css';
 
 type OnChange = (update: HistoryEntry) => void;
 
@@ -34,7 +34,7 @@ function InsideOfContext(props: DocEditorProps) {
       (update) => {
         onChange?.(update);
       },
-      { scope: "document", source: "user" },
+      { scope: 'document', source: 'user' },
     );
 
     return unlisten;

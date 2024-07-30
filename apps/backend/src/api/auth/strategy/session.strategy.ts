@@ -11,7 +11,7 @@ export class SessionStrategy extends PassportStrategy(PassportSessionStrategy) {
   constructor(
     // @AuthConfig() readonly config: ConfigType<typeof authConfig>,
     private readonly userService: UserService,
-    private readonly cls: ClsService
+    private readonly cls: ClsService,
   ) {
     super();
   }

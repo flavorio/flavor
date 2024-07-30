@@ -1,4 +1,9 @@
-import { ConnectedSocket, OnGatewayInit, SubscribeMessage, WebSocketGateway } from '@nestjs/websockets';
+import {
+  ConnectedSocket,
+  OnGatewayInit,
+  SubscribeMessage,
+  WebSocketGateway,
+} from '@nestjs/websockets';
 import { WsService } from './ws.service';
 import { Logger } from '@nestjs/common';
 import WebSocket from 'ws';
@@ -11,11 +16,9 @@ import { WsTransportAdaptor } from './ws-transport-adaptor';
   // perMessageDeflate: true
 })
 export class WsGateway implements OnGatewayInit {
-  constructor(private readonly wsService: WsService) { }
+  constructor(private readonly wsService: WsService) {}
 
-  afterInit(@ConnectedSocket() socket: WebSocket) {
-
-  }
+  afterInit(@ConnectedSocket() socket: WebSocket) {}
 
   private logger = new Logger(WsGateway.name);
 
@@ -41,13 +44,11 @@ export class WsGateway implements OnGatewayInit {
     }
   }
 
-
   @SubscribeMessage('message')
   handleMessage(client: unknown, payload: any) {
     this.logger.log('ws:on:message', payload);
     return 'hello world';
   }
-
 
   private async findUserByRequest(request: IncomingMessage) {
     // const url = new URL(request.url, `http://${request.headers.host}`);

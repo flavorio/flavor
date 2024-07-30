@@ -1,21 +1,21 @@
-import { create } from "zustand";
-import { produce } from "immer";
-import { HistoryEntry } from "tldraw";
-import { apiAgent } from "@/api";
+import { create } from 'zustand';
+import { produce } from 'immer';
+import { HistoryEntry } from 'tldraw';
+import { apiAgent } from '@/api';
 
 type PageState = {
   pageId: string;
   pageData: { schema: any; store: any };
-  pageStatus: "idle" | "loading" | "succeed" | "failed";
+  pageStatus: 'idle' | 'loading' | 'succeed' | 'failed';
   setPageId: (pageId: string) => void;
   getPageData: () => Promise<void>;
   updatePageData: (update: HistoryEntry) => void;
 };
 
 export const usePageStore = create<PageState>()((set, get) => ({
-  pageId: "",
+  pageId: '',
   pageData: { schema: null, store: null },
-  pageStatus: "idle" as const,
+  pageStatus: 'idle' as const,
   setPageId: (newPageId) => {
     const { pageId, getPageData } = get();
     if (newPageId && newPageId !== pageId) {
@@ -24,12 +24,12 @@ export const usePageStore = create<PageState>()((set, get) => ({
     }
   },
   getPageData: async () => {
-    set({ pageStatus: "loading" });
+    set({ pageStatus: 'loading' });
     try {
       const res = await apiAgent.document.getDocument({ id: get().pageId });
-      set({ pageData: res.data, pageStatus: "succeed" });
+      set({ pageData: res.data, pageStatus: 'succeed' });
     } catch (_) {
-      set({ pageStatus: "failed" });
+      set({ pageStatus: 'failed' });
     }
   },
   updatePageData: (update) => {
