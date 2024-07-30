@@ -1,6 +1,7 @@
 import { debounce } from "lodash";
 import type { FC, PropsWithChildren } from "react";
 import React, { useMemo, useState } from "react";
+import { useShallow } from "zustand/react/shallow";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import {
   Button,
@@ -13,21 +14,23 @@ import {
 import { hasPermission, SpaceRole } from "@flavor/core/auth";
 import { ListSpaceCollaboratorVo } from "@flavor/core/space";
 import { useT } from "@/hooks";
+import { apiAgent } from "@/api";
 import { Collaborator } from "./Collaborator";
 import { RoleSelect } from "./RoleSelect";
 import { useUserInfo } from "@/stores/user-store";
+import { useSpaceStore } from "@/stores/space-store";
 
 interface ICollaborators {
   spaceId: string;
   role: SpaceRole;
 }
 
-const filterCollaborators = (
+const filterSpaceMembers = (
   search: string,
-  collaborators?: ListSpaceCollaboratorVo,
+  spaceMembers?: ListSpaceCollaboratorVo,
 ) => {
-  if (!search) return collaborators;
-  return collaborators?.filter(({ userName, email }) => {
+  if (!search) return spaceMembers;
+  return spaceMembers?.filter(({ userName, email }) => {
     const searchLower = search.toLowerCase();
     const usernameLower = userName.toLowerCase();
     const emailLower = email.toLowerCase();
@@ -44,41 +47,32 @@ export const Collaborators: FC<PropsWithChildren<ICollaborators>> = (props) => {
 
   const t = useT();
   const user = useUserInfo();
+  const [spaceMembers, getSpaceMembers] = useSpaceStore(
+    useShallow((state) => [state.spaceMembers, state.getSpaceMembers]),
+  );
 
   const [search, setSearch] = useState<string>("");
   const [applySearch, setApplySearch] = useState<string>(search);
 
-  const collaborators = [
-    {
-      userId: "usr0lfDYZzxy44Owig6",
-      userName: "聂骁骏",
-      email: "nxjniexiao@gmail.com",
-      avatar: "https://sss.teable.io/pub-assets/avatar/usr0lfDYZzxy44Owig6",
-      role: "owner",
-      createdAt: "2024-07-17T03:26:19.246Z",
-    },
-    {
-      userId: "usrmRE0EhpPlRFV1XMQ",
-      userName: "awehook",
-      email: "awehook@163.com",
-      avatar: "https://sss.teable.io/pub-assets/avatar/usrmRE0EhpPlRFV1XMQ",
-      role: "creator",
-      createdAt: "2024-07-26T10:22:43.229Z",
-    },
-  ];
-  const updateCollaborator = (arg: any) => {
-    //
+  const updateCollaborator = async (
+    spaceId: string,
+    userId: string,
+    role: SpaceRole,
+  ) => {
+    await apiAgent.space.updateSpaceMember({ spaceId, userId, role });
+    getSpaceMembers();
   };
   const updateCollaboratorLoading = false;
 
-  const deleteCollaborator = (arg: any) => {
-    //
+  const deleteCollaborator = async (spaceId: string, userId: string) => {
+    await apiAgent.space.deleteSpaceMember({ spaceId, userId });
+    getSpaceMembers();
   };
   const deleteCollaboratorLoading = false;
 
   const collaboratorsFiltered = useMemo(() => {
-    return filterCollaborators(applySearch, collaborators);
-  }, [applySearch, collaborators]);
+    return filterSpaceMembers(applySearch, spaceMembers);
+  }, [applySearch, spaceMembers]);
 
   const hasGrantRolePermission = hasPermission(role, "space|grant_role");
 
@@ -119,12 +113,7 @@ export const Collaborators: FC<PropsWithChildren<ICollaborators>> = (props) => {
                   userId === user?.id ||
                   !hasGrantRolePermission
                 }
-                onChange={(role) =>
-                  updateCollaborator({
-                    spaceId,
-                    updateSpaceCollaborateRo: { userId, role },
-                  })
-                }
+                onChange={(role) => updateCollaborator(spaceId, userId, role)}
               />
               {userId !== user?.id && hasGrantRolePermission && (
                 <TooltipProvider>
@@ -135,7 +124,7 @@ export const Collaborators: FC<PropsWithChildren<ICollaborators>> = (props) => {
                         size="sm"
                         variant="ghost"
                         disabled={deleteCollaboratorLoading}
-                        onClick={() => deleteCollaborator({ spaceId, userId })}
+                        onClick={() => deleteCollaborator(spaceId, userId)}
                       >
                         <Cross2Icon className="size-4 cursor-pointer text-muted-foreground opacity-70 hover:opacity-100" />
                       </Button>

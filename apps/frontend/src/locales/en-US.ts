@@ -24,15 +24,15 @@ export default {
     spaceMembers: "Space members",
     invite: {
       title: "{{spaceName}} space sharing",
-      desc: "This space has {count, plural, =0 {no collaborators} one {# collaborator} other {# collaborators}}. Adding a space collaborator will give them access to all bases within this space.",
+      desc: "This space has {count, plural, =0 {no spaceMembers} one {# collaborator} other {# spaceMembers}}. Adding a space collaborator will give them access to all bases within this space.",
       tabEmail: "Invite by email",
-      emailPlaceholder: "Invite more space collaborators via email",
+      emailPlaceholder: "Invite more space spaceMembers via email",
       tabLink: "Invite by link",
       linkPlaceholder:
         "Create an invite link that grants the following access to anyone who opens it: ",
       emailSend: "Send invite",
       linkSend: "Create link",
-      spaceTitle: "Space collaborators",
+      spaceTitle: "Space spaceMembers",
       collaboratorSearchPlaceholder:
         "Find a space collaborator by name or email",
       collaboratorJoin: "joined {joinTime}",

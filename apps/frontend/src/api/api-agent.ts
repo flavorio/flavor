@@ -1,12 +1,15 @@
 import axios from "axios";
 import {
+  AcceptInvitationLinkRo,
   CreateDocumentRo,
   CreateSpaceInvitationLinkRo,
   DeleteSpaceInvitationLinkRo,
+  DeleteSpaceMemberRo,
   SigninRo,
   SignupRo,
   UpdateDocumentRecordsRo,
   UpdateSpaceInvitationLinkRo,
+  UpdateSpaceMemberRo,
 } from "@flavor/core/data";
 
 const baseURL = "/api/";
@@ -64,8 +67,16 @@ export const apiAgent = {
       return await instance.post("/space/getSpaceInviteLinks", payload);
     },
 
-    async getSpaceCollaborators(payload: PayloadWithId) {
-      return await instance.post("/space/getSpaceCollaborators", payload);
+    async getSpaceMembers(payload: PayloadWithId) {
+      return await instance.post("/space/getSpaceMembers", payload);
+    },
+
+    async deleteSpaceMember(payload: DeleteSpaceMemberRo) {
+      return await instance.post("/space/deleteSpaceMember", payload);
+    },
+
+    async updateSpaceMember(payload: UpdateSpaceMemberRo) {
+      return await instance.post("/space/updateSpaceMember", payload);
     },
   },
 
@@ -80,6 +91,10 @@ export const apiAgent = {
 
     async updateSpaceInviteLink(payload: UpdateSpaceInvitationLinkRo) {
       return await instance.post("/invitation/updateInvitationLink", payload);
+    },
+
+    async acceptInvitationLink(payload: AcceptInvitationLinkRo) {
+      return await instance.post("/invitation/acceptInvitationLink", payload);
     },
   },
 };

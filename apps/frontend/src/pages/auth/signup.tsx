@@ -35,7 +35,7 @@ export default function SignUp() {
 
   async function onSubmit(values: SignupRo) {
     await apiAgent.auth.signup(values);
-    const from = location.state?.from?.pathname || "/";
+    const from = location.state?.from || "/";
     navigate(from, { replace: true });
   }
 
@@ -73,7 +73,7 @@ export default function SignUp() {
             <Button type="submit">
               <FormattedMessage id="auth.signUp" />
             </Button>
-            <Link to="/login" replace className="ml-4">
+            <Link to="/login" state={location.state} replace className="ml-4">
               <FormattedMessage id="auth.redirectToSignInDesc" />
             </Link>
           </div>

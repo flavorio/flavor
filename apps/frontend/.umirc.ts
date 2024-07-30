@@ -16,6 +16,12 @@ export default defineConfig({
         },
       ],
     },
+    {
+      path: "/invite",
+      component: "invite",
+      wrappers: ["@/wrappers/auth"],
+      layout: false,
+    },
     { path: "/signup", component: "auth/signup", layout: false },
     { path: "/login", component: "auth/login", layout: false },
     { path: "/*", component: "404", layout: false },

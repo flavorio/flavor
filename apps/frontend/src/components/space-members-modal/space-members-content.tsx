@@ -8,11 +8,11 @@ import { InviteLink } from "./InviteLink";
 import { Collaborators } from "./Collaborators";
 
 export default function SpaceMemberModalContent() {
-  const [currSpaceInfo, getInviteLinks, getCollaborators] = useSpaceStore(
+  const [currSpaceInfo, getInviteLinks, getSpaceMembers] = useSpaceStore(
     useShallow((state) => [
       state.currSpaceInfo,
       state.getInviteLinks,
-      state.getCollaborators,
+      state.getSpaceMembers,
     ]),
   );
   const t = useT();
@@ -20,7 +20,7 @@ export default function SpaceMemberModalContent() {
   useEffect(() => {
     const fetchData = async () => {
       getInviteLinks();
-      // getCollaborators();
+      getSpaceMembers();
     };
 
     fetchData();

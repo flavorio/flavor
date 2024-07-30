@@ -34,7 +34,7 @@ type InviteLink = {
   role: SpaceRole;
 };
 
-type Collaborator = {
+type SpaceMember = {
   avatar: string;
   createdAt: string;
   email: string;
@@ -48,15 +48,15 @@ type SpaceState = {
   currSpaceInfo: SpaceInfo | null;
   spaceList: SpaceList;
   inviteLinks: InviteLink[];
-  collaborators: Collaborator[];
+  spaceMembers: SpaceMember[];
   getSpaceList: () => Promise<void>;
   getSpaceInfo: () => Promise<void>;
   setCurrSpaceId: (currSpaceId: string) => void;
   updateDocName: (docId: string, docName: string) => void;
   getInviteLinks: () => Promise<void>;
-  getCollaborators: () => Promise<void>;
+  getSpaceMembers: () => Promise<void>;
   setInviteLinks: (inviteLinks: InviteLink[]) => void;
-  setCollaborators: (collaborators: Collaborator[]) => void;
+  setSpaceMembers: (spaceMembers: SpaceMember[]) => void;
 };
 
 export const useSpaceStore = create<SpaceState>((set, get) => ({
@@ -64,7 +64,7 @@ export const useSpaceStore = create<SpaceState>((set, get) => ({
   currSpaceInfo: null,
   spaceList: [],
   inviteLinks: [],
-  collaborators: [],
+  spaceMembers: [],
   getSpaceList: async () => {
     try {
       const res = await apiAgent.space.getSpaceList();
@@ -110,20 +110,20 @@ export const useSpaceStore = create<SpaceState>((set, get) => ({
       set({ inviteLinks: res.data });
     } catch (_) {}
   },
-  getCollaborators: async () => {
+  getSpaceMembers: async () => {
     try {
       const currSpaceId = get().currSpaceId!;
-      const res = await apiAgent.space.getSpaceCollaborators({
+      const res = await apiAgent.space.getSpaceMembers({
         id: currSpaceId,
       });
-      set({ collaborators: res.data });
+      set({ spaceMembers: res.data });
     } catch (_) {}
   },
   setInviteLinks: (inviteLinks) => {
     set({ inviteLinks });
   },
-  setCollaborators: (collaborators) => {
-    set({ collaborators });
+  setSpaceMembers: (spaceMembers) => {
+    set({ spaceMembers });
   },
 }));
 

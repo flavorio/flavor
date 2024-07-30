@@ -20,8 +20,8 @@ interface IInvite {
 export const Invite: React.FC<IInvite> = (props) => {
   const { className, spaceId, role } = props;
 
-  const [getInviteLinks, getCollaborators] = useSpaceStore(
-    useShallow((state) => [state.getInviteLinks, state.getCollaborators]),
+  const [getInviteLinks] = useSpaceStore(
+    useShallow((state) => [state.getInviteLinks]),
   );
   const t = useT();
 

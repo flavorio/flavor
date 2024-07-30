@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { keyBy, map } from 'lodash';
-import { GetSpaceVo } from '@flavor/core';
+import { GetSpaceVo, SpaceRole } from '@flavor/core';
 
 @Injectable()
 export class SpaceService {
@@ -28,13 +28,13 @@ export class SpaceService {
   // }
 
   async getSpaceList(userId: string) {
-    const spaces = await this.prisma.spaceMember.findMany({
+    const spaces = await this.prisma.txClient().spaceMember.findMany({
       where: { userId },
       select: { spaceId: true, role: true },
     });
 
     const spaceIds = map(spaces, 'spaceId') as string[];
-    const spaceList = await this.prisma.space.findMany({
+    const spaceList = await this.prisma.txClient().space.findMany({
       where: { id: { in: spaceIds } },
       select: { id: true, name: true },
       orderBy: { createdAt: 'desc' },
@@ -48,7 +48,7 @@ export class SpaceService {
   }
 
   async getSpaceInfo(spaceId: string, userId: string) {
-    const space = await this.prisma.space.findUnique({
+    const space = await this.prisma.txClient().space.findUnique({
       where: { id: spaceId, active: true },
       select: { id: true, name: true },
     });
@@ -56,12 +56,12 @@ export class SpaceService {
       throw new NotFoundException('Space not found');
     }
 
-    const spaceMember = await this.prisma.spaceMember.findFirst({
-      where: { spaceId, userId },
+    const spaceMember = await this.prisma.txClient().spaceMember.findFirst({
+      where: { spaceId, userId, active: true },
       select: { spaceId: true, role: true },
     });
 
-    const documents = await this.prisma.document.findMany({
+    const documents = await this.prisma.txClient().document.findMany({
       where: { spaceId, active: true },
     });
     return {
@@ -69,5 +69,70 @@ export class SpaceService {
       role: spaceMember?.role,
       documents,
     };
+  }
+
+  async getSpaceMembers(spaceId: string) {
+    const members = await this.prisma.txClient().spaceMember.findMany({
+      where: {
+        spaceId,
+        active: true,
+      },
+      select: {
+        id: true,
+        spaceId: true,
+        userId: true,
+        role: true,
+        createdAt: true,
+      },
+    });
+
+    const userIds = members.map((member) => member.userId);
+    const users = await this.prisma.txClient().user.findMany({
+      where: { id: { in: userIds } },
+      select: { id: true, name: true, avatar: true, email: true },
+      orderBy: { createdAt: 'desc' },
+    });
+    const userMap = keyBy(users, 'id');
+
+    const spaceMembers = members.map((member) => {
+      const { name: userName, avatar, email } = userMap[member.userId] || {};
+
+      return {
+        ...member,
+        avatar,
+        userName,
+        email,
+      };
+    });
+
+    return spaceMembers;
+  }
+
+  async deleteSpaceMember(spaceId: string, userId: string) {
+    await this.prisma.txClient().spaceMember.updateMany({
+      where: {
+        spaceId,
+        userId,
+      },
+      data: {
+        active: false,
+      },
+    });
+
+    return;
+  }
+
+  async updateSpaceMember(spaceId: string, userId: string, role: SpaceRole) {
+    await this.prisma.txClient().spaceMember.updateMany({
+      where: {
+        spaceId,
+        userId,
+      },
+      data: {
+        role,
+      },
+    });
+
+    return;
   }
 }
