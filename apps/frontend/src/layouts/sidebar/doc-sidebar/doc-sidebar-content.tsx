@@ -25,7 +25,7 @@ export default function DocSidebarContent() {
       spaceId: currSpaceInfo?.id!,
       doc: createDoc(),
     };
-    apiAgent.document.createDocument(payload);
+    await apiAgent.document.createDocument(payload);
     await getSpaceInfo();
   };
 

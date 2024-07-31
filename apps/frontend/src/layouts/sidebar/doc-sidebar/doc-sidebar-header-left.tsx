@@ -5,9 +5,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 export default function DocSidebarHeaderLeft() {
   const navigate = useNavigate();
-  const [currSpaceInfo, spaceList, setCurrSpaceId, getSpaceInfo] = useSpaceStore(
+  const [currSpaceId, spaceList, setCurrSpaceId, getSpaceInfo] = useSpaceStore(
     useShallow((state) => [
-      state.currSpaceInfo,
+      state.currSpaceId,
       state.spaceList,
       state.setCurrSpaceId,
       state.getSpaceInfo,
@@ -25,12 +25,12 @@ export default function DocSidebarHeaderLeft() {
       <span className="mr-2 text-sm">
         <FormattedMessage id="space.space" />:
       </span>
-      {currSpaceInfo?.id && (
-        <Select defaultValue={currSpaceInfo?.id} onValueChange={selectWorkspace}>
+      {currSpaceId && (
+        <Select value={currSpaceId} onValueChange={selectWorkspace}>
           <SelectTrigger className="h-8 w-[160px]">
             <SelectValue placeholder="select a workspace" />
           </SelectTrigger>
-          <SelectContent defaultValue={currSpaceInfo?.id}>
+          <SelectContent>
             {spaceList.map((space) => (
               <SelectItem value={space.id} key={space.id}>
                 {space.name}
