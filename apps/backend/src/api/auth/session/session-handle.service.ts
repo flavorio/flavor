@@ -5,7 +5,8 @@ import ms from 'ms';
 // import { AuthConfig, IAuthConfig } from '../../configs/auth.config';
 import { AUTH_SESSION_COOKIE_NAME } from 'src/const';
 import { SessionStoreService } from './session-store.service';
-import { AuthConfig, IAuthConfig } from 'src/config/auth.config';
+import type { IAuthConfig } from 'src/config/auth.config';
+import { AuthConfig } from 'src/config/auth.config';
 
 @Injectable()
 export class SessionHandleService {

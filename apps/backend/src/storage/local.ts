@@ -11,7 +11,8 @@ import {
   IPresignParams,
   IRespHeaders,
 } from './types';
-import { IStorageConfig, StorageConfig } from 'src/config/storage.config';
+import type { IStorageConfig } from 'src/config/storage.config';
+import { StorageConfig } from 'src/config/storage.config';
 import { CacheService } from 'src/cache/cache.service';
 import StorageAdapter from './adapter';
 import { getRandomString } from '@flavor/core';

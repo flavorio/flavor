@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Injectable } from '@nestjs/common';
 import { Store } from 'express-session';
-import { AuthConfig, IAuthConfig } from 'src/config/auth.config';
+import type { IAuthConfig } from 'src/config/auth.config';
+import { AuthConfig } from 'src/config/auth.config';
 import type { ISessionData } from 'src/types/session';
 import { second } from 'src/utils/second';
 import { CacheService } from 'src/cache/cache.service';

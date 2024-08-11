@@ -1,12 +1,14 @@
 import { Controller, HttpCode, HttpStatus, Post, Body } from '@nestjs/common';
 import { SpaceService } from './space.service';
 import { ClsService } from 'nestjs-cls';
-import {
-  DeleteSpaceMemberRo,
-  deleteSpaceMemberRoSchema,
+import type {
   IdRo,
-  idSchema,
+  DeleteSpaceMemberRo,
   UpdateSpaceMemberRo,
+} from '@flavor/core';
+import {
+  idSchema,
+  deleteSpaceMemberRoSchema,
   updateSpaceMemberRoSchema,
 } from '@flavor/core';
 import { ZodValidationPipe } from 'src/zod.validation.pipe';

@@ -1,3 +1,4 @@
+const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
@@ -11,7 +12,7 @@ module.exports = function (options, webpack) {
     cache: false,
     externals: [
       nodeExternals({
-        allowlist: ['webpack/hot/poll?100', /^@flavor/],
+        allowlist: ['webpack/hot/poll?100', /^@flavor/, 'nanoid'],
       }),
     ],
     // ignore tests hot reload
@@ -30,6 +31,18 @@ module.exports = function (options, webpack) {
           },
           exclude: [/node_modules/, /.e2e-spec.ts$/],
         },
+
+        // {
+        //   test: /\.js$/,
+        //   include: [path.resolve(__dirname, 'node_modules/nanoid')],
+        //   use: {
+        //     loader: 'babel-loader',
+        //     options: {
+        //       presets: ['@babel/preset-env'],
+        //       plugins: ['@babel/plugin-transform-modules-commonjs'],
+        //     },
+        //   },
+        // },
       ],
     },
     cache: {

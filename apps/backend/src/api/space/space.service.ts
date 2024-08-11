@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { keyBy, map } from 'lodash';
-import { GetSpaceVo, SpaceRole } from '@flavor/core';
+import { SpaceRole } from '@flavor/core';
 
 @Injectable()
 export class SpaceService {

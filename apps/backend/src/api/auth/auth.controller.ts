@@ -13,7 +13,8 @@ import { Public } from './decorator/public.decorator';
 import { LocalAuthGuard } from './guard/local-auth.guard';
 import { pickUserMe } from './utils';
 import { ZodValidationPipe } from 'src/zod.validation.pipe';
-import { SignupRo, signupSchema } from '@flavor/core';
+import type { SignupRo } from '@flavor/core';
+import { signupSchema } from '@flavor/core';
 
 @Controller('api/auth')
 export class AuthController {

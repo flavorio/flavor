@@ -2,11 +2,13 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { Permissions } from '../auth/decorator/permissions.decorator';
 import { InvitationService } from './invitation.service';
 import { ZodValidationPipe } from 'src/zod.validation.pipe';
-import {
+import type {
   AcceptInvitationLinkRo,
   CreateSpaceInvitationLinkRo,
   DeleteSpaceInvitationLinkRo,
   UpdateSpaceInvitationLinkRo,
+} from '@flavor/core';
+import {
   acceptInvitationLinkRoSchema,
   createSpaceInvitationLinkRoSchema,
   deleteSpaceInvitationLinkRoSchema,

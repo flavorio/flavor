@@ -9,7 +9,7 @@
     "moduleResolution": "Node",
     "declaration": true,
     "declarationDir": "./dist",
-    "module": "CommonJS",
+    "module": "ES2022",
     "noEmit": false,
     "sourceMap": true,
     "allowJs": false,

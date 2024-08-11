@@ -18,8 +18,8 @@
     "declarationDir": "dist",
     "composite": true,
     "rootDir": "src",
-    "outDir": "dist",
-    "types": ["vitest/globals"]
+    "outDir": "dist"
+    // "types": ["vitest/globals"]
   },
   "exclude": ["**/node_modules", "**/.*/", "./dist", "./coverage"],
   "include": ["src"]

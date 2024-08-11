@@ -102,7 +102,7 @@ model Document {
   id        String    @id @default(cuid())
   spaceId   String    @map("space_id")
   name      String
-  schema    Json
+  snapshot  Json?
   active    Boolean   @default(true)
   createdBy String    @map("created_by")
   createdAt DateTime  @default(now()) @map("created_at")

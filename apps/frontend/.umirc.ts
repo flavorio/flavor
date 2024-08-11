@@ -41,6 +41,11 @@ export default defineConfig({
       changeOrigin: true,
       // pathRewrite: { "^/api": "" },
     },
+    '/realtime': {
+      target: 'http://localhost:10008',
+      changeOrigin: true,
+      // pathRewrite: { "^/api": "" },
+    },
   },
 
   alias: {

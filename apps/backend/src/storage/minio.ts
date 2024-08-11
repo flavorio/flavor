@@ -1,7 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import * as minio from 'minio';
 import StorageAdapter from './adapter';
-import { IStorageConfig, StorageConfig } from 'src/config/storage.config';
+import type { IStorageConfig } from 'src/config/storage.config';
+import { StorageConfig } from 'src/config/storage.config';
 import { IObjectMeta, IPresignParams, IPresignRes } from './types';
 import { getRandomString } from '@flavor/core';
 import { Readable } from 'stream';
