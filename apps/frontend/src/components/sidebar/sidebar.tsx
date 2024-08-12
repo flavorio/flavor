@@ -1,6 +1,6 @@
 import { PropsWithChildren, ReactNode, useState } from 'react';
 import { DoubleArrowRightIcon } from '@radix-ui/react-icons';
-import { Button, cn } from '@flavor/ui/shadcn';
+import { Button, cn } from '@flavor/ui';
 import { HoverWrapper } from '@/components/toggle-sidebar/hover-wrapper';
 import { SidebarHeader } from './sidebar-header';
 import { SIDE_BAR_WIDTH } from '../toggle-sidebar/constant';

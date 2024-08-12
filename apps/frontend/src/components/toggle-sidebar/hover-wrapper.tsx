@@ -1,4 +1,4 @@
-import { cn } from '@flavor/ui/shadcn';
+import { cn } from '@flavor/ui';
 import React, { useState } from 'react';
 
 interface IHoverWrapperProps {

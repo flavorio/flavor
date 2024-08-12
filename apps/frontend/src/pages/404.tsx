@@ -1,5 +1,5 @@
 import { FormattedMessage, Link } from 'umi';
-import { Button } from '@flavor/ui/shadcn';
+import { Button } from '@flavor/ui';
 
 export default function NotFoundPage(props: { title?: string }) {
   const { title } = props;

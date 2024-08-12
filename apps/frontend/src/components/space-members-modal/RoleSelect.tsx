@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
   Separator,
-} from '@flavor/ui/shadcn';
+} from '@flavor/ui';
 import { SpaceRole } from '@flavor/core';
 
 interface IRoleSelect {

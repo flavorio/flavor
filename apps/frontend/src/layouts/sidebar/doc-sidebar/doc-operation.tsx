@@ -5,7 +5,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@flavor/ui/shadcn';
+} from '@flavor/ui';
 import { Document } from '@/stores/space-store';
 
 type DocOperationProps = {

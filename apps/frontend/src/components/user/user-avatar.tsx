@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage, cn } from '@flavor/ui/shadcn';
+import { Avatar, AvatarFallback, AvatarImage, cn } from '@flavor/ui';
 import React from 'react';
 
 interface UserAvatarProps {

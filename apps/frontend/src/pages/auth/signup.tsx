@@ -12,7 +12,7 @@ import {
   FormLabel,
   FormMessage,
   Input,
-} from '@flavor/ui/shadcn';
+} from '@flavor/ui';
 
 export default function SignUp() {
   const location = useLocation();

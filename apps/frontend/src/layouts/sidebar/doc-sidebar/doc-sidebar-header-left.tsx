@@ -1,7 +1,7 @@
 import { useNavigate, FormattedMessage } from 'umi';
 import { useShallow } from 'zustand/react/shallow';
 import { useSpaceStore } from '@/stores/space-store';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@flavor/ui/shadcn';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@flavor/ui';
 
 export default function DocSidebarHeaderLeft() {
   const navigate = useNavigate();

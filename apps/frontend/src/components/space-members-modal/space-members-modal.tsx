@@ -1,5 +1,5 @@
 import { FormattedMessage } from 'umi';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@flavor/ui/shadcn';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@flavor/ui';
 import { useShallow } from 'zustand/react/shallow';
 import SpaceMemberModalContent from './space-members-content';
 import { useUIStore } from '@/stores/ui-store';

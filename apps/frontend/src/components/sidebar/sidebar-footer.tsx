@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@flavor/ui/shadcn';
+import { Avatar, AvatarFallback, AvatarImage } from '@flavor/ui';
 import { useUserInfo } from '@/stores/user-store';
 import SidebarFooterOperation from './sidebar-footer-operation';
 import SpaceMemberModal from '../space-members-modal/space-members-modal';

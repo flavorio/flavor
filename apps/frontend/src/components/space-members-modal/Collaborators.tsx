@@ -10,7 +10,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@flavor/ui/shadcn';
+} from '@flavor/ui';
 import { hasPermission, SpaceRole } from '@flavor/core';
 import { ListSpaceCollaboratorVo } from '@flavor/core';
 import { useT } from '@/hooks';

@@ -1,4 +1,4 @@
-import { cn } from '@flavor/ui/shadcn';
+import { cn } from '@flavor/ui';
 import { UserAvatar } from '../user/user-avatar';
 
 interface ICollaboratorProps {

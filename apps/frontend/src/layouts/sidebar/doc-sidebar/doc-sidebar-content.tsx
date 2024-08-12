@@ -8,7 +8,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@flavor/ui/shadcn';
+} from '@flavor/ui';
 import { apiAgent } from '@/api';
 import { useState } from 'react';
 import DocItem from './doc-item';

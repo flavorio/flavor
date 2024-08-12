@@ -5,7 +5,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@flavor/ui/shadcn';
+} from '@flavor/ui';
 import { useUIStore } from '@/stores/ui-store';
 
 type SidebarFooterOperationProps = {

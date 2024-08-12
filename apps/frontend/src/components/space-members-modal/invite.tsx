@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { Cross2Icon } from '@radix-ui/react-icons';
 import { hasPermission, SpaceRole } from '@flavor/core';
-import { Button, cn } from '@flavor/ui/shadcn';
+import { Button, cn } from '@flavor/ui';
 import { apiAgent } from '@/api';
 import { useSpaceRoleStatic, useT } from '@/hooks';
 import { useSpaceStore } from '@/stores/space-store';

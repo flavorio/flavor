@@ -9,7 +9,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
   useToast,
-} from '@flavor/ui/shadcn';
+} from '@flavor/ui';
 import { RoleSelect } from './RoleSelect';
 import { getRolesWithLowerPermissions } from './utils';
 import { CopyIcon, Cross2Icon } from '@radix-ui/react-icons';
