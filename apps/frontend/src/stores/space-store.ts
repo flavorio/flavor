@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { produce } from 'immer';
 import { apiAgent } from '@/api';
-import { SpaceRole } from '@flavor/core/auth/role';
+import { SpaceRole } from '@flavor/core';
 
 type Space = {
   id: string;

@@ -10,7 +10,7 @@ import {
   UpdateDocumentRecordsRo,
   UpdateSpaceInvitationLinkRo,
   UpdateSpaceMemberRo,
-} from '@flavor/core/data';
+} from '@flavor/core';
 
 const baseURL = '/api/';
 

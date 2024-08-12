@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { RoomSnapshot, TLSocketRoom } from '@tldraw/sync-core';
 import { DocumentService } from 'src/api/document/document.service';
 
@@ -33,7 +33,7 @@ export class RealtimeService {
   async readSnapshot(roomId: string) {
     const doc = await this.documentService.findDocument(roomId);
     if (doc) return doc.snapshot as any as RoomSnapshot;
-    return undefined;
+    throw new NotFoundException('Document not found');
   }
 
   async saveSnapshot(roomId: string, snapshot: RoomSnapshot) {

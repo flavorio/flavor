@@ -11,8 +11,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@flavor/ui/shadcn';
-import { hasPermission, SpaceRole } from '@flavor/core/auth';
-import { ListSpaceCollaboratorVo } from '@flavor/core/space';
+import { hasPermission, SpaceRole } from '@flavor/core';
+import { ListSpaceCollaboratorVo } from '@flavor/core';
 import { useT } from '@/hooks';
 import { apiAgent } from '@/api';
 import { Collaborator } from './Collaborator';

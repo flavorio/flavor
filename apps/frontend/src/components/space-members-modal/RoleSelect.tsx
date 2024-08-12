@@ -10,7 +10,7 @@ import {
   SelectValue,
   Separator,
 } from '@flavor/ui/shadcn';
-import { SpaceRole } from '@flavor/core/auth';
+import { SpaceRole } from '@flavor/core';
 
 interface IRoleSelect {
   className?: string;

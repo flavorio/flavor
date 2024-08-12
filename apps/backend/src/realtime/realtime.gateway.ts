@@ -1,3 +1,4 @@
+import { parse } from 'url';
 import {
   OnGatewayConnection,
   OnGatewayInit,
@@ -18,12 +19,13 @@ export class RealtimeGateway implements OnGatewayInit, OnGatewayConnection {
   private logger = new Logger(RealtimeGateway.name);
 
   afterInit(server: Server) {
-    this.logger.log('WsGateway afterInit');
+    this.logger.log('RealtimeGateway afterInit');
     server.on('connection', async (socket, request: Request) => {
       try {
         this.logger.log('ws:on:connection');
-        const roomId = request.query['roomId'] as string;
-        const sessionId = request.query['sessionId'] as string;
+        const parsedUrl = parse(request.url, true);
+        const roomId = parsedUrl.query['roomId'] as string;
+        const sessionId = parsedUrl.query['sessionId'] as string;
         const room = await this.realtimeService.makeOrLoadRoom(roomId);
         room.handleSocketConnect({
           sessionId,
@@ -40,7 +42,7 @@ export class RealtimeGateway implements OnGatewayInit, OnGatewayConnection {
     this.logger.log('ws:on:close');
   }
 
-  handleConnection(client: unknown) {
-    this.logger.log('ws:on:connection', client);
+  handleConnection(socket: unknown, request: Request) {
+    this.logger.log('ws:on:connection');
   }
 }

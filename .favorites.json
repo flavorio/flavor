@@ -6,5 +6,13 @@
     "workspaceRoot": "/home/zhou/coding/awehook/flavor",
     "workspacePath": "node_modules/.pnpm/@tldraw+store@2.4.0_react@18.3.1/node_modules",
     "id": "y5SOUcBtiW0IDZj9"
+  },
+  {
+    "type": "Directory",
+    "name": "/home/zhou/coding/awehook/flavor/apps/backend/node_modules/@nestjs",
+    "parent_id": null,
+    "workspaceRoot": "/home/zhou/coding/awehook/flavor",
+    "workspacePath": "apps/backend/node_modules/@nestjs",
+    "id": "ElvachqJg1HTD3yx"
   }
 ]

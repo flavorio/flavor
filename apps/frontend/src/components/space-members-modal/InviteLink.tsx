@@ -13,7 +13,7 @@ import {
 import { RoleSelect } from './RoleSelect';
 import { getRolesWithLowerPermissions } from './utils';
 import { CopyIcon, Cross2Icon } from '@radix-ui/react-icons';
-import { SpaceRole } from '@flavor/core/auth';
+import { SpaceRole } from '@flavor/core';
 import { useSpaceRoleStatic, useT } from '@/hooks';
 import { useSpaceStore } from '@/stores/space-store';
 import { apiAgent } from '@/api';

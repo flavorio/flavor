@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useIntl } from 'umi';
-import { SpaceRole } from '@flavor/core/auth/role';
+import { SpaceRole } from '@flavor/core';
 
 export interface ISpaceRoleStatic {
   role: SpaceRole;

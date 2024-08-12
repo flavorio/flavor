@@ -1,5 +1,5 @@
 import { ISpaceRoleStatic } from '@/hooks';
-import { SpaceRole } from '@flavor/core/auth/role';
+import { SpaceRole } from '@flavor/core';
 
 export const getRolesWithLowerPermissions = (
   role: SpaceRole,

@@ -1,10 +1,3 @@
 {
-  "extends": "./src/.umi/tsconfig.json",
-
-  "compilerOptions": {
-    "paths": {
-      // "*": ["*"],
-      "@flavor/core": ["../../packages/core/src"]
-    }
-  }
+  "extends": "./src/.umi/tsconfig.json"
 }

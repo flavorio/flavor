@@ -42,7 +42,8 @@ export default defineConfig({
       // pathRewrite: { "^/api": "" },
     },
     '/realtime': {
-      target: 'http://localhost:10008',
+      target: 'ws://localhost:10008',
+      ws: true,
       changeOrigin: true,
       // pathRewrite: { "^/api": "" },
     },

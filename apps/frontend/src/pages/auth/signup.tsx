@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { apiAgent } from '@/api';
 import { useIntl, FormattedMessage, Link, useLocation, useNavigate } from 'umi';
-import { signupSchema, SignupRo } from '@flavor/core/data';
+import { signupSchema, SignupRo } from '@flavor/core';
 import {
   Button,
   Form,

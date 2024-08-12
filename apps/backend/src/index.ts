@@ -19,7 +19,9 @@ async function bootstrap() {
   );
   process.env.PORT = port.toString();
 
-  await app.listen(port);
+  process.env.NODE_ENV === 'production'
+    ? await app.listen(port)
+    : await app.listen(port, 'localhost');
 }
 bootstrap();
 

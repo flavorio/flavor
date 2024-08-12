@@ -10,21 +10,32 @@ import {
   Tldraw,
   uniqueId,
 } from 'tldraw';
+import 'tldraw/tldraw.css';
+import { useUserStore } from '@/stores/user-store';
 
-const WORKER_URL = `http://localhost:10008`;
+// const WORKER_URL = `ws://localhost`;
+const WORKER_URL = `ws://localhost:10008`;
 
 const Doc = () => {
+  const userInfo = useUserStore((state) => state.userInfo);
   const { docId } = useParams();
   const sessionId = getRandomString(16);
   const store = useSync({
     // We need to know the websocket's URI...
-    uri: `${WORKER_URL}/realtime/?roomId=${docId}`,
+    uri: `${WORKER_URL}/realtime?roomId=${docId}`,
+    userInfo: {
+      id: userInfo!.id,
+      name: userInfo?.name,
+    },
     // ...and how to handle static assets like images & videos
     assets: multiplayerAssets,
   });
 
   return (
-    <div style={{ position: 'fixed', inset: 0 }}>
+    <div
+      className="w-full h-full"
+      // style={{ position: 'fixed', inset: 0 }}
+    >
       <Tldraw
         // we can pass the connected store into the Tldraw component which will handle
         // loading states & enable multiplayer UX like cursors & a presence menu
