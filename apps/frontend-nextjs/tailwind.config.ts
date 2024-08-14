@@ -1,19 +1,29 @@
-import type { Config } from 'tailwindcss';
+const { join } = require('path');
+const uiConfig = require('../../packages/ui/ui.config.js');
+const filePath = join(__dirname, './src/**/*.{js,ts,jsx,tsx}');
+const uiPath = join(__dirname, '../../packages/ui/src/**/*.{js,ts,jsx,tsx}');
+const scrollbarPlugin = require('tailwind-scrollbar');
 
-const config: Config = {
-  content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
-  theme: {
-    extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-      },
+/** @type {import('tailwindcss').Config} */
+module.exports = uiConfig({
+  content: [filePath, uiPath],
+  theme: {},
+  plugins: [
+    scrollbarPlugin({ nocompatible: true }),
+    function ({ addUtilities }) {
+      const newUtilities = {
+        '.scrollbar-min-thumb': {
+          '&::-webkit-scrollbar-thumb': {
+            minHeight: '32px',
+          },
+          '&::-webkit-scrollbar-thumb:vertical': {
+            minHeight: '32px',
+          },
+        },
+      };
+
+      addUtilities(newUtilities);
     },
-  },
-  plugins: [],
-};
-export default config;
+    require('@tailwindcss/container-queries'),
+  ],
+});
