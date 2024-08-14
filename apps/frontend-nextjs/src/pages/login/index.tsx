@@ -39,8 +39,8 @@ export default function Login() {
 
   async function onSubmit(values: SigninRo) {
     await apiAgent.auth.signin(values);
-    const { next } = router.query;
-    const url = next === undefined || Array.isArray(next) ? '/' : next;
+    const { redirect } = router.query;
+    const url = redirect === undefined || Array.isArray(redirect) ? '/' : redirect;
     router.replace(url);
   }
 

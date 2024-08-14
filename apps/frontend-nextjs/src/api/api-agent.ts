@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import {
   AcceptInvitationLinkRo,
   CreateDocumentRo,
@@ -10,22 +10,29 @@ import {
   UpdateDocumentRecordsRo,
   UpdateSpaceInvitationLinkRo,
   UpdateSpaceMemberRo,
-} from '@flavor/core/data';
+} from '@flavor/core';
 
-const baseURL = '/api/';
+const API_URL = process.env.API_URL;
 
 const instance = axios.create({
-  baseURL,
+  baseURL: '/api/',
   timeout: 30000,
 });
 
-export const apiAgent = {
+const instanceSSR = axios.create({
+  baseURL: API_URL,
+  timeout: 30000,
+});
+
+const createApiAgent = (instance: AxiosInstance) => ({
+  instance,
   auth: {
     async signup(payload: SignupRo) {
       return await instance.post('auth/signup/', payload);
     },
 
     async signin(payload: SigninRo) {
+      console.log('test: ', instance.defaults);
       return await instance.post('auth/signin/', payload);
     },
   },
@@ -97,4 +104,8 @@ export const apiAgent = {
       return await instance.post('/invitation/acceptInvitationLink', payload);
     },
   },
-};
+});
+
+export const apiAgent = createApiAgent(instance);
+
+export const apiAgentSSR = createApiAgent(instanceSSR);
