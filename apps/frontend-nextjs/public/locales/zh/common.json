@@ -20,8 +20,12 @@
     "password": "密码"
   },
   "space": {
+    "allSpaces": "所有空间",
     "space": "空间",
     "spaceMembers": "空间成员",
+    "actions": {
+      "createSpace": "创建空间"
+    },
     "invite": {
       "title": "{spaceName} 空间分享",
       "desc": "这个空间有 {count} 个协作者。添加一个空间协作者将使他们能够访问该空间内的所有数据库。",
