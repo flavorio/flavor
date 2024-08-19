@@ -3,6 +3,7 @@ import {
   AcceptInvitationLinkRo,
   CreateDocumentRo,
   CreateSpaceInvitationLinkRo,
+  CreateSpaceRo,
   DeleteSpaceInvitationLinkRo,
   DeleteSpaceMemberRo,
   SigninRo,
@@ -62,6 +63,10 @@ const createApiAgent = (instance: AxiosInstance) => ({
   },
 
   space: {
+    async createSpace(payload: CreateSpaceRo) {
+      return await instance.post('/space/createSpace', payload);
+    },
+
     async getSpaceList() {
       return await instance.post('/space/getSpaceList');
     },

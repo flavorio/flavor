@@ -5,11 +5,13 @@ import type {
   IdRo,
   DeleteSpaceMemberRo,
   UpdateSpaceMemberRo,
+  CreateSpaceRo,
 } from '@flavor/core';
 import {
   idSchema,
   deleteSpaceMemberRoSchema,
   updateSpaceMemberRoSchema,
+  createSpaceRoSchema,
 } from '@flavor/core';
 import { ZodValidationPipe } from 'src/zod.validation.pipe';
 import { InvitationService } from '../invitation/invitation.service';
@@ -21,6 +23,16 @@ export class SpaceController {
     private readonly invitationService: InvitationService,
     private readonly cls: ClsService,
   ) {}
+
+  @HttpCode(HttpStatus.OK)
+  @Post('createSpace')
+  public async createWorkspace(
+    @Body(new ZodValidationPipe(createSpaceRoSchema)) body: CreateSpaceRo,
+  ): Promise<any> {
+    const userId = this.cls.get('user.id');
+    const { name } = body;
+    return await this.spaceService.createSpace(name, userId);
+  }
 
   @HttpCode(HttpStatus.OK)
   @Post('getSpaceList')

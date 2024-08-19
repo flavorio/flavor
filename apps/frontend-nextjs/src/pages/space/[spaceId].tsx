@@ -1,8 +1,9 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { SpaceIdPageProps } from '@/lib/page-props-type';
 import withAuthSSR from '@/lib/with-auth-ssr';
 import { SpaceLayout } from '@/layouts/space-layout';
+import { useSetAtom } from 'jotai';
 import { useHydrateAtoms } from 'jotai/utils';
 import { userAtom } from '@/stores/user-atoms';
 import { currSpaceAtom, spaceListAtom } from '@/stores/space-atoms';
@@ -12,11 +13,19 @@ import { apiAgentSSR } from '@/api';
 function SpaceId(props: SpaceIdPageProps) {
   const { userInfo, spaceList, currSpace } = props;
 
+  // if the initial value used is changed during rerenders,
+  // it won't update the atom value.
   useHydrateAtoms([
     [userAtom, userInfo],
     [spaceListAtom, spaceList],
     [currSpaceAtom, currSpace],
   ]);
+
+  const setCurrSpace = useSetAtom(currSpaceAtom);
+
+  useEffect(() => {
+    setCurrSpace(currSpace);
+  }, [currSpace, setCurrSpace]);
 
   return <SpaceInfo />;
 }

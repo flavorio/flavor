@@ -1,16 +1,22 @@
-import { useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
 import { useRouter } from 'next/router';
 import { PlusIcon } from '@radix-ui/react-icons';
 import { Button } from '@flavor/ui';
 import { spaceListAtom } from '@/stores/space-atoms';
 import { SpaceItem } from './space-item';
+import { apiAgent } from '@/api';
 
 export function SpaceSidebarContent() {
   const router = useRouter();
-  const spaceList = useAtomValue(spaceListAtom);
+  const [spaceList, setSpaceList] = useAtom(spaceListAtom);
 
-  const addSpace = ({ name }: { name: string }) => {
-    //
+  const addSpace = async () => {
+    const name = 'New Space';
+    await apiAgent.space.createSpace({
+      name,
+    });
+    const newSpaceList = await apiAgent.space.getSpaceList().then(({ data }) => data);
+    setSpaceList(newSpaceList);
   };
 
   return (
@@ -21,7 +27,7 @@ export function SpaceSidebarContent() {
           size={'sm'}
           className="w-full"
           onClick={() => {
-            addSpace({ name: 'new space' });
+            addSpace();
           }}
         >
           <PlusIcon />

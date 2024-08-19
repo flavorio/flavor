@@ -1,14 +1,21 @@
 import React from 'react';
 import { useTranslation } from 'next-i18next';
-import { useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
 import { Button } from '@flavor/ui';
 import { spaceListAtom } from '@/stores/space-atoms';
+import { apiAgent } from '@/api';
 
 export function AllSpace() {
   const { t } = useTranslation('common');
-  const spaceList = useAtomValue(spaceListAtom);
+  const [spaceList, setSpaceList] = useAtom(spaceListAtom);
 
-  const createSpace = () => {};
+  const createSpace = async () => {
+    await apiAgent.space.createSpace({
+      name: 'New Space',
+    });
+    const newSpaceList = await apiAgent.space.getSpaceList().then(({ data }) => data);
+    setSpaceList(newSpaceList);
+  };
 
   return (
     <div className="flex h-screen flex-1 flex-col overflow-hidden py-8">

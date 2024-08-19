@@ -1,31 +1,37 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { keyBy, map } from 'lodash';
-import { SpaceRole } from '@flavor/core';
+import { generateSpaceId, SpaceRole } from '@flavor/core';
 
 @Injectable()
 export class SpaceService {
   constructor(private prisma: PrismaService) {}
 
-  // async createWorkspace(name: string, createdBy: string) {
-  //   const workspaceId = genUUID();
-  //   await this.prisma.workspace.create({
-  //     data: {
-  //       id: workspaceId,
-  //       name,
-  //       createdBy,
-  //       updatedBy: createdBy,
-  //     },
-  //   });
+  async createSpace(name: string, createdBy: string) {
+    const workspaceId = generateSpaceId();
 
-  //   await this.prisma.workspaceMembership.create({
-  //     data: {
-  //       workspaceId,
-  //       userId: createdBy,
-  //       role: 'OWNER',
-  //     },
-  //   });
-  // }
+    return await this.prisma.$tx(async (prisma) => {
+      const [space, _] = await Promise.all([
+        prisma.space.create({
+          data: {
+            id: workspaceId,
+            name,
+            createdBy,
+          },
+        }),
+        prisma.spaceMember.create({
+          data: {
+            spaceId: workspaceId,
+            userId: createdBy,
+            createdBy,
+            role: SpaceRole.Owner,
+          },
+        }),
+      ]);
+
+      return space;
+    });
+  }
 
   async getSpaceList(userId: string) {
     const spaces = await this.prisma.txClient().spaceMember.findMany({
