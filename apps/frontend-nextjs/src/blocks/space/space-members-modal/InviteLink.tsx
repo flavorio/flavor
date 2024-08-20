@@ -1,0 +1,111 @@
+import { useAtomValue } from 'jotai';
+import { useMemo } from 'react';
+import { map } from 'lodash';
+import { useTranslation } from 'next-i18next';
+import { CopyIcon, Cross2Icon } from '@radix-ui/react-icons';
+import {
+  Button,
+  Input,
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+  useToast,
+} from '@flavor/ui';
+import { SpaceRole } from '@flavor/core';
+import { useSpaceRoleStatic } from '@/hooks';
+import { getInviteLinks, inviteLinksAtom } from '@/stores/space-members-atoms';
+import { apiAgent } from '@/api';
+import { RoleSelect } from './RoleSelect';
+import { getRolesWithLowerPermissions } from './utils';
+
+interface IInviteLink {
+  spaceId: string;
+  role: SpaceRole;
+}
+
+export const InviteLink: React.FC<IInviteLink> = (props) => {
+  const { spaceId, role } = props;
+  const { toast } = useToast();
+  const { t } = useTranslation('common');
+  const inviteLinks = useAtomValue(inviteLinksAtom);
+
+  const updateInviteLink = async (invitationId: string, role: SpaceRole) => {
+    await apiAgent.invitation.updateSpaceInviteLink({
+      spaceId,
+      invitationId,
+      role,
+    });
+    getInviteLinks();
+  };
+  const updateInviteLinkLoading = false;
+
+  const deleteInviteLink = async (invitationId: string) => {
+    await apiAgent.invitation.deleteSpaceInviteLink({ spaceId, invitationId });
+    getInviteLinks();
+  };
+  const deleteInviteLinkLoading = false;
+
+  const copyInviteUrl = async (url: string) => {
+    await navigator.clipboard.writeText(url);
+    toast({ title: t('space.invite.linkCopySuccess') });
+  };
+
+  const spaceRoleStatic = useSpaceRoleStatic();
+  const filterRoles = useMemo(
+    () => map(getRolesWithLowerPermissions(role, spaceRoleStatic), 'role'),
+    [role, spaceRoleStatic],
+  );
+
+  if (!inviteLinks?.length) {
+    return <></>;
+  }
+
+  return (
+    <div>
+      <div className="mb-3 text-sm text-muted-foreground">{t('space.invite.linkTitle')}</div>
+      <div className="space-y-3">
+        {inviteLinks.map(({ invitationId, inviteUrl, createdAt, role }) => (
+          <div key={invitationId} className="relative flex items-center gap-3 pr-7">
+            <div className="flex flex-1 items-center gap-2">
+              <Input className="h-8 flex-1" value={inviteUrl} readOnly />
+              <CopyIcon
+                onClick={() => copyInviteUrl(inviteUrl)}
+                className="size-4 cursor-pointer text-muted-foreground opacity-70 hover:opacity-100"
+              />
+            </div>
+            <div className="text-xs text-muted-foreground">
+              {t('space.invite.linkCreatedTime', {
+                createdTime: createdAt,
+              })}
+            </div>
+            <RoleSelect
+              value={role}
+              disabled={updateInviteLinkLoading}
+              filterRoles={filterRoles}
+              onChange={(role) => updateInviteLink(invitationId, role)}
+            />
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    className="absolute right-0 h-auto p-0 hover:bg-inherit"
+                    size="sm"
+                    variant="ghost"
+                    disabled={deleteInviteLinkLoading}
+                    onClick={() => deleteInviteLink(invitationId)}
+                  >
+                    <Cross2Icon className="size-4 cursor-pointer text-muted-foreground opacity-70 hover:opacity-100" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{t('space.invite.linkRemove')}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};

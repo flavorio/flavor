@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { DoubleArrowLeftIcon } from '@radix-ui/react-icons';
 import { Button, TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@flavor/ui';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 export interface ISidebarHeaderProps {
   headerLeft: ReactNode;

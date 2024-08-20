@@ -1,7 +1,8 @@
 import { useAtomValue } from 'jotai';
 import { Avatar, AvatarFallback, AvatarImage } from '@flavor/ui';
-import { SidebarFooterOperation } from './sidebar-footer-operation';
 import { userAtom } from '@/stores/user-atoms';
+import { SidebarFooterOperation } from './sidebar-footer-operation';
+import { SpaceMemberModal } from '../space/space-members-modal';
 
 export function SidebarFooter() {
   const userInfo = useAtomValue(userAtom);
@@ -17,7 +18,7 @@ export function SidebarFooter() {
       <span>{userInfo.name}</span>
       <span className="grow basis-0"></span>
       <SidebarFooterOperation className="cursor-pointer" />
-      {/* <SpaceMemberModal /> */}
+      <SpaceMemberModal />
     </div>
   );
 }

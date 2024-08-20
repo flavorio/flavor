@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import { DotsHorizontalIcon, Pencil1Icon } from '@radix-ui/react-icons';
 import {
   DropdownMenu,
