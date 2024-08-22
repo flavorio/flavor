@@ -6,8 +6,10 @@ import { authConfig } from './auth.config';
 import { cacheConfig } from './cache.config';
 import { storageConfig } from './storage.config';
 import { mailConfig } from './mail.config';
+import { bootstrapConfigs, nextJsConfig } from './bootstrap.config';
 
 const configurations = [
+  ...bootstrapConfigs,
   loggerConfig,
   mailConfig,
   authConfig,

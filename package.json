@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build-app-docker": "docker buildx build --build-arg BUILD_VERSION=0.0.1 --file dockers/flavor/Dockerfile --tag flavor:develop . --progress=plain",
     "test": "echo \"Error: no test specified\" && exit 1",
     "reset-db": "pnpm --filter @flavor/backend reset-db",
     "prepare": "husky"

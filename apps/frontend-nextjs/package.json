@@ -20,6 +20,9 @@
     "lodash": "^4.17.21",
     "next": "14.2.5",
     "next-i18next": "^15.3.1",
+    "next-secure-headers": "2.2.0",
+    "next-transpile-modules": "10.0.1",
+    "picocolors": "1.0.0",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.52.1",
@@ -28,6 +31,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "14.1.4",
     "@types/lodash": "^4.17.6",
     "@types/node": "^20",
     "@types/react": "^18",

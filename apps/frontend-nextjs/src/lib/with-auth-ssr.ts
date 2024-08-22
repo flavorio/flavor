@@ -10,7 +10,7 @@ export default function withAuthSSR<P extends { [key: string]: any }>(
     try {
       return await handler(ctx);
     } catch (err: any) {
-      const status = err.response.status;
+      const status = err.status;
       if (status === 401) {
         return {
           redirect: {
