@@ -69,6 +69,7 @@ export class SpaceService {
 
     const documents = await this.prisma.txClient().document.findMany({
       where: { spaceId, active: true },
+      select: { id: true, name: true, spaceId: true },
     });
     return {
       ...space,

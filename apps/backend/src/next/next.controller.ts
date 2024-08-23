@@ -22,6 +22,7 @@ export class NextController {
     '402/?*',
     'api/((?!flavor).)*',
     'space/?*',
+    'doc/?*',
     'auth/?*',
     'invite/?*',
     'setting/?*',

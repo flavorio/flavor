@@ -3,9 +3,10 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 
 module.exports = function (options, webpack) {
+  console.log(options.entry);
   return {
     ...options,
-    // entry: ['webpack/hot/poll?100', options.entry],
+    entry: ['webpack/hot/poll?100', options.entry],
     mode: 'development',
     devtool: 'source-map',
     cache: false,

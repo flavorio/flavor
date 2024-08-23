@@ -6,11 +6,20 @@ import { WsAdapter } from '@nestjs/platform-ws';
 import isPortReachable from 'is-port-reachable';
 import { ConfigService } from '@nestjs/config';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+declare const module: any;
+
 const host = 'localhost';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
+
+  if (module.hot) {
+    module.hot.accept();
+    module.hot.dispose(() => app.close());
+  }
+
   app.useWebSocketAdapter(new WsAdapter(app));
   app.useGlobalPipes(new ValidationPipe());
 
