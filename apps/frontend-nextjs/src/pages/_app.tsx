@@ -7,7 +7,7 @@ import type { ReactElement, ReactNode } from 'react';
 import { store } from '@/stores';
 
 type NextPageWithLayout = NextPage & {
-  getLayout?: (page: ReactElement) => ReactNode;
+  getLayout?: (page: ReactElement, pageProps: AppProps) => ReactNode;
 };
 
 type AppPropsWithLayout = AppProps & {
@@ -18,7 +18,7 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
   // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout ?? ((page) => page);
 
-  return <Provider store={store}>{getLayout(<Component {...pageProps} />)}</Provider>;
+  return <Provider store={store}>{getLayout(<Component {...pageProps} />, pageProps)}</Provider>;
 }
 
 export default appWithTranslation(App);

@@ -1,6 +1,22 @@
+import { useHydrateAtoms } from 'jotai/utils';
+import { DocPageProps } from '@/lib/page-props-type';
+import { userAtom } from '@/stores/user-atoms';
+import { currSpaceAtom, spaceListAtom } from '@/stores/space-atoms';
 import { DocSidebar } from './doc-sidebar';
 
-export function DocLayout({ children }: { children: React.ReactNode }) {
+type Props = DocPageProps & {
+  children: React.ReactNode;
+};
+
+export function DocLayout(props: Props) {
+  const { userInfo, spaceList, currSpace, children } = props;
+
+  useHydrateAtoms([
+    [userAtom, userInfo],
+    [spaceListAtom, spaceList],
+    [currSpaceAtom, currSpace],
+  ]);
+
   return (
     <div className="flex h-screen w-full">
       <DocSidebar className="z-10" />

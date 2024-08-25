@@ -13,6 +13,10 @@ export type SpaceIdPageProps = PageCommonProps & {
   currSpace: Space;
 };
 
+export type SpaceLayoutProps = PageCommonProps & {
+  currSpace?: Space;
+};
+
 export type DocPageProps = PageCommonProps & {
   currSpace: Space;
 };
