@@ -1,3 +1,0 @@
-type PayloadWithId = {
-  id: string;
-};

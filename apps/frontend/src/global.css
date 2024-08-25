@@ -1,8 +1,0 @@
-@import url('@flavor/ui/styles/global.css');
-
-html,
-body,
-#root {
-  width: 100%;
-  height: 100%;
-}
