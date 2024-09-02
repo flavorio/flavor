@@ -22,7 +22,7 @@ type Props = {
   /** Add props here */
 };
 
-export default function Login() {
+export default function SignIn() {
   const router = useRouter();
   const { t } = useTranslation('common');
 
