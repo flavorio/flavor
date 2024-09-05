@@ -11,12 +11,16 @@
         "runtimeExecutable": "pnpm",
         "args": ["apps/flavor-backend/src/index.ts"],
         "runtimeArgs": ["start:debug"],
-        "outFiles": ["${workspaceFolder}/**/*.js", "!**/node_modules/**"],
+        "outFiles": [
+          "${workspaceFolder}/**/*.js",
+          // "${workspaceFolder}/apps/backend/node_modules/webpack/**/*.js"
+          "!**/node_modules/**"
+        ],
         "cwd": "${workspaceFolder}/apps/backend",
         "internalConsoleOptions": "openOnSessionStart",
         "sourceMaps": true,
         "console": "internalConsole",
-        "outputCapture": "std"
+        "outputCapture": "std",
       },
     ]
 }

@@ -19,7 +19,7 @@ import { InvitationModule } from './api/invitation/invitation.module';
     UserModule,
     AuthModule,
     SpaceModule,
-    RealtimeModule,
+    // RealtimeModule,
     DocumentModule,
     InvitationModule,
   ],

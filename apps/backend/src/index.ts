@@ -5,6 +5,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { WsAdapter } from '@nestjs/platform-ws';
 import isPortReachable from 'is-port-reachable';
 import { ConfigService } from '@nestjs/config';
+import { NextService } from './next/next.service';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const module: any;
@@ -31,6 +32,8 @@ async function bootstrap() {
   process.env.NODE_ENV === 'production'
     ? await app.listen(port)
     : await app.listen(port, 'localhost');
+
+  // await app.listen(port);
 }
 bootstrap();
 
